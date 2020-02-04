@@ -8,9 +8,4 @@ UPsydeKickBPLibrary::UPsydeKickBPLibrary(const FObjectInitializer& ObjectInitial
 {
 
 }
-/*
-void UPsydeKickBPLibrary::PlaceHolderFunction(UObject* WorldContextObject, FString text)
-{
-	UE_LOG(LogPsydeKick, Log, TEXT("Log message: \"%s\""), *text);
-}
-*/
+

@@ -28,8 +28,4 @@ class UPsydeKickBPLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
-	/*
-	UFUNCTION(BlueprintCallable, meta = (Keywords = "PsydeKick Show text"), Category = "PsydeKick", meta = (WorldContext = WorldContextObject))
-	static void PlaceHolderFunction(UObject* WorldContextObject, FString text);
-	*/
 };
