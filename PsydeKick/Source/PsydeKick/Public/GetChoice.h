@@ -23,7 +23,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FChoiceMade ChoiceMade;
 
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "Psydekick")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "Psydekick|Visuals|2D")
 	static UGetChoice* GetChoice(const UObject* WorldContextObject, const FString prompt, const TArray<FString> options);
 
 	virtual void Activate() override;
