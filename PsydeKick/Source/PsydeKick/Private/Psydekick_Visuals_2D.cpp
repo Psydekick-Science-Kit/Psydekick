@@ -8,7 +8,9 @@
 #include "Misc/OutputDeviceNull.h" 
 
 #include "STextDisplay.h"
+#include "SImageDisplay.h"
 #include "SChoiceDisplay.h"
+
 #include "Engine/Engine.h"
 
 
@@ -44,6 +46,24 @@ void UPsydekick_Visuals_2D::ClearScreen(UObject* WorldContextObject)
     GEngine->GameViewport->RemoveAllViewportWidgets();
 }
 
+void UPsydekick_Visuals_2D::ShowImage(UObject* WorldContextObject, UTexture2D* Image)
+{
+    SAssignNew(CurrentWidget, SImageDisplay);
+
+    if (CurrentWidget.IsValid()) {
+        TSharedPtr<SImageDisplay> MyImageDisplay = StaticCastSharedPtr<SImageDisplay>(CurrentWidget);
+        MyImageDisplay->SetImage(Image);
+
+        GEngine->GameViewport->AddViewportWidgetContent(
+            SNew(SWeakWidget)
+            .PossiblyNullContent(CurrentWidget.ToSharedRef())
+        );
+    }
+    else {
+        UE_LOG(LogPsydeKick, Error, TEXT("Failed to create widget"));
+    }
+}
+
 
 void UPsydekick_Visuals_2D::ShowChoices(const UObject* WorldContextObject, const FString prompt, const TArray<FString> choices, const FChoiceMade &ChoiceMade)
 {
@@ -61,5 +81,4 @@ void UPsydekick_Visuals_2D::ShowChoices(const UObject* WorldContextObject, const
     else {
         UE_LOG(LogPsydeKick, Error, TEXT("Failed to create widget"));
     }
-    
 }

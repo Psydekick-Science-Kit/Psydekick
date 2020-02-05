@@ -22,13 +22,16 @@ class PSYDEKICK_API UPsydekick_Visuals_2D : public UBlueprintFunctionLibrary
 	GENERATED_UCLASS_BODY()
 
 public:
-	UFUNCTION(BlueprintCallable, meta = (Keywords = "Psydekick show text"), Category = "Psydekick", meta = (WorldContext = WorldContextObject))
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
 	static void ShowText(UObject* WorldContextObject, FString text);
 
-	UFUNCTION(BlueprintCallable, meta = (Keywords = "Psydekick clear screen"), Category = "Psydekick", meta = (WorldContext = WorldContextObject))
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
 	static void ClearScreen(UObject* WorldContextObject);
 
-	//UFUNCTION(BlueprintCallable, meta = (Keywords = "Psydekick show choices"), Category = "Psydekick", meta = (WorldContext = WorldContextObject))
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
+	static void ShowImage(UObject* WorldContextObject, UTexture2D* Image);
+
+
 	static void ShowChoices(const UObject* WorldContextObject, const FString prompt, const TArray<FString> choices, const FChoiceMade &ChoiceMade);
 
 	static TSharedPtr<class SWidget> CurrentWidget;
