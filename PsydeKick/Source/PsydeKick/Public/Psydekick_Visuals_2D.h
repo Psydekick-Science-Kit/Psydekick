@@ -9,6 +9,10 @@
 
 #include "Psydekick_Visuals_2D.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FChoiceMade, FString, choice, uint8, index);
+//DECLARE_DYNAMIC_DELEGATE_TwoParams(FChoiceMade_, FString, choice, uint8, index);
+
+
 /**
  * 
  */
@@ -24,9 +28,8 @@ public:
 	UFUNCTION(BlueprintCallable, meta = (Keywords = "Psydekick clear screen"), Category = "Psydekick", meta = (WorldContext = WorldContextObject))
 	static void ClearScreen(UObject* WorldContextObject);
 
-	// @TODO: modify for callback on selection
-	UFUNCTION(BlueprintCallable, meta = (Keywords = "Psydekick show choices"), Category = "Psydekick", meta = (WorldContext = WorldContextObject))
-	static void ShowChoices(UObject* WorldContextObject, FString prompt, TArray<FString> choices);
+	//UFUNCTION(BlueprintCallable, meta = (Keywords = "Psydekick show choices"), Category = "Psydekick", meta = (WorldContext = WorldContextObject))
+	static void ShowChoices(const UObject* WorldContextObject, const FString prompt, const TArray<FString> choices, const FChoiceMade &ChoiceMade);
 
 	static TSharedPtr<class SWidget> CurrentWidget;
 };

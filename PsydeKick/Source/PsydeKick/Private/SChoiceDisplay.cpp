@@ -5,6 +5,7 @@
 #include "SlateOptMacros.h"
 #include "PsydeKick.h"
 #include "InputCoreTypes.h"
+#include "Engine/Engine.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SChoiceDisplay::Construct(const FArguments& InArgs)
@@ -42,12 +43,18 @@ void SChoiceDisplay::Construct(const FArguments& InArgs)
 
 
 TSharedRef<ITableRow> SChoiceDisplay::OnGenerateTile(TSharedPtr<FString> Item, const TSharedRef<STableViewBase>& OwnerTable) {
-	// @TODO: bind callback to button click
+	int32 index = count++;
+	FChoiceMade _onChoiceMade = OnChoiceMade;
+
 	return SNew(STableRow<TSharedPtr<SWidget>>, OwnerTable)
 		[
 			SNew(SButton)
 			.VAlign(VAlign_Center)
 			.HAlign(HAlign_Center)
+			.OnClicked_Lambda([Item, _onChoiceMade, index]()->FReply {
+				_onChoiceMade.Broadcast(**Item, index);
+				return FReply::Handled();
+			})
 			.Content()
 			[
 				SNew(STextBlock)
@@ -58,11 +65,13 @@ TSharedRef<ITableRow> SChoiceDisplay::OnGenerateTile(TSharedPtr<FString> Item, c
 }
 
 
-void SChoiceDisplay::Init(FString prompt, TArray<FString> choices)
+void SChoiceDisplay::Init(FString prompt, TArray<FString> choices, const FChoiceMade& ChoiceMade)
 {
+	OnChoiceMade = ChoiceMade;
 	TextBlock->SetText(FText::FromString(prompt));
 
 	Items.RemoveAll([](TSharedPtr<FString> Val) { return true; });
+	count = 0;
 	for (auto& Choice : choices) {
 		TSharedPtr<FString> item = MakeShared<FString>(Choice);
 		Items.Add(item);

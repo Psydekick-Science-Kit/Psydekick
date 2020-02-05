@@ -44,19 +44,19 @@ void UPsydekick_Visuals_2D::ClearScreen(UObject* WorldContextObject)
     GEngine->GameViewport->RemoveAllViewportWidgets();
 }
 
-void UPsydekick_Visuals_2D::ShowChoices(UObject* WorldContextObject, FString prompt, TArray<FString> choices)
+
+void UPsydekick_Visuals_2D::ShowChoices(const UObject* WorldContextObject, const FString prompt, const TArray<FString> choices, const FChoiceMade &ChoiceMade)
 {
     SAssignNew(CurrentWidget, SChoiceDisplay);
 
     if (CurrentWidget.IsValid()) {
         TSharedPtr<SChoiceDisplay> myChoiceDisplay = StaticCastSharedPtr<SChoiceDisplay>(CurrentWidget);
-        myChoiceDisplay->Init(prompt, choices);
+        myChoiceDisplay->Init(prompt, choices, ChoiceMade);
 
         GEngine->GameViewport->AddViewportWidgetContent(
             SNew(SWeakWidget)
             .PossiblyNullContent(CurrentWidget.ToSharedRef())
         );
-
     }
     else {
         UE_LOG(LogPsydeKick, Error, TEXT("Failed to create widget"));
