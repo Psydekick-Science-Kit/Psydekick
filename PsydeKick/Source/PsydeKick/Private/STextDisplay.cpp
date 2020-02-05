@@ -21,6 +21,7 @@ void STextDisplay::Construct(const FArguments& InArgs)
 			.ShadowColorAndOpacity(FLinearColor::Black)
 			.ColorAndOpacity(FLinearColor::White)
 			.ShadowOffset(FIntPoint(-1, 1))
+			.AutoWrapText(true)
 			.Font(FSlateFontInfo(FPaths::EngineContentDir() / TEXT("Slate/Fonts/Roboto-Bold.ttf"), 24))
 			.Visibility(EVisibility::Visible)
 		];
