@@ -6,12 +6,12 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 
 #include "STextDisplay.h"
+#include "FileMediaSource.h" 
 
 #include "Psydekick_Visuals_2D.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FChoiceMade, FString, choice, uint8, index);
-//DECLARE_DYNAMIC_DELEGATE_TwoParams(FChoiceMade_, FString, choice, uint8, index);
-
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FVideoFinished);
 
 /**
  * 
@@ -23,14 +23,13 @@ class PSYDEKICK_API UPsydekick_Visuals_2D : public UBlueprintFunctionLibrary
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
-	static void ShowText(UObject* WorldContextObject, FString text);
+	static void ShowText(const UObject* WorldContextObject, FString text);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
-	static void ClearScreen(UObject* WorldContextObject);
+	static void ClearScreen(const UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
-	static void ShowImage(UObject* WorldContextObject, UTexture2D* Image);
-
+	static void ShowImage(const UObject* WorldContextObject, UTexture* Image);
 
 	static void ShowChoices(const UObject* WorldContextObject, const FString prompt, const TArray<FString> choices, const FChoiceMade &ChoiceMade);
 

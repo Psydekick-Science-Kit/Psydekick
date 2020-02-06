@@ -27,7 +27,9 @@ public class PsydeKick : ModuleRules
 			{
 				"Core",
 				"UMG",
-				"InputCore"
+				"InputCore",
+				"MediaAssets",
+				"AudioMixer",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);
