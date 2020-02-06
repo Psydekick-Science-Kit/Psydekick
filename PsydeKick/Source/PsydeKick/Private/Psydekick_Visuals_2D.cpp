@@ -20,11 +20,11 @@ TSharedPtr<class SWidget> UPsydekick_Visuals_2D::CurrentWidget;
 UPsydekick_Visuals_2D::UPsydekick_Visuals_2D(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
-    UE_LOG(LogPsydeKick, Log, TEXT("Initialized Psydekick Visuals 2D Plugin"));
 }
 
-void UPsydekick_Visuals_2D::ShowText(UObject* WorldContextObject, FString text)
+void UPsydekick_Visuals_2D::ShowText(const UObject* WorldContextObject, const FString text)
 {
+    UPsydekick_Visuals_2D::ClearScreen(WorldContextObject);
     SAssignNew(CurrentWidget, STextDisplay);
 
     if (CurrentWidget.IsValid()) {
@@ -41,13 +41,14 @@ void UPsydekick_Visuals_2D::ShowText(UObject* WorldContextObject, FString text)
     }
 }
 
-void UPsydekick_Visuals_2D::ClearScreen(UObject* WorldContextObject)
+void UPsydekick_Visuals_2D::ClearScreen(const UObject* WorldContextObject)
 {
     GEngine->GameViewport->RemoveAllViewportWidgets();
 }
 
-void UPsydekick_Visuals_2D::ShowImage(UObject* WorldContextObject, UTexture2D* Image)
+void UPsydekick_Visuals_2D::ShowImage(const UObject* WorldContextObject, UTexture* Image)
 {
+    UPsydekick_Visuals_2D::ClearScreen(WorldContextObject);
     SAssignNew(CurrentWidget, SImageDisplay);
 
     if (CurrentWidget.IsValid()) {
@@ -64,9 +65,9 @@ void UPsydekick_Visuals_2D::ShowImage(UObject* WorldContextObject, UTexture2D* I
     }
 }
 
-
 void UPsydekick_Visuals_2D::ShowChoices(const UObject* WorldContextObject, const FString prompt, const TArray<FString> choices, const FChoiceMade &ChoiceMade)
 {
+    UPsydekick_Visuals_2D::ClearScreen(WorldContextObject);
     SAssignNew(CurrentWidget, SChoiceDisplay);
 
     if (CurrentWidget.IsValid()) {

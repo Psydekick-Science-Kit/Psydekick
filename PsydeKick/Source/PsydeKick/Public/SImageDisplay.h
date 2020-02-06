@@ -21,10 +21,11 @@ public:
 
 		/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
-	void SetImage(UTexture2D* ImageTexture);
+	void SetImage(UTexture* ImageTexture);
 
 private:
 	TSharedPtr<SImage> ImageBox;
 	FSlateColorBrush brushClr = FSlateColorBrush(FLinearColor(0, 0, 0, 0.5));
 	FSlateBrush Brush;
+
 };
