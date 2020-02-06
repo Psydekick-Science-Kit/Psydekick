@@ -22,7 +22,7 @@ public:
 	void Init(FString prompt, TArray<FString> choices, const FChoiceMade &ChoiceMade);
 
 private:
-	FSlateColorBrush brushClr = FSlateColorBrush(FLinearColor(0, 0, 0, 0.75));
+	FSlateColorBrush brushClr = FSlateColorBrush(FLinearColor(0, 0, 0, 0.5));
 
 	TSharedPtr<STextBlock> TextBlock;
 

@@ -9,8 +9,6 @@
 
 #include "GetChoice.generated.h"
 
-//DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FChoiceMadeOutputPin, FString, choice, uint8, index);
-
 /**
  * 
  */
@@ -32,8 +30,4 @@ private:
 	const UObject* WorldContextObject;
 	FString prompt;
 	TArray<FString> options;
-	/*
-	UFUNCTION()
-	void ExecuteAfterChoiceMade();
-	*/
 };

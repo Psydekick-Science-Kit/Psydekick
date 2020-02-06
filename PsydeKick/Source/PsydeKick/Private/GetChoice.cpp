@@ -6,7 +6,6 @@
 
 UGetChoice::UGetChoice(const FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer), WorldContextObject(nullptr), prompt(TEXT("Please make a choice")), options(TArray<FString>()) 
 {
-
 }
 
 UGetChoice* UGetChoice::GetChoice(const UObject* WorldContextObject, const FString prompt, const TArray<FString> options)
@@ -21,13 +20,5 @@ UGetChoice* UGetChoice::GetChoice(const UObject* WorldContextObject, const FStri
 
 void UGetChoice::Activate()
 {
-	// show choices here
-	//WorldContextObject->GetWorld()->GetTimerManager().SetTimerForNextTick(this, &UGetChoice::ExecuteAfterChoiceMade);
 	UPsydekick_Visuals_2D::ShowChoices(WorldContextObject, prompt, options, ChoiceMade);
 }
-/*
-void UGetChoice::ExecuteAfterChoiceMade()
-{
-	ChoiceMade.Broadcast(TEXT("HI"), 0);
-}
-*/
