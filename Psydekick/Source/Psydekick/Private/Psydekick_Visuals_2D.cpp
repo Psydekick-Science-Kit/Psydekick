@@ -7,15 +7,14 @@
 #include "Kismet/GameplayStatics.h" 
 #include "Misc/OutputDeviceNull.h" 
 
-#include "STextDisplay.h"
-#include "SImageDisplay.h"
-#include "SChoiceDisplay.h"
+#include "TextDisplay.h"
+#include "ImageDisplay.h"
+#include "ChoiceDisplay.h"
 
 #include "Engine/Engine.h"
 
 
 TSharedPtr<class SWidget> UPsydekick_Visuals_2D::CurrentWidget;
-
 
 UPsydekick_Visuals_2D::UPsydekick_Visuals_2D(const FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)

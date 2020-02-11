@@ -12,6 +12,7 @@
 /**
  * 
  */
+
 UCLASS()
 class PSYDEKICK_API UGetChoice : public UBlueprintAsyncActionBase
 {

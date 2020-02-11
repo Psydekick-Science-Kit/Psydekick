@@ -17,6 +17,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE(FVideoFinished);
 /**
  * 
  */
+
 UCLASS()
 class PSYDEKICK_API UShowVideo : public UBlueprintAsyncActionBase
 {

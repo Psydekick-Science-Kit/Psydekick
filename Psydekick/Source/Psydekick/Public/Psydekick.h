@@ -9,8 +9,6 @@ DECLARE_LOG_CATEGORY_EXTERN(LogPsydekick, Log, All);
 class FPsydekickModule : public IModuleInterface
 {
 public:
-
-	/** IModuleInterface implementation */
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 };

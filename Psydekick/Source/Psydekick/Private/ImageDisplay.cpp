@@ -1,11 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
-#include "SImageDisplay.h"
+#include "ImageDisplay.h"
 #include "SlateOptMacros.h"
 
 #include <Runtime\SlateCore\Public\Layout\Visibility.h>
 #include "Brushes/SlateImageBrush.h" 
+#include "MediaTexture.h" 
+#include "Engine/Texture2D.h" 
 
 #include "Psydekick.h"
 

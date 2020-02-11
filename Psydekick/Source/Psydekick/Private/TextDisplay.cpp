@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
-#include "STextDisplay.h"
+#include "TextDisplay.h"
 #include "SlateOptMacros.h"
 
 #include <Runtime\Core\Public\Misc\Paths.h>

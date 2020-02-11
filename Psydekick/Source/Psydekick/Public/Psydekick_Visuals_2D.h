@@ -4,18 +4,16 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-
-#include "STextDisplay.h"
 #include "FileMediaSource.h" 
 
 #include "Psydekick_Visuals_2D.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FChoiceMade, FString, choice, uint8, index);
-//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FVideoFinished);
 
 /**
  * 
  */
+
 UCLASS()
 class PSYDEKICK_API UPsydekick_Visuals_2D : public UBlueprintFunctionLibrary
 {

@@ -5,25 +5,26 @@
 #include "CoreMinimal.h"
 #include "Widgets/SCompoundWidget.h"
 #include "Slate.h"
-
-
-#include "GameFramework/HUD.h" 
+#include "Styling/SlateBrush.h"
+#include "Engine/Texture.h" 
 
 /**
- * 
+ *
  */
-class PSYDEKICK_API STextDisplay : public SBorder
+
+class PSYDEKICK_API SImageDisplay : public SBorder
 {
 public:
-	SLATE_BEGIN_ARGS(STextDisplay)
+	SLATE_BEGIN_ARGS(SImageDisplay)
 	{}
 	SLATE_END_ARGS()
 
-	/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
-	void SetText(FString text);
+	void SetImage(UTexture* ImageTexture);
 
 private:
-	TSharedPtr<STextBlock> TextBlock;
+	TSharedPtr<SImage> ImageBox;
 	FSlateColorBrush brushClr = FSlateColorBrush(FLinearColor(0, 0, 0, 0.5));
+	FSlateBrush Brush;
+
 };
