@@ -20,5 +20,15 @@
 			"Type": "Runtime",
 			"LoadingPhase": "PreLoadingScreen"
 		}
+	],
+	"Plugins": [
+		{
+			"Name": "SoundUtilities",
+			"Enabled": true
+		},
+		{
+			"Name": "Synthesis",
+			"Enabled": true
+		}
 	]
 }
