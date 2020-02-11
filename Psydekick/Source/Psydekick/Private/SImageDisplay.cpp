@@ -7,7 +7,7 @@
 #include <Runtime\SlateCore\Public\Layout\Visibility.h>
 #include "Brushes/SlateImageBrush.h" 
 
-#include "PsydeKick.h"
+#include "Psydekick.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SImageDisplay::Construct(const FArguments& InArgs)

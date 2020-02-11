@@ -4,9 +4,9 @@
 
 #include "Modules/ModuleManager.h"
 
-DECLARE_LOG_CATEGORY_EXTERN(LogPsydeKick, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN(LogPsydekick, Log, All);
 
-class FPsydeKickModule : public IModuleInterface
+class FPsydekickModule : public IModuleInterface
 {
 public:
 

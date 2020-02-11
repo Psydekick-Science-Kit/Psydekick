@@ -2,7 +2,7 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "PsydeKick",
+	"FriendlyName": "Psydekick",
 	"Description": "",
 	"Category": "Other",
 	"CreatedBy": "Dominic Canare",
@@ -16,7 +16,7 @@
 	"Installed": false,
 	"Modules": [
 		{
-			"Name": "PsydeKick",
+			"Name": "Psydekick",
 			"Type": "Runtime",
 			"LoadingPhase": "PreLoadingScreen"
 		}

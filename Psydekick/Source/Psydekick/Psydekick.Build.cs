@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class PsydeKick : ModuleRules
+public class Psydekick : ModuleRules
 {
-	public PsydeKick(ReadOnlyTargetRules Target) : base(Target)
+	public Psydekick(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		

@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Psydekick_Visuals_2D.h"
-#include "PsydeKick.h"
+#include "Psydekick.h"
 
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h" 
@@ -37,7 +37,7 @@ void UPsydekick_Visuals_2D::ShowText(const UObject* WorldContextObject, const FS
         );
     }
     else {
-        UE_LOG(LogPsydeKick, Error, TEXT("Failed to create widget"));
+        UE_LOG(LogPsydekick, Error, TEXT("Failed to create widget"));
     }
 }
 
@@ -61,7 +61,7 @@ void UPsydekick_Visuals_2D::ShowImage(const UObject* WorldContextObject, UTextur
         );
     }
     else {
-        UE_LOG(LogPsydeKick, Error, TEXT("Failed to create widget"));
+        UE_LOG(LogPsydekick, Error, TEXT("Failed to create widget"));
     }
 }
 
@@ -80,6 +80,6 @@ void UPsydekick_Visuals_2D::ShowChoices(const UObject* WorldContextObject, const
         );
     }
     else {
-        UE_LOG(LogPsydeKick, Error, TEXT("Failed to create widget"));
+        UE_LOG(LogPsydekick, Error, TEXT("Failed to create widget"));
     }
 }

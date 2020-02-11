@@ -3,7 +3,7 @@
 
 #include "SChoiceDisplay.h"
 #include "SlateOptMacros.h"
-#include "PsydeKick.h"
+#include "Psydekick.h"
 #include "InputCoreTypes.h"
 #include "Engine/Engine.h"
 

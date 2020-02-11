@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "PsydeKickBPLibrary.generated.h"
+#include "PsydekickBPLibrary.generated.h"
 
 /* 
 *	Function library class.
@@ -24,7 +24,7 @@
 */
 
 UCLASS()
-class UPsydeKickBPLibrary : public UBlueprintFunctionLibrary
+class UPsydekickBPLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
