@@ -40,7 +40,6 @@ void SChoiceDisplay::Construct(const FArguments& InArgs)
 		];
 }
 
-
 TSharedRef<ITableRow> SChoiceDisplay::OnGenerateTile(TSharedPtr<FString> Item, const TSharedRef<STableViewBase>& OwnerTable) {
 	int32 index = count++;
 	FChoiceMade _onChoiceMade = OnChoiceMade;
@@ -51,7 +50,7 @@ TSharedRef<ITableRow> SChoiceDisplay::OnGenerateTile(TSharedPtr<FString> Item, c
 			.VAlign(VAlign_Center)
 			.HAlign(HAlign_Center)
 			.OnClicked_Lambda([Item, _onChoiceMade, index]()->FReply {
-				_onChoiceMade.Broadcast(**Item, index);
+				_onChoiceMade.ExecuteIfBound(**Item, index);
 				return FReply::Handled();
 			})
 			.Content()
@@ -62,7 +61,6 @@ TSharedRef<ITableRow> SChoiceDisplay::OnGenerateTile(TSharedPtr<FString> Item, c
 			]
 		];
 }
-
 
 void SChoiceDisplay::Init(FString prompt, TArray<FString> choices, const FChoiceMade& ChoiceMade)
 {

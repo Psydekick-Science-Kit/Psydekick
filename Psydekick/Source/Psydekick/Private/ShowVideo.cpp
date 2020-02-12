@@ -5,7 +5,15 @@
 #include "Psydekick_Visuals_2D.h"
 
 
-UShowVideo* UShowVideo::ShowVideo(const UObject* WorldContextObject, UFileMediaSource* Video)
+void UShowVideo::ShowVideo(const UObject* WorldContextObject, UFileMediaSource* Video, const FVideoFinished& VideoFinished)
+{
+	UShowVideo* bpNode = UShowVideo::ShowVideoLatent(WorldContextObject, Video);
+
+	bpNode->VideoFinishedExec.Add(VideoFinished);
+	bpNode->Activate();
+}
+
+UShowVideo* UShowVideo::ShowVideoLatent(const UObject* WorldContextObject, UFileMediaSource* Video)
 {
 	UShowVideo* bpNode = NewObject<UShowVideo>();
 
@@ -47,5 +55,5 @@ void UShowVideo::Activate()
 void UShowVideo::OnFinished()
 {
 	WorldContextObject->GetWorld()->GetTimerManager().ClearTimer(AudioTickTimerHandle);
-	VideoFinished.Broadcast();
+	VideoFinishedExec.Broadcast();
 }

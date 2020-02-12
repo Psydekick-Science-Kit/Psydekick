@@ -12,11 +12,8 @@
 
 #include "ShowVideo.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FVideoFinished);
-
-/**
- * 
- */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FVideoFinishedExec);
+DECLARE_DYNAMIC_DELEGATE(FVideoFinished);
 
 UCLASS()
 class PSYDEKICK_API UShowVideo : public UBlueprintAsyncActionBase
@@ -24,11 +21,14 @@ class PSYDEKICK_API UShowVideo : public UBlueprintAsyncActionBase
 	GENERATED_UCLASS_BODY()
 
 public:
-	UPROPERTY(BlueprintAssignable)
-	FVideoFinished VideoFinished;
+	UPROPERTY(BlueprintAssignable, meta= (DisplayName = "Video Finished"))
+	FVideoFinishedExec VideoFinishedExec;
 
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "Psydekick|Visuals|2D")
-	static UShowVideo* ShowVideo(const UObject* WorldContextObject, UFileMediaSource* Video);
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject", DisplayName = "Show Video (latent)"), Category = "Psydekick|Visuals|2D")
+	static UShowVideo* ShowVideoLatent(const UObject* WorldContextObject, UFileMediaSource* Video);
+
+	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject"), Category = "Psydekick|Visuals|2D")
+	static void ShowVideo(const UObject* WorldContextObject, UFileMediaSource* Video, const FVideoFinished& VideoFinished);
 
 	virtual void Activate() override;
 

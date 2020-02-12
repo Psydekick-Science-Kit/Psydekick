@@ -64,14 +64,14 @@ void UPsydekick_Visuals_2D::ShowImage(const UObject* WorldContextObject, UTextur
     }
 }
 
-void UPsydekick_Visuals_2D::ShowChoices(const UObject* WorldContextObject, const FString prompt, const TArray<FString> choices, const FChoiceMade &ChoiceMade)
+void UPsydekick_Visuals_2D::GetChoice(const UObject* WorldContextObject, const FString Prompt, const TArray<FString> Options, const FChoiceMade &ChoiceMade)
 {
     UPsydekick_Visuals_2D::ClearScreen(WorldContextObject);
     SAssignNew(CurrentWidget, SChoiceDisplay);
 
     if (CurrentWidget.IsValid()) {
         TSharedPtr<SChoiceDisplay> myChoiceDisplay = StaticCastSharedPtr<SChoiceDisplay>(CurrentWidget);
-        myChoiceDisplay->Init(prompt, choices, ChoiceMade);
+        myChoiceDisplay->Init(Prompt, Options, ChoiceMade);
 
         GEngine->GameViewport->AddViewportWidgetContent(
             SNew(SWeakWidget)

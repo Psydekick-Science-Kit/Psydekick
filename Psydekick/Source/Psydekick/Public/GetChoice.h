@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+﻿// Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
 
@@ -9,9 +9,7 @@
 
 #include "GetChoice.generated.h"
 
-/**
- * 
- */
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FChoiceMadeExec, FString, choice, uint8, index);
 
 UCLASS()
 class PSYDEKICK_API UGetChoice : public UBlueprintAsyncActionBase
@@ -20,15 +18,20 @@ class PSYDEKICK_API UGetChoice : public UBlueprintAsyncActionBase
 	
 public:
 	UPROPERTY(BlueprintAssignable)
-	FChoiceMade ChoiceMade;
+	FChoiceMadeExec ChoiceMade;
 
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "Psydekick|Visuals|2D")
-	static UGetChoice* GetChoice(const UObject* WorldContextObject, const FString prompt, const TArray<FString> options);
+	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly="true", WorldContext="WorldContextObject", DisplayName="Get Choice (latent)"), Category = "Psydekick|Visuals|2D")
+	static UGetChoice* GetChoice(const UObject* WorldContextObject, const FString Prompt, const TArray<FString> Options);
+
+	UFUNCTION()
+	void OnChoiceMade(FString Choice, uint8 Index);
 
 	virtual void Activate() override;
 
 private:
 	const UObject* WorldContextObject;
-	FString prompt;
-	TArray<FString> options;
+	FString Prompt;
+	TArray<FString> Options;
+
+	FChoiceMade ChoiceMadeDelegate;
 };
