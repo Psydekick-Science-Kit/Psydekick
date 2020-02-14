@@ -9,7 +9,7 @@
 
 #include "GetChoice.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FChoiceMadeExec, FString, choice, uint8, index);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FChoiceMadeExec, FString, choice, int32, index);
 
 UCLASS()
 class PSYDEKICK_API UGetChoice : public UBlueprintAsyncActionBase
@@ -20,7 +20,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FChoiceMadeExec ChoiceMade;
 
-	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly="true", WorldContext="WorldContextObject", DisplayName="Get Choice (latent)"), Category = "Psydekick|Visuals|2D")
+	UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject", DisplayName="Get Choice (latent)"), Category = "Psydekick|Visuals|2D")
 	static UGetChoice* GetChoice(const UObject* WorldContextObject, const FString Prompt, const TArray<FString> Options);
 
 	UFUNCTION()
