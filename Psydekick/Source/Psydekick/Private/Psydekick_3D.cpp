@@ -2,10 +2,12 @@
 
 
 #include "Psydekick_3D.h"
+#include "Psydekick.h"
+
 #include "Engine/StaticMeshActor.h"
 #include "Engine/World.h" 
-#include "Psydekick.h"
 #include "Materials/MaterialInstanceDynamic.h" 
+#include "GameFramework/PlayerController.h" 
 
 #include "ActorMovementController.h" 
 

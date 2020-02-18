@@ -18,7 +18,14 @@
 		{
 			"Name": "Psydekick",
 			"Type": "Runtime",
-			"LoadingPhase": "PreLoadingScreen"
+			"LoadingPhase": "PreLoadingScreen",
+			"WhitelistPlatforms" :
+			[
+				"Win64",
+				"Win32",
+				"Linux",
+				"LinuxAArch64"
+			]
 		}
 	],
 	"Plugins": [
@@ -28,6 +35,10 @@
 		},
 		{
 			"Name": "Synthesis",
+			"Enabled": true
+		},
+		{
+			"Name": "PhysXVehicles",
 			"Enabled": true
 		}
 	]

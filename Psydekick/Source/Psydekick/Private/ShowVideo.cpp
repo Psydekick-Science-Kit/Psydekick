@@ -3,7 +3,7 @@
 #include "ShowVideo.h"
 
 #include "Psydekick_Visuals_2D.h"
-
+#include "TimerManager.h" 
 
 void UShowVideo::ShowVideo(const UObject* WorldContextObject, UFileMediaSource* Video, const FVideoFinished& VideoFinished)
 {
