@@ -30,12 +30,13 @@ void SChoiceDisplay::Construct(const FArguments& InArgs)
 
 			+SVerticalBox::Slot()
 			.VAlign(VAlign_Fill)
+			.HAlign(HAlign_Fill)
 			.Padding(FMargin(16.0f))
 			[
 				SAssignNew(ChoiceContainer, STileView<TSharedPtr<FString>>)
 				.ListItemsSource(&Items)
+				.ItemAlignment(EListItemAlignment::CenterAligned)
 				.OnGenerateTile(this, &SChoiceDisplay::OnGenerateTile)
-				
 			]
 		];
 }
@@ -45,6 +46,7 @@ TSharedRef<ITableRow> SChoiceDisplay::OnGenerateTile(TSharedPtr<FString> Item, c
 	FChoiceMade _onChoiceMade = OnChoiceMade;
 
 	return SNew(STableRow<TSharedPtr<SWidget>>, OwnerTable)
+		.Padding(FMargin(8.0f))
 		[
 			SNew(SButton)
 			.VAlign(VAlign_Center)
