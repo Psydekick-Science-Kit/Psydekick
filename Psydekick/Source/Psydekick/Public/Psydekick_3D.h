@@ -26,4 +26,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|3D", meta = (WorldContext = WorldContextObject))
 	static void SetActorTexture(const UObject* WorldContextObject, AActor* Actor, UTexture2D* Texture);
 
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|3D", meta = (WorldContext = WorldContextObject))
+	static void MoveInDirection(const UObject* WorldContextObject, FVector Direction);
+
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|3D", meta = (WorldContext = WorldContextObject))
+	static void Stop(const UObject* WorldContextObject);
 };

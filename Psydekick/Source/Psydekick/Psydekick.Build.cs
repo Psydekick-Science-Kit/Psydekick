@@ -30,6 +30,7 @@ public class Psydekick : ModuleRules
 				"InputCore",
 				"MediaAssets",
 				"AudioMixer",
+				"PhysXVehicles",
 				// ... add other public dependencies that you statically link with here ...
 			}
 			);

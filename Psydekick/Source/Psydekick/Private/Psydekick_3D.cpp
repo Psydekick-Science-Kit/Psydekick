@@ -7,8 +7,8 @@
 #include "Psydekick.h"
 #include "Materials/MaterialInstanceDynamic.h" 
 
+#include "ActorMovementController.h" 
 
-#include "Materials/MaterialExpressionConstant3Vector.h" 
 
 AStaticMeshActor* UPsydekick_3D::SpawnMesh(const UObject* WorldContextObject, UStaticMesh* Mesh, FVector Location, FRotator Rotation)
 {
@@ -30,7 +30,6 @@ AStaticMeshActor* UPsydekick_3D::SpawnMesh(const UObject* WorldContextObject, US
 
 void UPsydekick_3D::SetMeshComponentTexture(const UObject* WorldContextObject, UMeshComponent* Component, UTexture2D* Texture)
 {
-	UE_LOG(LogPsydekick, Log, TEXT("Loading material from content"));
 	FStringAssetReference assetRef("/Psydekick/Visuals/2D/GenericTextureMaterial.GenericTextureMaterial");
 	UMaterial* TextureMaterial = Cast<UMaterial>(assetRef.TryLoad());
 
@@ -51,3 +50,30 @@ void UPsydekick_3D::SetActorTexture(const UObject* WorldContextObject, AActor* A
 
 	UPsydekick_3D::SetMeshComponentTexture(WorldContextObject, MeshComponents[0], Texture);
 }
+
+void UPsydekick_3D::MoveInDirection(const UObject* WorldContextObject, FVector Direction)
+{
+	APawn* Pawn = WorldContextObject->GetWorld()->GetFirstPlayerController()->GetPawn();
+	UActorMovementController* MovementController = Pawn->FindComponentByClass<UActorMovementController>();
+	if (MovementController == nullptr) {
+		UE_LOG(LogPsydekick, Log, TEXT("Adding MovementController to Pawn"));
+		MovementController = NewObject<UActorMovementController>(Pawn);
+		Pawn->AddOwnedComponent(MovementController);
+		MovementController->RegisterComponent();
+	}
+	MovementController->MoveInDirection(Direction);
+}
+
+void UPsydekick_3D::Stop(const UObject* WorldContextObject)
+{
+	APawn* Pawn = WorldContextObject->GetWorld()->GetFirstPlayerController()->GetPawn();
+	UActorMovementController* MovementController = Pawn->FindComponentByClass<UActorMovementController>();
+	if (MovementController == nullptr) {
+		UE_LOG(LogPsydekick, Log, TEXT("Adding MovementController to Pawn"));
+		MovementController = NewObject<UActorMovementController>(Pawn);
+		Pawn->AddOwnedComponent(MovementController);
+		MovementController->RegisterComponent();
+	}
+	MovementController->Stop();
+}
+
