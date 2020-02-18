@@ -28,5 +28,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
 	static void GetChoice(const UObject* WorldContextObject, const FString Prompt, const TArray<FString> Options, const FChoiceMade& ChoiceMade);
 
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
+	static void SetUIMode(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
+	static void SetGameOnlyMode(const UObject* WorldContextObject);
+
+
 	static TSharedPtr<class SWidget> CurrentWidget;
 };

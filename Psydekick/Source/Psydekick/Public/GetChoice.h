@@ -20,7 +20,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FChoiceMadeExec ChoiceMade;
 
-	UFUNCTION(BlueprintCallable, meta=(WorldContext="WorldContextObject", DisplayName="Get Choice (latent)"), Category = "Psydekick|Visuals|2D")
+	UFUNCTION(BlueprintCallable, meta=(BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject", DisplayName = "Get Choice (latent)"), Category = "Psydekick|Visuals|2D")
 	static UGetChoice* GetChoice(const UObject* WorldContextObject, const FString Prompt, const TArray<FString> Options);
 
 	UFUNCTION()

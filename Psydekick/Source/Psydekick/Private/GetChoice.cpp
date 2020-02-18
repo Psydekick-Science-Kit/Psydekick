@@ -18,12 +18,15 @@ UGetChoice* UGetChoice::GetChoice(const UObject* WorldContextObject, const FStri
 	return bpNode;
 }
 
+void UGetChoice::Activate()
+{
+	UPsydekick_Visuals_2D::SetUIMode(WorldContextObject);
+	UPsydekick_Visuals_2D::GetChoice(WorldContextObject, Prompt, Options, ChoiceMadeDelegate);
+}
+
 void UGetChoice::OnChoiceMade(FString Choice, uint8 Index)
 {
+	UPsydekick_Visuals_2D::SetGameOnlyMode(WorldContextObject);
 	ChoiceMade.Broadcast(Choice, Index);
 }
 
-void UGetChoice::Activate()
-{
-	UPsydekick_Visuals_2D::GetChoice(WorldContextObject, Prompt, Options, ChoiceMadeDelegate);
-}

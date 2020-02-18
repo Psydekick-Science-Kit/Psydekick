@@ -67,6 +67,8 @@ void UPsydekick_Visuals_2D::ShowImage(const UObject* WorldContextObject, UTextur
 void UPsydekick_Visuals_2D::GetChoice(const UObject* WorldContextObject, const FString Prompt, const TArray<FString> Options, const FChoiceMade &ChoiceMade)
 {
     UPsydekick_Visuals_2D::ClearScreen(WorldContextObject);
+    UPsydekick_Visuals_2D::SetUIMode(WorldContextObject);
+
     SAssignNew(CurrentWidget, SChoiceDisplay);
 
     if (CurrentWidget.IsValid()) {
@@ -81,4 +83,24 @@ void UPsydekick_Visuals_2D::GetChoice(const UObject* WorldContextObject, const F
     else {
         UE_LOG(LogPsydekick, Error, TEXT("Failed to create widget"));
     }
+}
+
+void UPsydekick_Visuals_2D::SetUIMode(const UObject* WorldContextObject)
+{
+    FInputModeGameAndUI GameAndUIMode;
+    APlayerController* controller = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+    controller->SetInputMode(GameAndUIMode);
+    controller->bShowMouseCursor = true;
+
+    UE_LOG(LogPsydekick, Log, TEXT("UI mode activated"));
+}
+
+void UPsydekick_Visuals_2D::SetGameOnlyMode(const UObject* WorldContextObject)
+{
+    FInputModeGameOnly GameOnlyMode;
+    APlayerController* controller = UGameplayStatics::GetPlayerController(WorldContextObject, 0);
+    controller->SetInputMode(GameOnlyMode);
+    controller->bShowMouseCursor = false;
+
+    UE_LOG(LogPsydekick, Log, TEXT("Game only mode activated"));
 }
