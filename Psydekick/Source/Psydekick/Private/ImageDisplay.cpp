@@ -3,7 +3,7 @@
 #include "ImageDisplay.h"
 #include "SlateOptMacros.h"
 
-#include <Runtime\SlateCore\Public\Layout\Visibility.h>
+#include "Layout/Visibility.h" 
 #include "Brushes/SlateImageBrush.h" 
 #include "MediaTexture.h" 
 #include "Engine/Texture2D.h" 

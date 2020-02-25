@@ -3,9 +3,8 @@
 #include "TextDisplay.h"
 #include "SlateOptMacros.h"
 
-#include <Runtime\Core\Public\Misc\Paths.h>
-#include <Runtime\SlateCore\Public\Layout\Visibility.h>
-
+#include "Misc/Paths.h"
+#include "Layout/Visibility.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void STextDisplay::Construct(const FArguments& InArgs)
