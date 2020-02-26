@@ -2,7 +2,7 @@
 
 #include "ShowVideo.h"
 
-#include "Psydekick_Visuals_2D.h"
+#include "PsydekickVisuals2D_BPLibrary.h"
 #include "TimerManager.h" 
 
 void UShowVideo::ShowVideo(const UObject* WorldContextObject, UFileMediaSource* Video, const FVideoFinished& VideoFinished)
@@ -43,7 +43,7 @@ UShowVideo::UShowVideo(const FObjectInitializer& ObjectInitializer) : Super(Obje
 
 void UShowVideo::Activate()
 {
-	UPsydekick_Visuals_2D::ShowImage(WorldContextObject, MediaTexture);
+	UPsydekickVisuals2D_BPLibrary::ShowImage(WorldContextObject, MediaTexture);
 
 	float tickInterval = 0.01f; // @TODO: Figure out what this rate should *actually* be
 	WorldContextObject->GetWorld()->GetTimerManager().SetTimer(AudioTickTimerHandle, SoundComponent, &UMediaSoundComponent::UpdatePlayer, tickInterval, true, 0);

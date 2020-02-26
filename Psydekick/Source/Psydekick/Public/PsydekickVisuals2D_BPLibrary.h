@@ -4,20 +4,25 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "FileMediaSource.h" 
 
-#include "Psydekick_Visuals_2D.generated.h"
+#include "PsydekickVisuals2D.h"
 
-DECLARE_DYNAMIC_DELEGATE_TwoParams(FChoiceMade, FString, choice, int32, index);
+#include "PsydekickVisuals2D_BPLibrary.generated.h"
 
 UCLASS()
-class PSYDEKICK_API UPsydekick_Visuals_2D : public UBlueprintFunctionLibrary
+class PSYDEKICK_API UPsydekickVisuals2D_BPLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
+protected:
+	static APsydekickVisuals2D* PKVisuals2DActor;
+
+
 public:
+	static APsydekickVisuals2D* GetPKVisuals2DActor(const UObject* WorldContextObject);
+
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
-	static void ShowText(const UObject* WorldContextObject, FString text);
+	static void ShowText(const UObject* WorldContextObject, FString Text);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
 	static void ClearScreen(const UObject* WorldContextObject);
@@ -33,7 +38,4 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
 	static void SetGameOnlyMode(const UObject* WorldContextObject);
-
-
-	static TSharedPtr<class SWidget> CurrentWidget;
 };

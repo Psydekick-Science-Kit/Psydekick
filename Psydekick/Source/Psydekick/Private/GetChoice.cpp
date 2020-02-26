@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "GetChoice.h"
-#include "Psydekick_Visuals_2D.h"
+#include "PsydekickVisuals2D_BPLibrary.h"
 
 UGetChoice::UGetChoice(const FObjectInitializer& ObjectInitializer) :Super(ObjectInitializer), WorldContextObject(nullptr), Prompt(TEXT("Please make a choice")), Options(TArray<FString>()) 
 {
@@ -20,13 +20,13 @@ UGetChoice* UGetChoice::GetChoice(const UObject* WorldContextObject, const FStri
 
 void UGetChoice::Activate()
 {
-	UPsydekick_Visuals_2D::SetUIMode(WorldContextObject);
-	UPsydekick_Visuals_2D::GetChoice(WorldContextObject, Prompt, Options, ChoiceMadeDelegate);
+	UPsydekickVisuals2D_BPLibrary::SetUIMode(WorldContextObject);
+	UPsydekickVisuals2D_BPLibrary::GetChoice(WorldContextObject, Prompt, Options, ChoiceMadeDelegate);
 }
 
 void UGetChoice::OnChoiceMade(FString Choice, uint8 Index)
 {
-	UPsydekick_Visuals_2D::SetGameOnlyMode(WorldContextObject);
+	UPsydekickVisuals2D_BPLibrary::SetGameOnlyMode(WorldContextObject);
 	ChoiceMade.Broadcast(Choice, Index);
 }
 

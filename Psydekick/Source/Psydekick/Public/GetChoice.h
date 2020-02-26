@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintAsyncActionBase.h"
 
-#include "Psydekick_Visuals_2D.h"
+#include "PsydekickVisuals2D_BPLibrary.h"
 
 #include "GetChoice.generated.h"
 

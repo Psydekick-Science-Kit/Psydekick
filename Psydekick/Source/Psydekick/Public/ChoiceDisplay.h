@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Widgets/SCompoundWidget.h"
 #include "Slate.h"
-#include "Psydekick_Visuals_2D.h"
+#include "PsydekickVisuals2D_BPLibrary.h"
 
 class PSYDEKICK_API SChoiceDisplay : public SBorder
 {
