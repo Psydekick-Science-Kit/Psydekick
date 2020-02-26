@@ -11,12 +11,6 @@
 
 APsydekickVisuals2D* UPsydekickVisuals2D_BPLibrary::PKVisuals2DActor;
 
-UPsydekickVisuals2D_BPLibrary::UPsydekickVisuals2D_BPLibrary(const FObjectInitializer& ObjectInitializer)
-	: Super(ObjectInitializer)
-{
-    UE_LOG(LogPsydekick, Log, TEXT("BP Library Constructed"));
-}
-
 APsydekickVisuals2D* UPsydekickVisuals2D_BPLibrary::GetPKVisuals2DActor(const UObject* WorldContextObject)
 {
     UWorld* World = WorldContextObject->GetWorld();

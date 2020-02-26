@@ -5,15 +5,14 @@
 #include "Psydekick.h"
 
 #include "Blueprint/UserWidget.h"
-#include "Kismet/GameplayStatics.h" 
-#include "Misc/OutputDeviceNull.h" 
+#include "Kismet/GameplayStatics.h"
+#include "Misc/OutputDeviceNull.h"
 
 #include "TextDisplay.h"
 #include "ImageDisplay.h"
 #include "ChoiceDisplay.h"
 
 #include "Engine/Engine.h"
-
 
 // Sets default values
 APsydekickVisuals2D::APsydekickVisuals2D()
