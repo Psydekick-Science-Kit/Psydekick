@@ -6,16 +6,18 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Engine/StaticMesh.h" 
 
-#include "Psydekick_3D.generated.h"
+#include "Psydekick3D_BPLibrary.generated.h"
 
 UCLASS()
-class PSYDEKICK_API UPsydekick_3D : public UBlueprintFunctionLibrary
+class PSYDEKICK_API UPsydekick3D_BPLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_BODY()
-	
+
+protected:
+	static APsydekick3D* PK3DActor;
 
 public:
-	//static UMaterialInterface TextureMaterial;
+	static APsydekick3D* GetPK3DActor(const UObject* WorldContextObject);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|3D", meta = (WorldContext = WorldContextObject))
 	static AStaticMeshActor* SpawnMesh(const UObject* WorldContextObject, UStaticMesh* Mesh, FVector Location, FRotator Rotation);

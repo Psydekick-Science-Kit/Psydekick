@@ -12,11 +12,10 @@
 UCLASS()
 class PSYDEKICK_API UPsydekickVisuals2D_BPLibrary : public UBlueprintFunctionLibrary
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
 
 protected:
 	static APsydekickVisuals2D* PKVisuals2DActor;
-
 
 public:
 	static APsydekickVisuals2D* GetPKVisuals2DActor(const UObject* WorldContextObject);

@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Psydekick_3D.h"
+#include "Psydekick3D.h"
 #include "Psydekick.h"
 
 #include "Engine/StaticMeshActor.h"
@@ -12,15 +12,9 @@
 #include "ActorMovementController.h" 
 
 
-AStaticMeshActor* UPsydekick_3D::SpawnMesh(const UObject* WorldContextObject, UStaticMesh* Mesh, FVector Location, FRotator Rotation)
+AStaticMeshActor* APsydekick3D::SpawnMesh(UStaticMesh* Mesh, FVector Location, FRotator Rotation)
 {
-	FActorSpawnParameters SpawnParams;
-	AStaticMeshActor* Actor = WorldContextObject->GetWorld()->SpawnActor<AStaticMeshActor>(
-		AStaticMeshActor::StaticClass(),
-		Location,
-		Rotation,
-		SpawnParams
-	);
+	AStaticMeshActor* Actor = GetWorld()->SpawnActor<AStaticMeshActor>(Location, Rotation);
 	
 	UStaticMeshComponent* Component = Actor->GetStaticMeshComponent();
 	Component->SetMobility(EComponentMobility::Movable);
@@ -30,7 +24,7 @@ AStaticMeshActor* UPsydekick_3D::SpawnMesh(const UObject* WorldContextObject, US
 	return Actor;
 }
 
-void UPsydekick_3D::SetMeshComponentTexture(const UObject* WorldContextObject, UMeshComponent* Component, UTexture2D* Texture)
+void APsydekick3D::SetMeshComponentTexture(UMeshComponent* Component, UTexture2D* Texture)
 {
 	FStringAssetReference assetRef("/Psydekick/Visuals/2D/GenericTextureMaterial.GenericTextureMaterial");
 	UMaterial* TextureMaterial = Cast<UMaterial>(assetRef.TryLoad());
@@ -41,7 +35,7 @@ void UPsydekick_3D::SetMeshComponentTexture(const UObject* WorldContextObject, U
 	Component->SetMaterial(0, Material);
 }
 
-void UPsydekick_3D::SetActorTexture(const UObject* WorldContextObject, AActor* Actor, UTexture2D* Texture)
+void APsydekick3D::SetActorTexture(AActor* Actor, UTexture2D* Texture)
 {	
 	TArray<UMeshComponent*> MeshComponents;
 	Actor->GetComponents<UMeshComponent>(MeshComponents, true);
@@ -50,12 +44,12 @@ void UPsydekick_3D::SetActorTexture(const UObject* WorldContextObject, AActor* A
 		return;
 	}
 
-	UPsydekick_3D::SetMeshComponentTexture(WorldContextObject, MeshComponents[0], Texture);
+	APsydekick3D::SetMeshComponentTexture(MeshComponents[0], Texture);
 }
 
-void UPsydekick_3D::MoveInDirection(const UObject* WorldContextObject, FVector Direction)
+void APsydekick3D::MoveInDirection(FVector Direction)
 {
-	APawn* Pawn = WorldContextObject->GetWorld()->GetFirstPlayerController()->GetPawn();
+	APawn* Pawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 	UActorMovementController* MovementController = Pawn->FindComponentByClass<UActorMovementController>();
 	if (MovementController == nullptr) {
 		UE_LOG(LogPsydekick, Log, TEXT("Adding MovementController to Pawn"));
@@ -66,9 +60,9 @@ void UPsydekick_3D::MoveInDirection(const UObject* WorldContextObject, FVector D
 	MovementController->MoveInDirection(Direction);
 }
 
-void UPsydekick_3D::Stop(const UObject* WorldContextObject)
+void APsydekick3D::Stop()
 {
-	APawn* Pawn = WorldContextObject->GetWorld()->GetFirstPlayerController()->GetPawn();
+	APawn* Pawn = GetWorld()->GetFirstPlayerController()->GetPawn();
 	UActorMovementController* MovementController = Pawn->FindComponentByClass<UActorMovementController>();
 	if (MovementController == nullptr) {
 		UE_LOG(LogPsydekick, Log, TEXT("Adding MovementController to Pawn"));
@@ -78,4 +72,3 @@ void UPsydekick_3D::Stop(const UObject* WorldContextObject)
 	}
 	MovementController->Stop();
 }
-
