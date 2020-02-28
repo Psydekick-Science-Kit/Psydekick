@@ -20,8 +20,8 @@ protected:
 public:
 	static APsydekickVisuals2D* GetPKVisuals2DActor(const UObject* WorldContextObject);
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
-	static void ShowText(const UObject* WorldContextObject, FString Text);
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject, AdvancedDisplay = 2))
+	static void ShowText(const UObject* WorldContextObject, const FString Text, const float Duration = 0.0f, FLinearColor TextColor = FLinearColor(1.0f, 1.0f, 1.0f, 1.0f), FLinearColor BackgroundColor = FLinearColor(0.0f, 0.0f, 0.0f, 0.75f));
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
 	static void ClearScreen(const UObject* WorldContextObject);

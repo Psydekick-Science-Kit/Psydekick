@@ -27,19 +27,17 @@ void APsydekickVisuals2D::BeginPlay()
 	Super::BeginPlay();	
 }
 
-void APsydekickVisuals2D::ShowText(const FString text)
+void APsydekickVisuals2D::ShowText(const FString Text, const float Duration, const FLinearColor TextColor, const FLinearColor BackgroundColor)
 {
     ClearScreen();
     SAssignNew(CurrentWidget, STextDisplay);
 
     if (CurrentWidget.IsValid()) {
-        TSharedPtr<STextDisplay> myTextDisplay = StaticCastSharedPtr<STextDisplay>(CurrentWidget);
-        myTextDisplay->SetText(text);
-
-        GEngine->GameViewport->AddViewportWidgetContent(
-            SNew(SWeakWidget)
-            .PossiblyNullContent(CurrentWidget.ToSharedRef())
-        );
+        TSharedPtr<STextDisplay> MyTextDisplay = StaticCastSharedPtr<STextDisplay>(CurrentWidget);
+        MyTextDisplay->SetText(Text);
+        MyTextDisplay->SetColorAndOpacity(TextColor);
+        MyTextDisplay->SetBackgroundColor(BackgroundColor);
+        MyTextDisplay->ShowOnScreen(Duration);
     }
     else {
         UE_LOG(LogPsydekick, Error, TEXT("Failed to create widget"));

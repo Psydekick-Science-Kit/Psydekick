@@ -6,8 +6,9 @@
 #include "Widgets/SCompoundWidget.h"
 #include "Slate.h"
 
-
 #include "GameFramework/HUD.h" 
+
+DECLARE_DELEGATE(FOnDurationTimerComplete);
 
 class PSYDEKICK_API STextDisplay : public SBorder
 {
@@ -16,10 +17,23 @@ public:
 	{}
 	SLATE_END_ARGS()
 
-	void Construct(const FArguments& InArgs);
-	void SetText(FString text);
+	~STextDisplay();
 
-private:
+	void Construct(const FArguments& InArgs);
+
+	// @TODO: Convert these to slate attributes
+	void SetText(const FString text);
+	void SetColorAndOpacity(const FLinearColor Color);
+	void SetBackgroundColor(const FLinearColor Color);
+
+	void AddToViewport();
+	void RemoveFromViewport();
+	void ShowOnScreen(const float Duration);
+
+protected:
 	TSharedPtr<STextBlock> TextBlock;
-	FSlateColorBrush brushClr = FSlateColorBrush(FLinearColor(0, 0, 0, 0.5));
+	FSlateColorBrush BrushColor = FSlateColorBrush(FLinearColor(0, 0, 0, 0.5));
+	FTimerHandle RemoveFromScreenTimerHandle;
+
+	FOnDurationTimerComplete DurationTimerComplete;
 };

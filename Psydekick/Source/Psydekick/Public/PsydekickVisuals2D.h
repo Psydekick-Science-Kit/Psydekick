@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Engine/EngineTypes.h"
+
 #include "PsydekickVisuals2D.generated.h"
 
 DECLARE_DYNAMIC_DELEGATE_TwoParams(FChoiceMade, FString, choice, int32, index);
@@ -24,7 +26,7 @@ protected:
 	TSharedPtr<class SWidget> CurrentWidget;
 
 public:	
-	void ShowText(FString text);
+	void ShowText(const FString Text, const float Duration, const FLinearColor TextColor, const FLinearColor BackgroundColor);
 	void ClearScreen();
 	void ShowImage(UTexture* Image);
 	void GetChoice(const FString Prompt, const TArray<FString> Options, const FChoiceMade& ChoiceMade);
