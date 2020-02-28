@@ -43,7 +43,7 @@ STextDisplay::~STextDisplay()
 
 void STextDisplay::SetText(const FString Text)
 {
-	TextBlock->SetText(FText::FromString(Text));
+	TextBlock->SetText(FText::FromString(Text.ReplaceEscapedCharWithChar()));
 }
 
 void STextDisplay::SetColorAndOpacity(const FLinearColor Color)
@@ -84,7 +84,6 @@ void STextDisplay::AddToViewport()
 
 void STextDisplay::RemoveFromViewport()
 {
-	UE_LOG(LogPsydekick, Log, TEXT("Goodbye cruel world"));
 	RemoveFromScreenTimerHandle.Invalidate();
 	if(IsParentValid())
 	{
