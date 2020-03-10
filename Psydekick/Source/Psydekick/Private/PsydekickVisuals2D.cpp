@@ -11,6 +11,7 @@
 #include "TextDisplay.h"
 #include "ImageDisplay.h"
 #include "ChoiceDisplay.h"
+#include "Widgets/SWeakWidget.h"
 
 #include "Engine/Engine.h"
 
@@ -32,7 +33,8 @@ void APsydekickVisuals2D::ShowText(const FString Text, const float Duration, con
     ClearScreen();
     SAssignNew(CurrentWidget, STextDisplay);
 
-    if (CurrentWidget.IsValid()) {
+    if (CurrentWidget.IsValid())
+    {
         TSharedPtr<STextDisplay> MyTextDisplay = StaticCastSharedPtr<STextDisplay>(CurrentWidget);
         MyTextDisplay->SetText(Text);
         MyTextDisplay->SetColorAndOpacity(TextColor);
@@ -54,7 +56,8 @@ void APsydekickVisuals2D::ShowImage(UTexture* Image)
     ClearScreen();
     SAssignNew(CurrentWidget, SImageDisplay);
 
-    if (CurrentWidget.IsValid()) {
+    if (CurrentWidget.IsValid())
+    {
         TSharedPtr<SImageDisplay> MyImageDisplay = StaticCastSharedPtr<SImageDisplay>(CurrentWidget);
         MyImageDisplay->SetImage(Image);
 
@@ -75,7 +78,8 @@ void APsydekickVisuals2D::GetChoice(const FString Prompt, const TArray<FString> 
 
     SAssignNew(CurrentWidget, SChoiceDisplay);
 
-    if (CurrentWidget.IsValid()) {
+    if (CurrentWidget.IsValid())
+    {
         TSharedPtr<SChoiceDisplay> myChoiceDisplay = StaticCastSharedPtr<SChoiceDisplay>(CurrentWidget);
         myChoiceDisplay->Init(Prompt, Options, ChoiceMade);
 
@@ -94,7 +98,8 @@ void APsydekickVisuals2D::SetUIMode()
 	UWorld* World = GetWorld();
     APlayerController* controller = UGameplayStatics::GetPlayerController(World, 0);
 
-	if(controller != nullptr){
+	if(controller != nullptr)
+    {
 	    FInputModeGameAndUI GameAndUIMode;
 		controller->SetInputMode(GameAndUIMode);
 		controller->bShowMouseCursor = true;
@@ -111,7 +116,8 @@ void APsydekickVisuals2D::SetGameOnlyMode()
 	UWorld* World = GetWorld();
     APlayerController* controller = UGameplayStatics::GetPlayerController(World, 0);
 
-	if(controller != nullptr){
+	if(controller != nullptr)
+    {
 	    FInputModeGameOnly GameOnlyMode;
 		controller->SetInputMode(GameOnlyMode);
 		controller->bShowMouseCursor = false;

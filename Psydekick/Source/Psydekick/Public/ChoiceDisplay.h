@@ -3,8 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
+
 #include "Widgets/SCompoundWidget.h"
-#include "Slate.h"
+#include "Widgets/Views/STileView.h" 
+#include "Brushes/SlateColorBrush.h"
+
 #include "PsydekickVisuals2D_BPLibrary.h"
 
 class PSYDEKICK_API SChoiceDisplay : public SBorder

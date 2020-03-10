@@ -3,10 +3,11 @@
 #include "ImageDisplay.h"
 #include "SlateOptMacros.h"
 
-#include "Layout/Visibility.h" 
-#include "Brushes/SlateImageBrush.h" 
-#include "MediaTexture.h" 
-#include "Engine/Texture2D.h" 
+#include "Layout/Visibility.h"
+#include "Brushes/SlateImageBrush.h"
+#include "MediaTexture.h"
+#include "Widgets/Images/SImage.h"
+#include "Engine/Texture2D.h"
 
 #include "Psydekick.h"
 

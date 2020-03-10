@@ -30,13 +30,13 @@ protected:
 	FTimespan GetCurrentTimeSince(FDateTime When);
 
 public:
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Psydekick|Data")
 	EStopwatchState State;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "Psydekick|Data")
 	TArray<FTimespan> Laps;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Psydekick|Data")
 	FDateTime LapStartTime = FDateTime::MinValue();
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")

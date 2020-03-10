@@ -4,9 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Widgets/SCompoundWidget.h"
-#include "Slate.h"
-
-#include "GameFramework/HUD.h" 
+#include "Brushes/SlateColorBrush.h" 
+#include "Math/Color.h"
+#include "GameFramework/HUD.h"
+#include "Engine/EngineTypes.h"
 
 DECLARE_DELEGATE(FOnDurationTimerComplete);
 

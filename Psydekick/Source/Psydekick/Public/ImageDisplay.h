@@ -3,10 +3,11 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Widgets/SCompoundWidget.h"
-#include "Slate.h"
+#include "Widgets/Layout/SBorder.h"
 #include "Styling/SlateBrush.h"
-#include "Engine/Texture.h" 
+#include "Brushes/SlateColorBrush.h"
+#include "Engine/Texture.h"
+#include "Widgets/Images/SImage.h"
 
 /**
  *

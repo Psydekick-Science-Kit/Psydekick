@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Engine/EngineTypes.h"
+#include "Engine/Texture.h"
 
 #include "PsydekickVisuals2D.generated.h"
 
