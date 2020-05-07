@@ -5,6 +5,7 @@
 #include "Engine/UserDefinedStruct.h"
 #include "Math/UnrealMathUtility.h"
 
+#include "Psydekick.h"
 #include "Stimulus.h"
 
 // Sets default values
@@ -19,6 +20,21 @@ AExperimentController::AExperimentController()
 void AExperimentController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (StimulusObjects.Num() == 0)
+	{
+		if (!StimulusClass)
+		{
+			SetState(EExperimentControllerState::Error);
+			UE_LOG(LogPsydekick, Warning, TEXT("No stimulus class specified - could not create stimulus object"));
+		}
+		else {
+			const FVector Location = { 0, 20, 0 };
+			const FRotator Rotation = FRotator(0, 0, 0);
+			StimulusObjects.Add((AStimulus*)GetWorld()->SpawnActor(StimulusClass, &Location, &Rotation));
+			UE_LOG(LogPsydekick, Log, TEXT("Spawned new stimulus object"));
+		}
+	}
 }
 
 void AExperimentController::InitializeBlocks()
@@ -98,21 +114,6 @@ void AExperimentController::NextTrial()
 		if (TrialID == 0)
 		{
 			BlockStarted(BlockID);
-		}
-
-		if (StimulusObjects.Num() == 0)
-		{
-			if (!StimulusClass)
-			{
-				SetState(EExperimentControllerState::Error);
-				UE_LOG(LogPsydekick, Warning, TEXT("No stimulus class specified - could not create stimulus object"));
-			}
-			else {
-				const FVector Location = { 0, 20, 0 };
-				const FRotator Rotation = FRotator(0, 0, 0);
-				StimulusObjects.Add((AStimulus*)GetWorld()->SpawnActor(StimulusClass, &Location, &Rotation));
-				UE_LOG(LogPsydekick, Log, TEXT("Spawned new stimulus object"));
-			}
 		}
 
 		SetState(EExperimentControllerState::InTrial);

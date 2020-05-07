@@ -54,7 +54,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")
 	void Reset();
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")
+	UFUNCTION(BlueprintPure, Category = "Psydekick|Data")
 	FTimespan GetCurrentTime();
 
+	UFUNCTION(BlueprintPure, Category = "Psydekick|Data")
+	FTimespan GetLastLap();
 };

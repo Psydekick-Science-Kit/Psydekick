@@ -35,28 +35,28 @@ class PSYDEKICK_API AExperimentController : public AActor
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Category = "_Psydekick"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TSubclassOf<AStimulus> StimulusClass;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Category = "_Psydekick"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	TArray<AStimulus*> StimulusObjects;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Category = "_Psydekick", ClampMin = "1", UIMin = "1"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = "1", UIMin = "1"))
 	int32 NumberOfBlocks;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Category = "_Psydekick"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	int32 TrialsPerBlock;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (Category = "_Psydekick"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	ETrialSelectionMode TrialSelectionMode;
 
-	UPROPERTY(BlueprintReadOnly, meta = (Category = "_Psydekick"))
+	UPROPERTY(BlueprintReadOnly)
 	int32 BlockID;
 	
-	UPROPERTY(BlueprintReadOnly, meta = (Category = "_Psydekick"))
+	UPROPERTY(BlueprintReadOnly)
 	int32 TrialID;
 
-	UPROPERTY(BlueprintReadOnly, meta = (Category = "_Psydekick"))
+	UPROPERTY(BlueprintReadOnly)
 	EExperimentControllerState State = EExperimentControllerState::NotStarted;
 
 	AExperimentController();

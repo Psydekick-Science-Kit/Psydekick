@@ -4,6 +4,8 @@
 #include "Stopwatch.h"
 #include "Misc/DateTime.h" 
 
+#include "Psydekick.h"
+
 void UStopwatch::Start()
 {
     if(State != EStopwatchState::PAUSED)
@@ -70,7 +72,6 @@ FTimespan UStopwatch::StopLap()
             UE_LOG(LogPsydekick, Error, TEXT("Stop called when stopwatch was not started"));
             return FTimespan::Zero();
     }
-
 }
 
 void UStopwatch::Reset()
@@ -97,4 +98,9 @@ FTimespan UStopwatch::GetCurrentTimeSince(FDateTime When)
         default:
             return FTimespan::Zero();
     }
+}
+
+FTimespan UStopwatch::GetLastLap()
+{
+    return Laps.Last();
 }
