@@ -3,8 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Widgets/SCompoundWidget.h"
-#include "Brushes/SlateColorBrush.h" 
+#include "SlateBasics.h"
+#include "SlateExtras.h"
+#include "Framework/Text/TextLayout.h" 
 #include "Math/Color.h"
 #include "GameFramework/HUD.h"
 #include "Engine/EngineTypes.h"
@@ -30,6 +31,8 @@ public:
 	void AddToViewport();
 	void RemoveFromViewport();
 	void ShowOnScreen(const float Duration);
+	void SetAutoWrapText(const bool AutoWrap);
+	void SetJustification(const ETextJustify::Type Justification);
 
 protected:
 	TSharedPtr<STextBlock> TextBlock;
@@ -37,4 +40,5 @@ protected:
 	FTimerHandle RemoveFromScreenTimerHandle;
 
 	FOnDurationTimerComplete DurationTimerComplete;
+
 };

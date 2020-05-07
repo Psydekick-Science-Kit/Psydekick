@@ -12,18 +12,18 @@ BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void STextDisplay::Construct(const FArguments& InArgs)
 {
 	SetBorderImage(&BrushColor);
+	SetPadding(FMargin(50.0f, 50.0f));
 
 	ChildSlot
 		.VAlign(VAlign_Center)
-		.HAlign(HAlign_Center)
+		.HAlign(HAlign_Fill)
 		[
 			SAssignNew(TextBlock, STextBlock)
-			.ShadowColorAndOpacity(FLinearColor::Black)
-			.ColorAndOpacity(FLinearColor::White)
-			.ShadowOffset(FIntPoint(-1, 1))
-			.AutoWrapText(true)
-			.Font(FSlateFontInfo(FPaths::EngineContentDir() / TEXT("Slate/Fonts/Roboto-Bold.ttf"), 24))
-			.Visibility(EVisibility::Visible)
+				.ShadowColorAndOpacity(FLinearColor::Black)
+				.ColorAndOpacity(FLinearColor::White)
+				.ShadowOffset(FIntPoint(-1, 1))
+				.Font(FSlateFontInfo(FPaths::EngineContentDir() / TEXT("Slate/Fonts/Roboto-Bold.ttf"), 24))
+				.Visibility(EVisibility::Visible)
 		];
 }
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -39,6 +39,14 @@ STextDisplay::~STextDisplay()
 			TimerManager.ClearTimer(RemoveFromScreenTimerHandle);
 		}
 	}
+}
+
+void STextDisplay::SetAutoWrapText(const bool AutoWrap) {
+	TextBlock->SetAutoWrapText(AutoWrap);
+}
+
+void STextDisplay::SetJustification(const ETextJustify::Type Justification) {
+	TextBlock->SetJustification(Justification);
 }
 
 void STextDisplay::SetText(const FString Text)

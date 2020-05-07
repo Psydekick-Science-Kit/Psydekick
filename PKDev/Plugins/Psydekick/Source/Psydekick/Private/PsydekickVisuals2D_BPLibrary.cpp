@@ -37,9 +37,9 @@ APsydekickVisuals2D* UPsydekickVisuals2D_BPLibrary::GetPKVisuals2DActor(const UO
     return PKVisuals2DActor;
 }
 
-void UPsydekickVisuals2D_BPLibrary::ShowText(const UObject* WorldContextObject, const FString Text, const float Duration, const FLinearColor TextColor, const FLinearColor BackgroundColor)
+void UPsydekickVisuals2D_BPLibrary::ShowText(const UObject* WorldContextObject, const FString Text, const float Duration, const FLinearColor TextColor, const FLinearColor BackgroundColor, const ETextJustify::Type Justification, const bool AutoWrapText)
 {
-    UPsydekickVisuals2D_BPLibrary::GetPKVisuals2DActor(WorldContextObject)->ShowText(Text, Duration, TextColor, BackgroundColor);
+    UPsydekickVisuals2D_BPLibrary::GetPKVisuals2DActor(WorldContextObject)->ShowText(Text, Duration, TextColor, BackgroundColor, Justification, AutoWrapText);
 }
 
 void UPsydekickVisuals2D_BPLibrary::ClearScreen(const UObject* WorldContextObject)

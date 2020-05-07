@@ -28,7 +28,7 @@ void APsydekickVisuals2D::BeginPlay()
 	Super::BeginPlay();	
 }
 
-void APsydekickVisuals2D::ShowText(const FString Text, const float Duration, const FLinearColor TextColor, const FLinearColor BackgroundColor)
+void APsydekickVisuals2D::ShowText(const FString Text, const float Duration, const FLinearColor TextColor, const FLinearColor BackgroundColor, const ETextJustify::Type Justification, const bool AutoWrapText)
 {
     ClearScreen();
     SAssignNew(CurrentWidget, STextDisplay);
@@ -39,6 +39,8 @@ void APsydekickVisuals2D::ShowText(const FString Text, const float Duration, con
         MyTextDisplay->SetText(Text);
         MyTextDisplay->SetColorAndOpacity(TextColor);
         MyTextDisplay->SetBackgroundColor(BackgroundColor);
+        MyTextDisplay->SetJustification(Justification);
+        MyTextDisplay->SetAutoWrapText(AutoWrapText);
         MyTextDisplay->ShowOnScreen(Duration);
     }
     else {
