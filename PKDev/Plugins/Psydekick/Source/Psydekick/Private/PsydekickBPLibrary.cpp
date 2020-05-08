@@ -2,9 +2,14 @@
 
 #include "PsydekickBPLibrary.h"
 #include "Psydekick.h"
+#include "StimulusConfiguration.h"
 
 UPsydekickBPLibrary::UPsydekickBPLibrary(const FObjectInitializer& ObjectInitializer)
 : Super(ObjectInitializer)
 {
+}
 
+FString UPsydekickBPLibrary::Conv_StimulusConfigurationToString(class UStimulusConfiguration* StimulusConfiguration)
+{
+	return StimulusConfiguration->ToString();
 }

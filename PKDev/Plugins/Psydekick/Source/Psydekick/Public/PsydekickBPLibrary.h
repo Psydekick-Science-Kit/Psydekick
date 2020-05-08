@@ -28,4 +28,6 @@ class UPsydekickBPLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
+	UFUNCTION(BlueprintPure, meta = (DisplayName = "To String (StimulusConfiguration)", CompactNodeTitle = "->", BlueprintAutocast), Category="Utilities|String")
+	static FString Conv_StimulusConfigurationToString(class UStimulusConfiguration* StimulusConfiguration);
 };

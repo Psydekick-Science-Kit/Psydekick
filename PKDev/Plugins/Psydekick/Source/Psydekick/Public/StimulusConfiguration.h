@@ -15,6 +15,6 @@ class PSYDEKICK_API UStimulusConfiguration : public UObject
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	UFUNCTION(BlueprintNativeEvent, BlueprintPure)
 	FString ToString();
 };
