@@ -11,5 +11,11 @@ UPsydekickBPLibrary::UPsydekickBPLibrary(const FObjectInitializer& ObjectInitial
 
 FString UPsydekickBPLibrary::Conv_StimulusConfigurationToString(class UStimulusConfiguration* StimulusConfiguration)
 {
-	return StimulusConfiguration->ToString();
+	if (StimulusConfiguration)
+	{
+		return StimulusConfiguration->ToString();
+	}
+	else {
+		return "";
+	}
 }

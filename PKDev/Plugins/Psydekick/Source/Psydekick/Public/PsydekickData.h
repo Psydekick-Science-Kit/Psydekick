@@ -21,12 +21,15 @@ private:
 
 public:
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Create a logger"), Category = "Psydekick | Data")
+	UFUNCTION(BlueprintCallable, Category = "Psydekick | Data")
 	static UFileLogger* CreateLogger(FString Name, FString Path);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Get logger"), Category = "Psydekick | Data")
+	UFUNCTION(BlueprintCallable, Category = "Psydekick | Data")
 	static UFileLogger* GetLogger(FString Name);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Log message"), Category = "Psydekick | Data")
+	UFUNCTION(BlueprintCallable, Category = "Psydekick | Data")
 	static bool Log(FString Name, FString message);
+
+	UFUNCTION(BlueprintCallable, Category = "Psydekick | Data")
+	static void CreateObjectsFromCSV(TArray<UObject*>& Result, FString Path, TSubclassOf<UObject> Class);
 };

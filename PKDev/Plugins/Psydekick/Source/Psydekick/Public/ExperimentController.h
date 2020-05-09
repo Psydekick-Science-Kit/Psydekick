@@ -59,10 +59,16 @@ public:
 	UPROPERTY(BlueprintReadOnly)
 	EExperimentControllerState State = EExperimentControllerState::NotStarted;
 
+	UPROPERTY(EditDefaultsOnly)
+	TSubclassOf<UStimulusConfiguration> ConfigurationClass;
+
 	AExperimentController();
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick")
 	void AddConfiguration(UStimulusConfiguration* Configuration);
+
+	UFUNCTION(BlueprintCallable, Category = "Psydekick")
+	void InitializeBlocksFromCSV(FString Path);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick", Meta = (ExpandEnumAsExecs = "CurrentState"))
 	void SwitchOnState(EExperimentControllerState &CurrentState);

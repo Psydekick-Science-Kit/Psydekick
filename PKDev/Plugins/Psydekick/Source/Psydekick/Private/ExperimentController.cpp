@@ -7,6 +7,7 @@
 
 #include "Psydekick.h"
 #include "Stimulus.h"
+#include "CSVLoader.h"
 
 // Sets default values
 AExperimentController::AExperimentController()
@@ -99,8 +100,34 @@ void AExperimentController::InitializeBlocks()
 
 void AExperimentController::AddConfiguration(UStimulusConfiguration* Configuration)
 {
-	// @TODO: Find a better way for users to define trial configurations
 	TrialConfigurations.Add(Configuration);
+}
+
+void AExperimentController::InitializeBlocksFromCSV(FString Path)
+{
+	if (!ConfigurationClass)
+	{
+		UE_LOG(LogPsydekick, Warning, TEXT("ExperimentController::InitializeBlocksFromCSV ConfigurationClass is not set"))
+		return;
+	}
+
+	UCSVLoader* Loader = NewObject<UCSVLoader>();
+	TArray<UObject*> TmpObjects;
+
+	TrialConfigurations.Empty();
+
+	Loader->Load(Path);
+	Loader->CreateObjects(TmpObjects, ConfigurationClass);
+	
+	for (auto Object : TmpObjects)
+	{
+		if (UStimulusConfiguration* ConfigObject = Cast<UStimulusConfiguration>(Object))
+		{
+			TrialConfigurations.Emplace(ConfigObject);
+		}
+	}
+
+	InitializeBlocks();
 }
 
 void AExperimentController::NextTrial()
@@ -108,7 +135,7 @@ void AExperimentController::NextTrial()
 	if (BlockID >= Blocks.Num())
 	{
 		SetState(EExperimentControllerState::Error);
-		UE_LOG(LogPsydekick, Warning, TEXT("No more blocks"));
+		UE_LOG(LogPsydekick, Warning, TEXT("ExperimentController::NextTrial No more blocks"));
 	}
 	else {
 		if (TrialID == 0)
@@ -125,7 +152,6 @@ void AExperimentController::NextTrial()
 			StimulusObject->NewConfiguration(StimulusConfiguration);
 		}
 	}
-	
 }
 
 void AExperimentController::EndTrial()

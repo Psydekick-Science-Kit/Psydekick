@@ -6,6 +6,7 @@
 
 #include "Psydekick.h"
 #include "FileLogger.h"
+#include "CSVLoader.h"
 
 TMap<FString, UFileLogger*> UPsydekickData::FileLoggers = UPsydekickData::CreateFileLoggerMap();
 TMap<FString, UFileLogger*> UPsydekickData::CreateFileLoggerMap()
@@ -69,4 +70,11 @@ bool UPsydekickData::Log(FString LoggerName, FString Message)
 	}
 
 	return false;
+}
+
+void UPsydekickData::CreateObjectsFromCSV(TArray<UObject*>& Result, FString Path, TSubclassOf<UObject> Class)
+{
+	UCSVLoader* Loader = NewObject<UCSVLoader>();
+	Loader->Load(Path);
+	Loader->CreateObjects(Result, Class);
 }
