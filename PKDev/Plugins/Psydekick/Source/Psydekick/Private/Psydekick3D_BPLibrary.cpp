@@ -10,30 +10,29 @@ APsydekick3D* UPsydekick3D_BPLibrary::PK3DActor;
 
 APsydekick3D* UPsydekick3D_BPLibrary::GetPK3DActor(const UObject* WorldContextObject)
 {
-    UWorld* World = WorldContextObject->GetWorld();
+	UWorld* World = WorldContextObject->GetWorld();
 
-    TArray<AActor*> Instances;
-    UGameplayStatics::GetAllActorsOfClass(World, APsydekick3D::StaticClass(), Instances);
+	TArray<AActor*> Instances;
+	UGameplayStatics::GetAllActorsOfClass(World, APsydekick3D::StaticClass(), Instances);
 
-    bool NeedToSpawn = (!PK3DActor) || (Instances.Num() < 1);
-    if(!NeedToSpawn)
-    {
-        PK3DActor = (APsydekick3D*)Instances.Last();
-        NeedToSpawn = NeedToSpawn || (World != PK3DActor->GetWorld());
-    }
-    
-    if(NeedToSpawn)
-    {
-        UE_LOG(LogPsydekick, Log, TEXT("Spawning new PK3DActor"));
-        FActorSpawnParameters SpawnParams;
-        SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-        
-        PK3DActor = World->SpawnActor<APsydekick3D>(SpawnParams);
-    }
+	bool NeedToSpawn = (!PK3DActor) || (Instances.Num() < 1);
+	if(!NeedToSpawn)
+	{
+		PK3DActor = (APsydekick3D*)Instances.Last();
+		NeedToSpawn = NeedToSpawn || (World != PK3DActor->GetWorld());
+	}
+	
+	if(NeedToSpawn)
+	{
+		UE_LOG(LogPsydekick, Log, TEXT("Spawning new PK3DActor"));
+		FActorSpawnParameters SpawnParams;
+		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+		
+		PK3DActor = World->SpawnActor<APsydekick3D>(SpawnParams);
+	}
 
-    return PK3DActor;
+	return PK3DActor;
 }
-
 
 AStaticMeshActor* UPsydekick3D_BPLibrary::SpawnMesh(const UObject* WorldContextObject, UStaticMesh* Mesh, FVector Location, FRotator Rotation)
 {
@@ -58,4 +57,9 @@ void UPsydekick3D_BPLibrary::MoveInDirection(const UObject* WorldContextObject, 
 void UPsydekick3D_BPLibrary::Stop(const UObject* WorldContextObject)
 {
 	UPsydekick3D_BPLibrary::GetPK3DActor(WorldContextObject)->Stop();
+}
+
+void UPsydekick3D_BPLibrary::SetMeshComponentColor(const UObject* WorldContextObject, UMeshComponent* Component, FLinearColor BaseColor)
+{
+	UPsydekick3D_BPLibrary::GetPK3DActor(WorldContextObject)->SetMeshComponentColor(Component, BaseColor);
 }

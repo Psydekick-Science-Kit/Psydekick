@@ -1,8 +1,10 @@
 // Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
 
 #include "PsydekickBPLibrary.h"
-#include "Psydekick.h"
+
 #include "StimulusConfiguration.h"
+#include "ArrayPool.h"
+#include "Psydekick.h"
 
 UPsydekickBPLibrary::UPsydekickBPLibrary(const FObjectInitializer& ObjectInitializer)
 : Super(ObjectInitializer)
@@ -18,4 +20,12 @@ FString UPsydekickBPLibrary::Conv_StimulusConfigurationToString(class UStimulusC
 	else {
 		return "";
 	}
+}
+
+UArrayPool* UPsydekickBPLibrary::MakeArrayPool(TArray<UObject*> Source)
+{
+	UArrayPool* Pool = NewObject<UArrayPool>();
+	Pool->SourcePool.Append(Source);
+
+	return Pool;
 }

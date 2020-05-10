@@ -30,4 +30,7 @@ class UPsydekickBPLibrary : public UBlueprintFunctionLibrary
 
 	UFUNCTION(BlueprintPure, meta = (DisplayName = "To String (StimulusConfiguration)", CompactNodeTitle = "->", BlueprintAutocast), Category="Utilities|String")
 	static FString Conv_StimulusConfigurationToString(class UStimulusConfiguration* StimulusConfiguration);
+
+	UFUNCTION(BlueprintCallable)
+	static UArrayPool* MakeArrayPool(TArray<UObject*> Source);
 };

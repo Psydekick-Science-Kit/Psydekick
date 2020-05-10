@@ -72,3 +72,17 @@ void APsydekick3D::Stop()
 	}
 	MovementController->Stop();
 }
+
+
+void APsydekick3D::SetMeshComponentColor(UMeshComponent* Component, FLinearColor BaseColor)
+{	
+	UE_LOG(LogPsydekick, Log, TEXT("Setting component color..."));
+	FStringAssetReference assetRef("/Psydekick/Visuals/2D/GenericColorMaterial.GenericColorMaterial");
+	UMaterial* Material = Cast<UMaterial>(assetRef.TryLoad());
+	
+	UE_LOG(LogPsydekick, Log, TEXT("Setting Create..."));
+	UMaterialInstanceDynamic* MaterialInstance = UMaterialInstanceDynamic::Create(Material, Component);
+	MaterialInstance->SetVectorParameterValue(TEXT("BaseColor"), BaseColor);
+
+	Component->SetMaterial(0, MaterialInstance);
+}

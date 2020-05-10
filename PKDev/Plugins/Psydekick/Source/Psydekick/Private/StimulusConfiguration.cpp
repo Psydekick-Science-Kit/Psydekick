@@ -32,7 +32,7 @@ FString UStimulusConfiguration::ToString_Implementation()
 		}
 		else if (UObjectProperty* ObjectProperty = Cast<UObjectProperty>(Property))
 		{
-			PropValues += "<" + ObjectProperty->GetPropertyValue_InContainer(this)->GetName() + ">";
+			PropValues += "<Object>";
 		}
 		else {
 			PropValues += "?";

@@ -21,7 +21,10 @@ AExperimentController::AExperimentController()
 void AExperimentController::BeginPlay()
 {
 	Super::BeginPlay();
+}
 
+void AExperimentController::InitializeBlocks()
+{
 	if (StimulusObjects.Num() == 0)
 	{
 		if (!StimulusClass)
@@ -36,10 +39,6 @@ void AExperimentController::BeginPlay()
 			UE_LOG(LogPsydekick, Log, TEXT("Spawned new stimulus object"));
 		}
 	}
-}
-
-void AExperimentController::InitializeBlocks()
-{
 
 	if (TrialSelectionMode == ETrialSelectionMode::InOrder)
 	{
@@ -146,11 +145,12 @@ void AExperimentController::NextTrial()
 		SetState(EExperimentControllerState::InTrial);
 		UStimulusConfiguration* StimulusConfiguration = Blocks[BlockID][TrialID];
 
-		TrialStarted(BlockID, TrialID, StimulusConfiguration);
 		for (auto& StimulusObject : StimulusObjects)
 		{
 			StimulusObject->NewConfiguration(StimulusConfiguration);
 		}
+
+		TrialStarted(BlockID, TrialID, StimulusConfiguration);
 	}
 }
 

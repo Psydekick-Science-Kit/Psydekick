@@ -6,6 +6,8 @@
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "Engine/StaticMesh.h" 
 
+#include "Psydekick3D.h"
+
 #include "Psydekick3D_BPLibrary.generated.h"
 
 UCLASS()
@@ -33,4 +35,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|3D", meta = (WorldContext = WorldContextObject))
 	static void Stop(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|3D", meta = (WorldContext = WorldContextObject))
+	static void SetMeshComponentColor(const UObject* WorldContextObject, UMeshComponent* Component, FLinearColor BaseColor);
 };

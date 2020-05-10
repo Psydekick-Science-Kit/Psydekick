@@ -17,6 +17,7 @@ class PSYDEKICK_API APsydekick3D : public AActor
 public:
 	AStaticMeshActor* SpawnMesh(UStaticMesh* Mesh, FVector Location, FRotator Rotation);
 	void SetMeshComponentTexture(UMeshComponent* Component, UTexture2D* Texture);
+	void SetMeshComponentColor(UMeshComponent* Component, FLinearColor Color);
 	void SetActorTexture(AActor* Actor, UTexture2D* Texture);
 	void MoveInDirection(FVector Direction);
 	void Stop();
