@@ -28,7 +28,7 @@ protected:
 
 public:	
 	void ShowText(const FString Text, const float Duration, const FLinearColor TextColor, const FLinearColor BackgroundColor, const ETextJustify::Type Justification, const bool AutoWrapText);
-	void ClearScreen();
+	void ClearScreen(const bool PsydekickWidgetOnly = true);
 	void ShowImage(UTexture* Image);
 	void GetChoice(const FString Prompt, const TArray<FString> Options, const FChoiceMade& ChoiceMade);
 	void SetUIMode();

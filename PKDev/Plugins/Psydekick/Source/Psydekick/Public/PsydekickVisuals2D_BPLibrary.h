@@ -32,8 +32,8 @@ public:
 		const bool AutoWrapText = true
 	);
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
-	static void ClearScreen(const UObject* WorldContextObject);
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject, AdvancedDisplay=1))
+	static void ClearScreen(const UObject* WorldContextObject, const bool PsydekickWidgetOnly = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
 	static void ShowImage(const UObject* WorldContextObject, UTexture* Image);
