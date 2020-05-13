@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Psydekick3D.h"
 #include "Psydekick.h"
 
@@ -10,7 +9,6 @@
 #include "GameFramework/PlayerController.h" 
 
 #include "ActorMovementController.h" 
-
 
 AStaticMeshActor* APsydekick3D::SpawnMesh(UStaticMesh* Mesh, FVector Location, FRotator Rotation)
 {
@@ -73,14 +71,12 @@ void APsydekick3D::Stop()
 	MovementController->Stop();
 }
 
-
 void APsydekick3D::SetMeshComponentColor(UMeshComponent* Component, FLinearColor BaseColor)
 {	
 	UE_LOG(LogPsydekick, Log, TEXT("Setting component color..."));
 	FStringAssetReference assetRef("/Psydekick/Visuals/2D/GenericColorMaterial.GenericColorMaterial");
 	UMaterial* Material = Cast<UMaterial>(assetRef.TryLoad());
 	
-	UE_LOG(LogPsydekick, Log, TEXT("Setting Create..."));
 	UMaterialInstanceDynamic* MaterialInstance = UMaterialInstanceDynamic::Create(Material, Component);
 	MaterialInstance->SetVectorParameterValue(TEXT("BaseColor"), BaseColor);
 
