@@ -84,18 +84,12 @@ void STextDisplay::ShowOnScreen(const float Duration)
 
 void STextDisplay::AddToViewport()
 {
-	GEngine->GameViewport->AddViewportWidgetContent(
-		SNew(SWeakWidget)
-		.PossiblyNullContent(AsShared())
-	);
+	GEngine->GameViewport->AddViewportWidgetContent(AsShared());
 }
 
 void STextDisplay::RemoveFromViewport()
 {
 	RemoveFromScreenTimerHandle.Invalidate();
-	if(IsParentValid())
-	{
-		GEngine->GameViewport->RemoveViewportWidgetContent(GetParentWidget()->AsShared());
-	}
+	GEngine->GameViewport->RemoveViewportWidgetContent(AsShared());
 }
 
