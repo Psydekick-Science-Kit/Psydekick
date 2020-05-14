@@ -30,7 +30,7 @@ void AExperimentController::InitializeBlocks()
 		if (!StimulusClass)
 		{
 			SetState(EExperimentControllerState::Error);
-			UE_LOG(LogPsydekick, Warning, TEXT("No stimulus class specified - could not create stimulus object"));
+			UE_LOG(LogPsydekick, Warning, TEXT("AExperimentController::InitializeBlocks No stimulus class specified - could not create stimulus object"));
 		}
 		else {
 			const FVector Location = { 0, 20, 0 };
@@ -38,6 +38,12 @@ void AExperimentController::InitializeBlocks()
 			StimulusObjects.Add((AStimulus*)GetWorld()->SpawnActor(StimulusClass, &Location, &Rotation));
 			UE_LOG(LogPsydekick, Log, TEXT("Spawned new stimulus object"));
 		}
+	}
+
+	if(TrialConfigurations.Num() == 0)
+	{
+		UE_LOG(LogPsydekick, Warning, TEXT("AExperimentController::InitializeBlocks No trial configurations"));
+		return;
 	}
 
 	if (TrialSelectionMode == ETrialSelectionMode::InOrder)
@@ -102,12 +108,12 @@ void AExperimentController::AddConfiguration(UStimulusConfiguration* Configurati
 	TrialConfigurations.Add(Configuration);
 }
 
-void AExperimentController::InitializeBlocksFromCSV(FString Path)
+void AExperimentController::InitializeBlocksFromCSV(FString Path, int32 &ConfigurationCount)
 {
 	if (!ConfigurationClass)
 	{
 		UE_LOG(LogPsydekick, Warning, TEXT("ExperimentController::InitializeBlocksFromCSV ConfigurationClass is not set"))
-		return;
+		ConfigurationCount = 0;
 	}
 
 	UCSVLoader* Loader = NewObject<UCSVLoader>();
@@ -127,6 +133,8 @@ void AExperimentController::InitializeBlocksFromCSV(FString Path)
 	}
 
 	InitializeBlocks();
+
+	ConfigurationCount = TrialConfigurations.Num();
 }
 
 void AExperimentController::NextTrial()
@@ -147,7 +155,14 @@ void AExperimentController::NextTrial()
 
 		for (auto& StimulusObject : StimulusObjects)
 		{
-			StimulusObject->NewConfiguration(StimulusConfiguration);
+			if (StimulusObject->IsValidLowLevel())
+			{
+				StimulusObject->NewConfiguration(StimulusConfiguration);
+			}
+			else
+			{
+				UE_LOG(LogPsydekick, Warning, TEXT("StimulusObject is not valid"));
+			}
 		}
 
 		TrialStarted(BlockID, TrialID, StimulusConfiguration);

@@ -68,7 +68,7 @@ public:
 	void AddConfiguration(UStimulusConfiguration* Configuration);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick")
-	void InitializeBlocksFromCSV(FString Path);
+	void InitializeBlocksFromCSV(FString Path, int32 &ConfigurationCount);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick", Meta = (ExpandEnumAsExecs = "CurrentState"))
 	void SwitchOnState(EExperimentControllerState &CurrentState);
