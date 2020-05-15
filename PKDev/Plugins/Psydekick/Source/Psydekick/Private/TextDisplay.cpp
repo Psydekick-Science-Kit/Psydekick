@@ -1,10 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TextDisplay.h"
-#include "SlateOptMacros.h"
 
-#include "Misc/Paths.h"
-#include "Layout/Visibility.h"
+#include "SlateBasics.h"
+
 
 #include "Engine/Engine.h"
 

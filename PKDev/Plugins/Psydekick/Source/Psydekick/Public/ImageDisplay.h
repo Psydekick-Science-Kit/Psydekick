@@ -3,11 +3,8 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "Widgets/Layout/SBorder.h"
-#include "Styling/SlateBrush.h"
-#include "Brushes/SlateColorBrush.h"
+#include "SlateBasics.h"
 #include "Engine/Texture.h"
-#include "Widgets/Images/SImage.h"
 
 /**
  *
@@ -22,10 +19,11 @@ public:
 
 	void Construct(const FArguments& InArgs);
 	void SetImage(UTexture* ImageTexture);
+	void SetBackgroundColor(const FLinearColor Color);
+	void SetOffsets(const int32 OffsetX, const int32 OffsetY);
 
 private:
 	TSharedPtr<SImage> ImageBox;
-	FSlateColorBrush brushClr = FSlateColorBrush(FLinearColor(0, 0, 0, 0.5));
+	FSlateColorBrush BrushColor = FSlateColorBrush(FLinearColor(0, 0, 0, 0.75));
 	FSlateBrush Brush;
-
 };

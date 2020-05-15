@@ -47,9 +47,9 @@ void UPsydekickVisuals2D_BPLibrary::ClearScreen(const UObject* WorldContextObjec
 	UPsydekickVisuals2D_BPLibrary::GetPKVisuals2DActor(WorldContextObject)->ClearScreen(PsydekickWidgetOnly);
 }
 
-void UPsydekickVisuals2D_BPLibrary::ShowImage(const UObject* WorldContextObject, UTexture* Image)
+void UPsydekickVisuals2D_BPLibrary::ShowImage(const UObject* WorldContextObject, UTexture* Image, FLinearColor BackgroundColor, EVerticalAlignment VAlign, EHorizontalAlignment HAlign, int32 OffsetX, int OffsetY)
 {
-	UPsydekickVisuals2D_BPLibrary::GetPKVisuals2DActor(WorldContextObject)->ShowImage(Image);
+	UPsydekickVisuals2D_BPLibrary::GetPKVisuals2DActor(WorldContextObject)->ShowImage(Image, BackgroundColor, VAlign, HAlign, OffsetX, OffsetY);
 }
 
 void UPsydekickVisuals2D_BPLibrary::GetChoice(const UObject* WorldContextObject, const FString Prompt, const TArray<FString> Options, const FChoiceMade &ChoiceMade)

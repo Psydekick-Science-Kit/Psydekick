@@ -29,7 +29,7 @@ protected:
 public:	
 	void ShowText(const FString Text, const float Duration, const FLinearColor TextColor, const FLinearColor BackgroundColor, const ETextJustify::Type Justification, const bool AutoWrapText);
 	void ClearScreen(const bool PsydekickWidgetOnly = true);
-	void ShowImage(UTexture* Image);
+	void ShowImage(UTexture* Image, FLinearColor BackgroundColor, EVerticalAlignment VAlign = EVerticalAlignment::VAlign_Center, EHorizontalAlignment HAlign = EHorizontalAlignment::HAlign_Center, int32 OffsetX = 0, int OffsetY = 0);
 	void GetChoice(const FString Prompt, const TArray<FString> Options, const FChoiceMade& ChoiceMade);
 	void SetUIMode();
 	void SetGameOnlyMode();	

@@ -63,7 +63,7 @@ void APsydekickVisuals2D::ClearScreen(const bool PsydekickWidgetOnly)
 	
 }
 
-void APsydekickVisuals2D::ShowImage(UTexture* Image)
+void APsydekickVisuals2D::ShowImage(UTexture* Image, FLinearColor BackgroundColor, EVerticalAlignment VAlign, EHorizontalAlignment HAlign, int32 OffsetX, int OffsetY)
 {
 	ClearScreen();
 	SAssignNew(CurrentWidget, SImageDisplay);
@@ -72,6 +72,10 @@ void APsydekickVisuals2D::ShowImage(UTexture* Image)
 	{
 		TSharedPtr<SImageDisplay> MyImageDisplay = StaticCastSharedPtr<SImageDisplay>(CurrentWidget);
 		MyImageDisplay->SetImage(Image);
+		MyImageDisplay->SetVAlign(VAlign);
+		MyImageDisplay->SetHAlign(HAlign);
+		MyImageDisplay->SetBackgroundColor(BackgroundColor);
+		MyImageDisplay->SetOffsets(OffsetX, OffsetY);
 
 		GEngine->GameViewport->AddViewportWidgetContent(
 			SNew(SWeakWidget)

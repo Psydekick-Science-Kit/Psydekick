@@ -1,12 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "ImageDisplay.h"
-#include "SlateOptMacros.h"
 
-#include "Layout/Visibility.h"
-#include "Brushes/SlateImageBrush.h"
 #include "MediaTexture.h"
-#include "Widgets/Images/SImage.h"
 #include "Engine/Texture2D.h"
 
 #include "Psydekick.h"
@@ -14,7 +10,7 @@
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SImageDisplay::Construct(const FArguments& InArgs)
 {
-	SetBorderImage(&brushClr);
+	SetBorderImage(&BrushColor);
 
 	ChildSlot
 		[
@@ -38,6 +34,35 @@ void SImageDisplay::SetImage(UTexture* ImageTexture) {
 	}
 
 	ImageBox->SetImage(&Brush);
+}
+
+void SImageDisplay::SetOffsets(int32 OffsetX, int32 OffsetY)
+{
+	FMargin Padding;
+	if (ChildSlot.HAlignment == EHorizontalAlignment::HAlign_Right)
+	{
+		Padding.Right = OffsetX;
+	}
+	else
+	{
+		Padding.Left = OffsetX;
+	}
+	
+	if (ChildSlot.VAlignment == EVerticalAlignment::VAlign_Bottom)
+	{
+		Padding.Bottom = OffsetY;
+	}
+	else
+	{
+		Padding.Top = OffsetY;
+	}
+	SetPadding(Padding);
+}
+
+void SImageDisplay::SetBackgroundColor(const FLinearColor Color)
+{
+	BrushColor = FSlateColorBrush(Color);
+	SetBorderImage(&BrushColor);
 }
 
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION
