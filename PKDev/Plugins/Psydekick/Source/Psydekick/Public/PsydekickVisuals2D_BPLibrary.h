@@ -47,6 +47,12 @@ public:
 	static void ClearScreen(const UObject* WorldContextObject, const bool PsydekickWidgetOnly = true);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
+	static void ClearTexts(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
+	static void ClearImages(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
 	static void GetChoice(const UObject* WorldContextObject, const FString Prompt, const TArray<FString> Options, const FChoiceMade& ChoiceMade);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))

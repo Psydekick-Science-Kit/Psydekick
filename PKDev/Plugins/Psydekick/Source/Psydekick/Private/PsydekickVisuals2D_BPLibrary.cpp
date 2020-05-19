@@ -47,6 +47,16 @@ void UPsydekickVisuals2D_BPLibrary::ClearScreen(const UObject* WorldContextObjec
 	UPsydekickVisuals2D_BPLibrary::GetPKVisuals2DActor(WorldContextObject)->ClearScreen(PsydekickWidgetOnly);
 }
 
+void UPsydekickVisuals2D_BPLibrary::ClearTexts(const UObject* WorldContextObject)
+{
+	UPsydekickVisuals2D_BPLibrary::GetPKVisuals2DActor(WorldContextObject)->ClearTexts();
+}
+
+void UPsydekickVisuals2D_BPLibrary::ClearImages(const UObject* WorldContextObject)
+{
+	UPsydekickVisuals2D_BPLibrary::GetPKVisuals2DActor(WorldContextObject)->ClearImages();
+}
+
 void UPsydekickVisuals2D_BPLibrary::ShowImage(const UObject* WorldContextObject, UTexture* Image, FLinearColor BackgroundColor, EVerticalAlignment VAlign, EHorizontalAlignment HAlign, int32 OffsetX, int OffsetY)
 {
 	UPsydekickVisuals2D_BPLibrary::GetPKVisuals2DActor(WorldContextObject)->ShowImage(Image, BackgroundColor, VAlign, HAlign, OffsetX, OffsetY);

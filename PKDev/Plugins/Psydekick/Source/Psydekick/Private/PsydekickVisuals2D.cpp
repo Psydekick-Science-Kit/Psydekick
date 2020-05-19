@@ -25,23 +25,47 @@ APsydekickVisuals2D::APsydekickVisuals2D()
 // Called when the game starts or when spawned
 void APsydekickVisuals2D::BeginPlay()
 {
-	Super::BeginPlay();	
+	Super::BeginPlay();
 }
 
 void APsydekickVisuals2D::ShowText(const FString Text, const float Duration, const FLinearColor TextColor, const FLinearColor BackgroundColor, const ETextJustify::Type Justification, const bool AutoWrapText)
 {
-	ClearScreen();
-	SAssignNew(CurrentWidget, STextDisplay);
+	TSharedPtr<class STextDisplay> TextDisplay = SNew(STextDisplay);
 
-	if (CurrentWidget.IsValid())
+	if (TextDisplay.IsValid())
 	{
-		TSharedPtr<STextDisplay> MyTextDisplay = StaticCastSharedPtr<STextDisplay>(CurrentWidget);
-		MyTextDisplay->SetText(Text);
-		MyTextDisplay->SetColorAndOpacity(TextColor);
-		MyTextDisplay->SetBackgroundColor(BackgroundColor);
-		MyTextDisplay->SetJustification(Justification);
-		MyTextDisplay->SetAutoWrapText(AutoWrapText);
-		MyTextDisplay->ShowOnScreen(Duration);
+		TextDisplay->SetText(Text);
+		TextDisplay->SetColorAndOpacity(TextColor);
+		TextDisplay->SetBackgroundColor(BackgroundColor);
+		TextDisplay->SetJustification(Justification);
+		TextDisplay->SetAutoWrapText(AutoWrapText);
+		TextDisplay->ShowOnScreen(Duration);
+
+		TextWidgets.Emplace(TextDisplay);
+	}
+	else {
+		UE_LOG(LogPsydekick, Error, TEXT("Failed to create widget"));
+	}
+}
+
+void APsydekickVisuals2D::ShowImage(UTexture* Image, FLinearColor BackgroundColor, EVerticalAlignment VAlign, EHorizontalAlignment HAlign, int32 OffsetX, int OffsetY)
+{
+	TSharedPtr<class SImageDisplay> ImageDisplay = SNew(SImageDisplay);
+
+	if (ImageDisplay.IsValid())
+	{
+		ImageDisplay->SetImage(Image);
+		ImageDisplay->SetVAlign(VAlign);
+		ImageDisplay->SetHAlign(HAlign);
+		ImageDisplay->SetBackgroundColor(BackgroundColor);
+		ImageDisplay->SetOffsets(OffsetX, OffsetY);
+
+		GEngine->GameViewport->AddViewportWidgetContent(
+			SNew(SWeakWidget)
+			.PossiblyNullContent(ImageDisplay)
+		);
+
+		ImageWidgets.Emplace(ImageDisplay);
 	}
 	else {
 		UE_LOG(LogPsydekick, Error, TEXT("Failed to create widget"));
@@ -52,57 +76,65 @@ void APsydekickVisuals2D::ClearScreen(const bool PsydekickWidgetOnly)
 {
 	if(PsydekickWidgetOnly)
 	{
-		if(CurrentWidget.IsValid())
+		for(auto& Widget : TextWidgets)
 		{
-			GEngine->GameViewport->RemoveViewportWidgetContent(CurrentWidget.ToSharedRef());
+			GEngine->GameViewport->RemoveViewportWidgetContent(Widget.ToSharedRef());
+		}
+		for(auto& Widget : ImageWidgets)
+		{
+			GEngine->GameViewport->RemoveViewportWidgetContent(Widget.ToSharedRef());
+		}
+		for(auto& Widget : ChoiceWidgets)
+		{
+			GEngine->GameViewport->RemoveViewportWidgetContent(Widget.ToSharedRef());
 		}
 	}
 	else {
 		GEngine->GameViewport->RemoveAllViewportWidgets();
 	}
-	
+	TextWidgets.Empty();
+	ImageWidgets.Empty();
+	ChoiceWidgets.Empty();
 }
 
-void APsydekickVisuals2D::ShowImage(UTexture* Image, FLinearColor BackgroundColor, EVerticalAlignment VAlign, EHorizontalAlignment HAlign, int32 OffsetX, int OffsetY)
+void APsydekickVisuals2D::ClearTexts()
 {
-	ClearScreen();
-	SAssignNew(CurrentWidget, SImageDisplay);
-
-	if (CurrentWidget.IsValid())
+	for(int32 i=TextWidgets.Num()-1; i>=0; i--)
 	{
-		TSharedPtr<SImageDisplay> MyImageDisplay = StaticCastSharedPtr<SImageDisplay>(CurrentWidget);
-		MyImageDisplay->SetImage(Image);
-		MyImageDisplay->SetVAlign(VAlign);
-		MyImageDisplay->SetHAlign(HAlign);
-		MyImageDisplay->SetBackgroundColor(BackgroundColor);
-		MyImageDisplay->SetOffsets(OffsetX, OffsetY);
-
-		GEngine->GameViewport->AddViewportWidgetContent(
-			SNew(SWeakWidget)
-			.PossiblyNullContent(CurrentWidget.ToSharedRef())
-		);
-	}
-	else {
-		UE_LOG(LogPsydekick, Error, TEXT("Failed to create widget"));
+		TSharedPtr<STextDisplay> WidgetPtr = TextWidgets[i];
+		GEngine->GameViewport->RemoveViewportWidgetContent(WidgetPtr.ToSharedRef());
+		TextWidgets.RemoveAt(i);
 	}
 }
+
+void APsydekickVisuals2D::ClearImages()
+{
+	for(int32 i=ImageWidgets.Num()-1; i>=0; i--)
+	{
+		TSharedPtr<SImageDisplay> WidgetPtr = ImageWidgets[i];
+		GEngine->GameViewport->RemoveViewportWidgetContent(WidgetPtr.ToSharedRef());
+		ImageWidgets.RemoveAt(i);
+	}
+}
+
 
 void APsydekickVisuals2D::GetChoice(const FString Prompt, const TArray<FString> Options, const FChoiceMade &ChoiceMade)
 {
 	ClearScreen();
 	SetUIMode();
 
-	SAssignNew(CurrentWidget, SChoiceDisplay);
+	TSharedPtr<class SChoiceDisplay> ChoiceDisplay = SNew(SChoiceDisplay);
 
-	if (CurrentWidget.IsValid())
+	if (ChoiceDisplay.IsValid())
 	{
-		TSharedPtr<SChoiceDisplay> myChoiceDisplay = StaticCastSharedPtr<SChoiceDisplay>(CurrentWidget);
-		myChoiceDisplay->Init(Prompt, Options, ChoiceMade);
+		ChoiceDisplay->Init(Prompt, Options, ChoiceMade);
 
 		GEngine->GameViewport->AddViewportWidgetContent(
 			SNew(SWeakWidget)
-			.PossiblyNullContent(CurrentWidget.ToSharedRef())
+			.PossiblyNullContent(ChoiceDisplay)
 		);
+
+		ChoiceWidgets.Emplace(ChoiceDisplay.Get());
 	}
 	else {
 		UE_LOG(LogPsydekick, Error, TEXT("Failed to create widget"));
