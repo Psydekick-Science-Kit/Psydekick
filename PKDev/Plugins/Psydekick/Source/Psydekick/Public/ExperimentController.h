@@ -35,69 +35,69 @@ class PSYDEKICK_API AExperimentController : public AActor
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick|Flow")
 	TSubclassOf<AStimulus> StimulusClass;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick|Flow")
 	TArray<AStimulus*> StimulusObjects;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (ClampMin = "1", UIMin = "1"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick|Flow", meta = (ClampMin = "1", UIMin = "1"))
 	int32 NumberOfBlocks;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick|Flow")
 	int32 TrialsPerBlock;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick|Flow")
 	ETrialSelectionMode TrialSelectionMode;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Psydekick|Flow")
 	int32 BlockID;
-	
-	UPROPERTY(BlueprintReadOnly)
+
+	UPROPERTY(BlueprintReadOnly, Category = "Psydekick|Flow")
 	int32 TrialID;
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Psydekick|Flow")
 	EExperimentControllerState State = EExperimentControllerState::NotStarted;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY(EditDefaultsOnly, Category = "Psydekick|Flow")
 	TSubclassOf<UStimulusConfiguration> ConfigurationClass;
 
 	AExperimentController();
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick")
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Flow")
 	void AddConfiguration(UStimulusConfiguration* Configuration);
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick")
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Flow")
 	void InitializeBlocksFromCSV(FString Path, int32 &ConfigurationCount);
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick", Meta = (ExpandEnumAsExecs = "CurrentState"))
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Flow", Meta = (ExpandEnumAsExecs = "CurrentState"))
 	void SwitchOnState(EExperimentControllerState &CurrentState);
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick")
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Flow")
 	void InitializeBlocks();
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick")
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Flow")
 	void NextTrial();
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick")
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Flow")
 	void EndTrial();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Psydekick")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Psydekick|Flow")
 	void BlockStarted(int32 Block);
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Psydekick")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Psydekick|Flow")
 	void BlockFinished(int32 Block);
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Psydekick")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Psydekick|Flow")
 	void Finished();
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Psydekick")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Psydekick|Flow")
 	void TrialStarted(int32 Block, int32 Trial, UStimulusConfiguration* StimulusConfiguration);
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Psydekick")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Psydekick|Flow")
 	void TrialFinished(int32 Block, int32 Trial, UStimulusConfiguration* StimulusConfiguration);
 
-	UFUNCTION(BlueprintImplementableEvent, Category = "Psydekick")
+	UFUNCTION(BlueprintImplementableEvent, Category = "Psydekick|Flow")
 	void StateChanged(EExperimentControllerState NewState);
 
 protected:

@@ -2,8 +2,8 @@
 
 #pragma once
 
-#include "Containers/Queue.h" 
-#include "HAL/Runnable.h" 
+#include "Containers/Queue.h"
+#include "HAL/Runnable.h"
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
@@ -37,7 +37,7 @@ UCLASS()
 class PSYDEKICK_API UFileWriter : public UObject
 {
 	GENERATED_BODY()
-	
+
 private:
 	FBackgroundFileWriter BgFileWriter;
 	TQueue<FString> Buffer;
@@ -45,15 +45,15 @@ private:
 public:
 	~UFileWriter();
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Psydekick|File Writer")
 	FString Filename = "";
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Set filename"), Category = "Psydekick | File writer")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Set filename"), Category = "Psydekick|File Writer")
 	UFileWriter* Initialize(FString Path);
 
-	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Write line"), Category = "Psydekick | File writer")
+	UFUNCTION(BlueprintCallable, meta = (DisplayName = "Write line"), Category = "Psydekick|File Writer")
 	void WriteLine(FString Message);
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick | File writer")
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|File Writer")
 	void Shutdown(const FFileWriterShutdownComplete& OnComplete);
 };

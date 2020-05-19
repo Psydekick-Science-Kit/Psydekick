@@ -3,9 +3,9 @@
 
 #include "FileWriter.h"
 
-#include "FileHelper.h"
-#include "Paths.h"
-#include "PlatformFilemanager.h"
+#include "Misc/FileHelper.h"
+#include "Misc/Paths.h"
+#include "HAL/PlatformFilemanager.h"
 
 #include "Psydekick.h"
 

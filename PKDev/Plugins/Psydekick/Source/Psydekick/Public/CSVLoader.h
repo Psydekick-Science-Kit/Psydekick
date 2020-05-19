@@ -7,7 +7,7 @@
 #include "CSVLoader.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS(BlueprintType)
 class PSYDEKICK_API UCSVLoader : public UObject
@@ -19,21 +19,21 @@ protected:
 	TArray<TArray<FString>> Data;
 
 public:
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintReadOnly, Category = "Psydekick|Data")
 	TArray<FString> Columns;
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick | Data")
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")
 	UCSVLoader* Load(FString Path);
 
-	UFUNCTION(BlueprintPure, Category = "Psydekick | Data")
+	UFUNCTION(BlueprintPure, Category = "Psydekick|Data")
 	int32 Num();
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick | Data")
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")
 	TArray<FString> GetRow(int32 Index);
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick | Data")
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")
 	UObject* CreateObject(int32 Index, TSubclassOf<UObject> Class);
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick | Data")
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")
 	void CreateObjects(TArray<UObject*>& Objects, TSubclassOf<UObject> Class);
 };

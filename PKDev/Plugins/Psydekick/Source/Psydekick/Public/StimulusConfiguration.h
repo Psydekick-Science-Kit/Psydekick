@@ -7,7 +7,7 @@
 #include "StimulusConfiguration.generated.h"
 
 /**
- * 
+ *
  */
 UCLASS(Blueprintable, BlueprintType)
 class PSYDEKICK_API UStimulusConfiguration : public UObject
@@ -15,6 +15,6 @@ class PSYDEKICK_API UStimulusConfiguration : public UObject
 	GENERATED_BODY()
 
 public:
-	UFUNCTION(BlueprintNativeEvent, BlueprintPure)
+	UFUNCTION(BlueprintNativeEvent, BlueprintPure, Category = "Psydekick|Stimuli")
 	FString ToString();
 };

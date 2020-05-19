@@ -1,6 +1,6 @@
 #include "CSVLoader.h"
 
-#include "FileHelper.h"
+#include "Misc/FileHelper.h"
 #include "Internationalization/Regex.h"
 #include "Engine/StaticMesh.h"
 
@@ -70,7 +70,7 @@ TArray<FString> UCSVLoader::GetRow(int32 Index)
 		UE_LOG(LogPsydekick, Error, TEXT("CSVLoader::GetRow Index %d out of range"), Index);
 		return TArray<FString>();
 	}
-	
+
 }
 
 UObject* UCSVLoader::CreateObject(int32 Index, TSubclassOf<UObject> Class)
@@ -126,7 +126,7 @@ UObject* UCSVLoader::CreateObject(int32 Index, TSubclassOf<UObject> Class)
 				{
 					UE_LOG(LogPsydekick, Warning, TEXT("UCSVLoader::CreateObject Unsupported object property %s for field %s"), *CPPType, *Column);
 				}
-				
+
 			}
 			else if (UStructProperty* StructProperty = Cast<UStructProperty>(Property))
 			{
