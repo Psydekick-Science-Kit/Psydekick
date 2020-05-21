@@ -6,8 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "Engine/EngineTypes.h"
 #include "Engine/Texture.h"
-#include "TextDisplay.h"
-#include "ImageDisplay.h"
+
+#include "2D/TextDisplay.h"
+#include "2D/ImageDisplay.h"
 
 #include "PsydekickVisuals2D.generated.h"
 
@@ -17,8 +18,8 @@ UCLASS()
 class PSYDEKICK_API APsydekickVisuals2D : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	APsydekickVisuals2D();
 

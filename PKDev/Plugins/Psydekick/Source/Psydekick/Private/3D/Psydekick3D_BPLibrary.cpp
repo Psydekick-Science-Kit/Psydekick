@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "3D/Psydekick3D_BPLibrary.h"
 
-#include "Psydekick3D_BPLibrary.h"
 #include "Psydekick.h"
 
 #include "Kismet/GameplayStatics.h"
@@ -21,13 +21,13 @@ APsydekick3D* UPsydekick3D_BPLibrary::GetPK3DActor(const UObject* WorldContextOb
 		PK3DActor = (APsydekick3D*)Instances.Last();
 		NeedToSpawn = NeedToSpawn || (World != PK3DActor->GetWorld());
 	}
-	
+
 	if(NeedToSpawn)
 	{
 		UE_LOG(LogPsydekick, Log, TEXT("Spawning new PK3DActor"));
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		
+
 		PK3DActor = World->SpawnActor<APsydekick3D>(SpawnParams);
 	}
 

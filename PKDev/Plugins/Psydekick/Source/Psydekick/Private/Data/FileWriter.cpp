@@ -1,13 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "FileWriter.h"
+#include "Data/FileWriter.h"
+
+#include "Psydekick.h"
 
 #include "Misc/FileHelper.h"
 #include "Misc/Paths.h"
 #include "HAL/PlatformFilemanager.h"
-
-#include "Psydekick.h"
 
 UFileWriter::~UFileWriter()
 {

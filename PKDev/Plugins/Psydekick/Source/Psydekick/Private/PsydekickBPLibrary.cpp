@@ -2,8 +2,9 @@
 
 #include "PsydekickBPLibrary.h"
 
-#include "StimulusConfiguration.h"
-#include "ArrayPool.h"
+#include "Data/ArrayPool.h"
+#include "Flow/StimulusConfiguration.h"
+
 #include "Psydekick.h"
 
 UPsydekickBPLibrary::UPsydekickBPLibrary(const FObjectInitializer& ObjectInitializer)

@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "StimulusConfiguration.h"
+#include "Flow/StimulusConfiguration.h"
 
 #include "Psydekick.h"
 

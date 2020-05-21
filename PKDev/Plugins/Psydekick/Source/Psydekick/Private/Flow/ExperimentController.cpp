@@ -1,13 +1,13 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "ExperimentController.h"
+#include "Flow/ExperimentController.h"
+#include "Flow/Stimulus.h"
+#include "Data/CSVLoader.h"
+#include "Psydekick.h"
+
 #include "Engine/UserDefinedStruct.h"
 #include "Math/UnrealMathUtility.h"
-
-#include "Psydekick.h"
-#include "Stimulus.h"
-#include "CSVLoader.h"
 
 // Sets default values
 AExperimentController::AExperimentController()
@@ -123,7 +123,7 @@ void AExperimentController::InitializeBlocksFromCSV(FString Path, int32 &Configu
 
 	Loader->Load(Path);
 	Loader->CreateObjects(TmpObjects, ConfigurationClass);
-	
+
 	for (auto Object : TmpObjects)
 	{
 		if (UStimulusConfiguration* ConfigObject = Cast<UStimulusConfiguration>(Object))

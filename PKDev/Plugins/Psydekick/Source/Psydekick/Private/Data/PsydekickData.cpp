@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "PsydekickData.h"
+#include "Data/PsydekickData.h"
 
-#include "Misc/Paths.h" 
+#include "Data/FileLogger.h"
+#include "Data/CSVLoader.h"
 
 #include "Psydekick.h"
-#include "FileLogger.h"
-#include "CSVLoader.h"
+#include "Misc/Paths.h"
 
 TMap<FString, UFileLogger*> UPsydekickData::FileLoggers = UPsydekickData::CreateFileLoggerMap();
 TMap<FString, UFileLogger*> UPsydekickData::CreateFileLoggerMap()
@@ -28,7 +28,7 @@ UFileLogger* UPsydekickData::CreateLogger(FString Name, FString ParentPath)
 	{
 		ParentPath = FPaths::ProjectLogDir() + "/" + ParentPath;
 	}
-	
+
 	if(!ParentPath.EndsWith("/"))
 	{
 		ParentPath += "/";

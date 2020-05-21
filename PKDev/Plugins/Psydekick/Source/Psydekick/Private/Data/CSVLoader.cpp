@@ -1,10 +1,10 @@
-#include "CSVLoader.h"
+#include "Data/CSVLoader.h"
+
+#include "Psydekick.h"
 
 #include "Misc/FileHelper.h"
 #include "Internationalization/Regex.h"
 #include "Engine/StaticMesh.h"
-
-#include "Psydekick.h"
 
 UCSVLoader* UCSVLoader::Load(FString Path)
 {

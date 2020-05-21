@@ -1,11 +1,11 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "ImageDisplay.h"
+#include "2D/ImageDisplay.h"
+
+#include "Psydekick.h"
 
 #include "MediaTexture.h"
 #include "Engine/Texture2D.h"
-
-#include "Psydekick.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
 void SImageDisplay::Construct(const FArguments& InArgs)
@@ -47,7 +47,7 @@ void SImageDisplay::SetOffsets(int32 OffsetX, int32 OffsetY)
 	{
 		Padding.Left = OffsetX;
 	}
-	
+
 	if (ChildSlot.VAlignment == EVerticalAlignment::VAlign_Bottom)
 	{
 		Padding.Bottom = OffsetY;

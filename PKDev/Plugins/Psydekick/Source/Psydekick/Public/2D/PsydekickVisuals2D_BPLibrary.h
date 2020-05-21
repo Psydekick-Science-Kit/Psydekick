@@ -4,9 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "Framework/Text/TextLayout.h" 
+#include "Framework/Text/TextLayout.h"
 
-#include "PsydekickVisuals2D.h"
+#include "2D/PsydekickVisuals2D.h"
 
 #include "PsydekickVisuals2D_BPLibrary.generated.h"
 

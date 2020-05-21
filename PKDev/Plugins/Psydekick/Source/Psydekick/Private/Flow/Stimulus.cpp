@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Stimulus.h"
+#include "Flow/Stimulus.h"
 
 // Sets default values
 AStimulus::AStimulus()
@@ -15,7 +15,7 @@ AStimulus::AStimulus()
 void AStimulus::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 }
 
 // Called every frame

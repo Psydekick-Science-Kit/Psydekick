@@ -1,13 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "PsydekickVisuals2D_BPLibrary.h"
+#include "2D/PsydekickVisuals2D_BPLibrary.h"
+#include "2D/PsydekickVisuals2D.h"
 #include "Psydekick.h"
+
 #include "Engine/Engine.h"
-#include "Engine/EngineTypes.h" 
-
-#include "Kismet/GameplayStatics.h" 
-
-#include "PsydekickVisuals2D.h"
+#include "Engine/EngineTypes.h"
+#include "Kismet/GameplayStatics.h"
 
 APsydekickVisuals2D* UPsydekickVisuals2D_BPLibrary::PKVisuals2DActor;
 
@@ -24,13 +23,13 @@ APsydekickVisuals2D* UPsydekickVisuals2D_BPLibrary::GetPKVisuals2DActor(const UO
 		PKVisuals2DActor = (APsydekickVisuals2D*)Instances.Last();
 		NeedToSpawn = NeedToSpawn || (World != PKVisuals2DActor->GetWorld());
 	}
-	
+
 	if(NeedToSpawn)
 	{
 		UE_LOG(LogPsydekick, Log, TEXT("Spawning new PKVisuals2DActor"));
 		FActorSpawnParameters SpawnParams;
 		SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-		
+
 		PKVisuals2DActor = World->SpawnActor<APsydekickVisuals2D>(SpawnParams);
 	}
 

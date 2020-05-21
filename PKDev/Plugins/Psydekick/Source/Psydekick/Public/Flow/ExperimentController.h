@@ -2,10 +2,11 @@
 
 #pragma once
 
+#include "Flow/Stimulus.h"
+
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Engine/DataTable.h"
-#include "Stimulus.h"
 
 #include "ExperimentController.generated.h"
 

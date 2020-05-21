@@ -1,18 +1,17 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "PsydekickVisuals2D.h"
+#include "2D/PsydekickVisuals2D.h"
 #include "Psydekick.h"
 
+#include "2D/TextDisplay.h"
+#include "2D/ImageDisplay.h"
+#include "2D/ChoiceDisplay.h"
+
+#include "Widgets/SWeakWidget.h"
 #include "Blueprint/UserWidget.h"
 #include "Kismet/GameplayStatics.h"
 #include "Misc/OutputDeviceNull.h"
-
-#include "TextDisplay.h"
-#include "ImageDisplay.h"
-#include "ChoiceDisplay.h"
-#include "Widgets/SWeakWidget.h"
-
 #include "Engine/Engine.h"
 
 // Sets default values

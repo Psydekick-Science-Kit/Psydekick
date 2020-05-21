@@ -1,6 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "ArrayPool.h"
+#include "Data/ArrayPool.h"
 
 UObject* UArrayPool::GetNext(TSubclassOf<UObject> AsClass)
 {

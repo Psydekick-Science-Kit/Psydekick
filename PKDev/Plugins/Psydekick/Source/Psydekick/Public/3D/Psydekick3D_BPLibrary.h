@@ -4,9 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
-#include "Engine/StaticMesh.h" 
+#include "Engine/StaticMesh.h"
 
-#include "Psydekick3D.h"
+#include "3D/Psydekick3D.h"
 
 #include "Psydekick3D_BPLibrary.generated.h"
 

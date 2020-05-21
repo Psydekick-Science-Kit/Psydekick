@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "ShowVideo.h"
+#include "2D/ShowVideo.h"
+#include "2D/PsydekickVisuals2D_BPLibrary.h"
 
-#include "PsydekickVisuals2D_BPLibrary.h"
-#include "TimerManager.h" 
+#include "TimerManager.h"
 
 void UShowVideo::ShowVideo(const UObject* WorldContextObject, UFileMediaSource* Video, const FVideoFinished& VideoFinished)
 {

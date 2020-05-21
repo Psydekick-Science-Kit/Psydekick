@@ -1,19 +1,19 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Psydekick3D.h"
+#include "3D/Psydekick3D.h"
+
+#include "3D/ActorMovementController.h"
 #include "Psydekick.h"
 
 #include "Engine/StaticMeshActor.h"
-#include "Engine/World.h" 
-#include "Materials/MaterialInstanceDynamic.h" 
-#include "GameFramework/PlayerController.h" 
-
-#include "ActorMovementController.h" 
+#include "Engine/World.h"
+#include "Materials/MaterialInstanceDynamic.h"
+#include "GameFramework/PlayerController.h"
 
 AStaticMeshActor* APsydekick3D::SpawnMesh(UStaticMesh* Mesh, FVector Location, FRotator Rotation)
 {
 	AStaticMeshActor* Actor = GetWorld()->SpawnActor<AStaticMeshActor>(Location, Rotation);
-	
+
 	UStaticMeshComponent* Component = Actor->GetStaticMeshComponent();
 	Component->SetMobility(EComponentMobility::Movable);
 	Component->SetStaticMesh(Mesh);
@@ -34,7 +34,7 @@ void APsydekick3D::SetMeshComponentTexture(UMeshComponent* Component, UTexture2D
 }
 
 void APsydekick3D::SetActorTexture(AActor* Actor, UTexture2D* Texture)
-{	
+{
 	TArray<UMeshComponent*> MeshComponents;
 	Actor->GetComponents<UMeshComponent>(MeshComponents, true);
 	if (MeshComponents.Num() < 1) {
@@ -72,11 +72,11 @@ void APsydekick3D::Stop()
 }
 
 void APsydekick3D::SetMeshComponentColor(UMeshComponent* Component, FLinearColor BaseColor)
-{	
+{
 	UE_LOG(LogPsydekick, Log, TEXT("Setting component color..."));
 	FStringAssetReference assetRef("/Psydekick/Visuals/2D/GenericColorMaterial.GenericColorMaterial");
 	UMaterial* Material = Cast<UMaterial>(assetRef.TryLoad());
-	
+
 	UMaterialInstanceDynamic* MaterialInstance = UMaterialInstanceDynamic::Create(Material, Component);
 	MaterialInstance->SetVectorParameterValue(TEXT("BaseColor"), BaseColor);
 

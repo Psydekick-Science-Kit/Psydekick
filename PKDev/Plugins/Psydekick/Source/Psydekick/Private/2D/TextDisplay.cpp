@@ -1,10 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "TextDisplay.h"
+#include "2D/TextDisplay.h"
 
 #include "SlateBasics.h"
-
-
 #include "Engine/Engine.h"
 
 BEGIN_SLATE_FUNCTION_BUILD_OPTIMIZATION
@@ -77,7 +75,7 @@ void STextDisplay::ShowOnScreen(const float Duration)
 			Duration,
 			false,
 			Duration
-		);  
+		);
 	}
 }
 
