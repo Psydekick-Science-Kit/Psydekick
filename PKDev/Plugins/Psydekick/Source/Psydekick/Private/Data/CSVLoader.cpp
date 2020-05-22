@@ -92,7 +92,8 @@ UObject* UCSVLoader::CreateObject(int32 Index, TSubclassOf<UObject> Class)
 				Value = Value.ToLower();
 				bool BoolValue = Value.Contains("t") || Value.Contains("1") || Value.Contains("y");
 				BoolProperty->SetPropertyValue(PropertyValuePtr, BoolValue);
-			} else if (UIntProperty* IntProperty = Cast<UIntProperty>(Property))
+			}
+			else if (UIntProperty* IntProperty = Cast<UIntProperty>(Property))
 			{
 				int32 IntValue = FCString::Atoi(*Value);
 				IntProperty->SetPropertyValue(PropertyValuePtr, IntValue);

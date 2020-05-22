@@ -11,7 +11,7 @@
 
 UFileWriter::~UFileWriter()
 {
-	UE_LOG(LogPsydekick, Log, TEXT("UFileWritier destructor"));
+	UE_LOG(LogPsydekick, Log, TEXT("UFileWriter destructor"));
 	if (BgFileWriter.Thread != NULL)
 	{
 		BgFileWriter.Abort();
@@ -26,7 +26,7 @@ UFileWriter* UFileWriter::Initialize(FString Path)
 
 	if (!DirectoryOK)
 	{
-		UE_LOG(LogPsydekick, Error, TEXT("UFileWritier.Initalize: Failed to find/create directory!"));
+		UE_LOG(LogPsydekick, Error, TEXT("UFileWriter::Initalize Failed to find/create directory!"));
 	}
 
 	BgFileWriter.Initialize(Filename, &Buffer);
@@ -74,7 +74,7 @@ void FBackgroundFileWriter::Stop()
 
 uint32 FBackgroundFileWriter::Run()
 {
-	UE_LOG(LogPsydekick, Verbose, TEXT("FBackgroundFileWriter.Run: Starting thread '%s'"), *Path);
+	UE_LOG(LogPsydekick, Verbose, TEXT("FBackgroundFileWriter::Run Starting thread '%s'"), *Path);
 	KeepRunning = true;
 
 	FString Line;
