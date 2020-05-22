@@ -17,29 +17,30 @@ class PSYDEKICK_API UCSVLogger : public UFileWriter
 	GENERATED_BODY()
 
 private:
-	void LogObjectProperties(UObject* Object, UStruct* Class, void* ContainerPtr);
 
 public:
+	void LogObjectProperties(const UObject* Object, const UStruct* Class, const void* ContainerPtr);
+
 	UPROPERTY(BlueprintReadWrite, BlueprintSetter=SetFieldNames)
 	TArray<FString> FieldNames;
 
 	UFUNCTION(BlueprintCallable)
-	void SetFieldNames(TArray<FString> InFieldNames);
+	void SetFieldNames(const TArray<FString> InFieldNames);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")
-	void SetFieldNamesFromObject(UObject* Object);
+	void SetFieldNamesFromObject(const UObject* Object);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data", CustomThunk, meta = (CustomStructureParam = "Struct"))
-	void SetFieldNamesFromStruct(UProperty* Struct);
+	void SetFieldNamesFromStruct(const UProperty* Struct);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")
-	void LogStrings(TMap<FString,FString> Record);
+	void LogStrings(const TMap<FString,FString> Record);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")
-	void LogObject(UObject* Object);
+	void LogObject(const UObject* Object);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data", CustomThunk, meta = (CustomStructureParam = "Struct"))
-	void LogStruct(UProperty* Struct);
+	void LogStruct(const UProperty* Struct);
 
 	DECLARE_FUNCTION(execSetFieldNamesFromStruct)
 	{

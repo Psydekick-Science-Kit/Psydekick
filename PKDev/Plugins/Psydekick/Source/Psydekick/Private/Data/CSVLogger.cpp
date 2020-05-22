@@ -5,7 +5,7 @@
 
 #include "Misc/DateTime.h"
 
-void UCSVLogger::SetFieldNames(TArray<FString> InFieldNames)
+void UCSVLogger::SetFieldNames(const TArray<FString> InFieldNames)
 {
 	if(FieldNames.Num() > 0)
 	{
@@ -26,11 +26,15 @@ void UCSVLogger::SetFieldNames(TArray<FString> InFieldNames)
 	WriteLine(HeaderLine);
 }
 
-void UCSVLogger::SetFieldNamesFromObject(UObject* Object)
+void UCSVLogger::SetFieldNamesFromObject(const UObject* Object)
 {
+	if(!Object){
+		return;
+	}
+
 	TArray<FString> Fields;
 
-	UStruct* Class = Cast<UScriptStruct>(Object);
+	const UStruct* Class = Cast<UScriptStruct>(Object);
 	if(!Class)
 	{
 		Class = Object->GetClass();
@@ -44,8 +48,10 @@ void UCSVLogger::SetFieldNamesFromObject(UObject* Object)
 	SetFieldNames(Fields);
 }
 
-void UCSVLogger::LogStrings(TMap<FString,FString> Record)
+void UCSVLogger::LogStrings(const TMap<FString,FString> Record)
 {
+
+	UE_LOG(LogPsydekick, Log, TEXT("Got some strings yo!"));
 	if (FieldNames.Num() == 0)
 	{
 		TArray<FString> Keys;
@@ -53,12 +59,12 @@ void UCSVLogger::LogStrings(TMap<FString,FString> Record)
 		SetFieldNames(Keys);
 	}
 
+	FString Line = "";
 	if (!Record.Contains("Timestamp")) {
 		FString Timestamp = FDateTime::Now().ToIso8601();
-		Record.FindOrAdd("Timestamp", Timestamp);
+		Line += Timestamp + ",";
 	}
 
-	FString Line = "";
 	for (FString FieldName : FieldNames) {
 		FString Value;
 		if (Record.Contains(FieldName)) {
@@ -74,8 +80,12 @@ void UCSVLogger::LogStrings(TMap<FString,FString> Record)
 	WriteLine(Line);
 }
 
-void UCSVLogger::LogObject(UObject* Object)
+void UCSVLogger::LogObject(const UObject* Object)
 {
+	if(!Object){
+		return;
+	}
+
 	if (FieldNames.Num() == 0)
 	{
 		SetFieldNamesFromObject(Object);
@@ -84,7 +94,7 @@ void UCSVLogger::LogObject(UObject* Object)
 	LogObjectProperties(Object, Object->GetClass(), Object);
 }
 
-void UCSVLogger::LogObjectProperties(UObject* Object, UStruct* Class, void* ContainerPtr)
+void UCSVLogger::LogObjectProperties(const UObject* Object, const UStruct* Class, const void* ContainerPtr)
 {
 	TMap<FString, FString> FieldValues;
 
@@ -98,7 +108,7 @@ void UCSVLogger::LogObjectProperties(UObject* Object, UStruct* Class, void* Cont
 		if (Property)
 		{
 			FString Value = "";
-			void* PropertyValuePtr = Property->ContainerPtrToValuePtr<void>(ContainerPtr);
+			const void* PropertyValuePtr = Property->ContainerPtrToValuePtr<void>(ContainerPtr);
 
 			if (UBoolProperty* BoolProperty = Cast<UBoolProperty>(Property))
 			{

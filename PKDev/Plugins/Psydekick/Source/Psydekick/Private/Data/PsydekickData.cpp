@@ -15,29 +15,41 @@ TMap<FString, UFileLogger*> UPsydekickData::CreateFileLoggerMap()
 	return LoggerMap;
 }
 
-UFileLogger* UPsydekickData::CreateLogger(FString Name, FString ParentPath)
+TMap<FString, UCSVLogger*> UPsydekickData::CSVLoggers = UPsydekickData::CreateCSVLoggerMap();
+TMap<FString, UCSVLogger*> UPsydekickData::CreateCSVLoggerMap()
 {
+	TMap<FString, UCSVLogger*> LoggerMap;
+	return LoggerMap;
+}
 
+UFileLogger* UPsydekickData::CreateLogger(const FString Name, const FString FolderPath)
+{
 	#if PLATFORM_WINDOWS
-		bool PathIsAbsolute = ParentPath.Contains(":");
+		bool PathIsAbsolute = FolderPath.Contains(":");
 	#else
-		bool PathIsAbsolute = ParentPath.StartsWith("/");
+		bool PathIsAbsolute = FolderPath.StartsWith("/");
 	#endif
 
+	FString Path;
 	if (!PathIsAbsolute)
 	{
-		ParentPath = FPaths::ProjectLogDir() + "/" + ParentPath;
+		Path = FPaths::ProjectLogDir() + "/" + FolderPath;
 	}
-
-	if(!ParentPath.EndsWith("/"))
+	else
 	{
-		ParentPath += "/";
+		Path = FolderPath;
 	}
 
-	FPaths::NormalizeDirectoryName(ParentPath);
-	FPaths::RemoveDuplicateSlashes(ParentPath);
 
-	FString Path = ParentPath + Name + "-" + FDateTime::Now().ToString() + ".log";
+	FPaths::NormalizeDirectoryName(Path);
+	FPaths::RemoveDuplicateSlashes(Path);
+
+	if(!Path.EndsWith("/"))
+	{
+		Path += "/";
+	}
+
+	Path += Name + "-" + FDateTime::Now().ToString() + ".log";
 
 	UFileLogger* Logger = NewObject<UFileLogger>();
 
@@ -47,7 +59,7 @@ UFileLogger* UPsydekickData::CreateLogger(FString Name, FString ParentPath)
 	return Logger;
 }
 
-UFileLogger* UPsydekickData::GetLogger(FString Name)
+UFileLogger* UPsydekickData::GetLogger(const FString Name)
 {
 	UFileLogger* Logger = NULL;
 
@@ -61,11 +73,85 @@ UFileLogger* UPsydekickData::GetLogger(FString Name)
 	return Logger;
 }
 
-bool UPsydekickData::Log(FString LoggerName, FString Message)
+bool UPsydekickData::Log(const FString Name, const FString Message)
 {
-	UFileLogger* Logger = UPsydekickData::GetLogger(LoggerName);
+	UFileLogger* Logger = UPsydekickData::GetLogger(Name);
 	if (Logger != NULL) {
 		Logger->Log(Message);
+		return true;
+	}
+
+	return false;
+}
+
+UCSVLogger* UPsydekickData::CreateCSVLogger(const FString Name, const FString FolderPath)
+{
+	#if PLATFORM_WINDOWS
+		bool PathIsAbsolute = FolderPath.Contains(":");
+	#else
+		bool PathIsAbsolute = FolderPath.StartsWith("/");
+	#endif
+
+	FString Path;
+	if (!PathIsAbsolute)
+	{
+		Path = FPaths::ProjectLogDir() + "/" + FolderPath;
+	}
+	else
+	{
+		Path = FolderPath;
+	}
+
+	FPaths::NormalizeDirectoryName(Path);
+	FPaths::RemoveDuplicateSlashes(Path);
+
+	if(!Path.EndsWith("/"))
+	{
+		Path += "/";
+	}
+
+	Path += Name + "-" + FDateTime::Now().ToString() + ".csv";
+
+	UCSVLogger* Logger = NewObject<UCSVLogger>();
+
+	Logger->Initialize(Path);
+	UPsydekickData::CSVLoggers.Add(Name, Logger);
+
+	return Logger;
+}
+
+UCSVLogger* UPsydekickData::GetCSVLogger(const FString Name)
+{
+	UCSVLogger* Logger = NULL;
+
+	if (UPsydekickData::CSVLoggers.Contains(Name))
+	{
+		Logger = *UPsydekickData::CSVLoggers.Find(Name);
+	} else {
+		UE_LOG(LogPsydekick, Error, TEXT("UPsydekickData.GetCSVLogger: Could not find CSV logger: '%s'"), *Name);
+	}
+
+	return Logger;
+}
+
+bool UPsydekickData::LogDataStrings(const FString Name, const TMap<FString, FString> Record)
+{
+	UE_LOG(LogPsydekick, Log, TEXT("Logging strings!"));
+	UCSVLogger* Logger = UPsydekickData::GetCSVLogger(Name);
+	if (Logger != NULL) {
+		UE_LOG(LogPsydekick, Log, TEXT("Sending the stuff"));
+		Logger->LogStrings(Record);
+		return true;
+	}
+
+	return false;
+}
+
+bool UPsydekickData::LogDataObject(const FString Name, const UObject* Object)
+{
+	UCSVLogger* Logger = UPsydekickData::GetCSVLogger(Name);
+	if (Logger != NULL) {
+		Logger->LogObject(Object);
 		return true;
 	}
 
