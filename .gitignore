@@ -76,3 +76,8 @@ PKDev/Plugins/*/Intermediate/*
 PKDev/DerivedDataCache/*
 
 *.pdb
+
+Documentation/xml/
+Documentation/rst/*.rst
+!Documentation/rst/page_index.rst
+Documentation/html/

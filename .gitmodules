@@ -1,0 +1,3 @@
+[submodule "Documentation/doxyrest_b"]
+	path = Documentation/doxyrest_b
+	url = git@github.com:vovkos/doxyrest_b
