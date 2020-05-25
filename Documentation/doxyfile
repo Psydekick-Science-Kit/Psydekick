@@ -1,6 +1,6 @@
 DOXYFILE_ENCODING      = UTF-8
 PROJECT_NAME           = "Psydekick"
-INPUT                  = /home/dom/code/Psydekick/PKDev/Plugins/Psydekick/Source
+INPUT                  = ../PKDev/Plugins/Psydekick/Source
 EXTRACT_ALL            = YES
 ENABLE_PREPROCESSING   = YES
 MACRO_EXPANSION        = YES
@@ -16,11 +16,10 @@ STRIP_CODE_COMMENTS    = NO
 RECURSIVE              = YES
 WARN_AS_ERROR          = NO
 
-GENERATE_XML = YES
-GENERATE_HTML = NO
-XML_OUTPUT = xml
-XML_PROGRAMLISTING = YES
-CASE_SENSE_NAMES = NO
-HIDE_UNDOC_RELATIONS = YES
-EXTRACT_ALL = YES
-
+GENERATE_HTML          = NO
+GENERATE_XML           = YES
+XML_OUTPUT             = xml
+XML_PROGRAMLISTING     = YES
+CASE_SENSE_NAMES       = NO
+HIDE_UNDOC_RELATIONS   = YES
+EXCLUDE_SYMBOLS        = UnrealBuildTool

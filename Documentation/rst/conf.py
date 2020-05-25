@@ -13,11 +13,12 @@ author = 'Dominic Canare'
 
 # -- General configuration ---------------------------------------------------
 
-extensions = ['doxyrest', 'cpplexer']
+extensions = ['doxyrest', 'cpplexer', 'sphinx_rtd_theme']
 templates_path = ['_templates']
 exclude_patterns = ['page_index.rst']
 
 # -- Options for HTML output -------------------------------------------------
 
-html_theme = 'alabaster'
+html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
+html_js_files = []
