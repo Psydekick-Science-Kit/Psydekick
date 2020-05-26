@@ -11,9 +11,6 @@
 #include "Psydekick3D_BPLibrary.generated.h"
 
 
-/** @ingroup pk3dbp
- *
- */
 UCLASS()
 class PSYDEKICK_API UPsydekick3D_BPLibrary : public UBlueprintFunctionLibrary
 {
@@ -26,7 +23,7 @@ public:
 	static APsydekick3D* GetPK3DActor(const UObject* WorldContextObject);
 
 	/**
-	 * @brief Spawn a static mesh actor
+	 * Spawn a static mesh actor
 	 *
 	 * @param Mesh The mesh to spawn
 	 * @param Location World location to spawn at
@@ -37,7 +34,7 @@ public:
 	static AStaticMeshActor* SpawnMesh(const UObject* WorldContextObject, UStaticMesh* Mesh, FVector Location, FRotator Rotation);
 
 	/**
-	 * @brief Apply a texture to a mesh component
+	 * Apply a texture to a mesh component
 	 *
 	 * @param Component The component to receive the texture
 	 * @param Texture The texture to apply
@@ -46,7 +43,7 @@ public:
 	static void SetMeshComponentTexture(const UObject* WorldContextObject, UMeshComponent* Component, UTexture2D* Texture);
 
 	/**
-	 * @brief Apply a texture to an actor's first MeshComponent
+	 * Apply a texture to an actor's first MeshComponent
 	 *
 	 * @param Actor The actor whose MeshComponent will receive the texture
 	 * @param Texture The texture to apply
@@ -55,7 +52,7 @@ public:
 	static void SetActorTexture(const UObject* WorldContextObject, AActor* Actor, UTexture2D* Texture);
 
 	/**
-	 * @brief Set the player's pawn in motion
+	 * Set the player's pawn in motion
 	 *
 	 * @param Direction The direction to move
 	 */
@@ -63,14 +60,14 @@ public:
 	static void MoveInDirection(const UObject* WorldContextObject, FVector Direction);
 
 	/**
-	 * @brief Stop the player's pawn
+	 * Stop the player's pawn
 	 *
 	 */
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|3D", meta = (WorldContext = WorldContextObject))
 	static void Stop(const UObject* WorldContextObject);
 
 	/**
-	 * @brief Apply a color to a MeshComponent
+	 * Apply a color to a MeshComponent
 	 *
 	 * @param Component The component to receive the new color
 	 * @param BaseColor The color to apply
