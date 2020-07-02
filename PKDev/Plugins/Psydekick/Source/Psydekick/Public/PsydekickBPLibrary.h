@@ -2,6 +2,7 @@
 
 #pragma once
 
+#include "Data/ValueWrapper.h"
 #include "Kismet/BlueprintFunctionLibrary.h"
 #include "PsydekickBPLibrary.generated.h"
 
@@ -24,7 +25,7 @@
 */
 
 UCLASS()
-class UPsydekickBPLibrary : public UBlueprintFunctionLibrary
+class PSYDEKICK_API UPsydekickBPLibrary : public UBlueprintFunctionLibrary
 {
 	GENERATED_UCLASS_BODY()
 
@@ -33,4 +34,7 @@ class UPsydekickBPLibrary : public UBlueprintFunctionLibrary
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")
 	static UArrayPool* MakeArrayPool(TArray<UObject*> Source);
+
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data", meta=(DeterminesOutputType = "Class"))
+	static TArray<UObject*> MakeCombinationsOfObjects(TSubclassOf<UObject> Class, TMap<FName, FValueArrayWrapper> Arrays);
 };

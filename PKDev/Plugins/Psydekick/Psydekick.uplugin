@@ -26,6 +26,9 @@
 				"Linux",
 				"LinuxAArch64"
 			]
+		},{
+			"Name": "PsydekickEditor",
+			"Type": "Editor"
 		}
 	],
 	"Plugins": [
