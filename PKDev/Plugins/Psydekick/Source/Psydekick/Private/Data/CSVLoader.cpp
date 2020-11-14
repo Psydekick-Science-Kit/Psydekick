@@ -82,74 +82,83 @@ UObject* UCSVLoader::CreateObject(int32 Index, TSubclassOf<UObject> Class)
 	{
 		FString Column = Columns[i];
 		FName FieldName = FName(*Column);
-		if (UProperty* Property = Class->FindPropertyByName(FieldName))
+		TFieldPath<FProperty> Property = Class->FindPropertyByName(FieldName);
+		if (*Property)
 		{
-			FString Value = Record[i];
-			void* PropertyValuePtr = Property->ContainerPtrToValuePtr<void>(Object);
-
-			if (UBoolProperty* BoolProperty = Cast<UBoolProperty>(Property))
+			if(i >= Record.Num())
 			{
-				Value = Value.ToLower();
-				bool BoolValue = Value.Contains("t") || Value.Contains("1") || Value.Contains("y");
-				BoolProperty->SetPropertyValue(PropertyValuePtr, BoolValue);
-			}
-			else if (UIntProperty* IntProperty = Cast<UIntProperty>(Property))
-			{
-				int32 IntValue = FCString::Atoi(*Value);
-				IntProperty->SetPropertyValue(PropertyValuePtr, IntValue);
-			}
-			else if (UFloatProperty* FloatProperty = Cast<UFloatProperty>(Property))
-			{
-				float FloatValue = FCString::Atof(*Value);
-				FloatProperty->SetPropertyValue(PropertyValuePtr, FloatValue);
-			}
-			else if (UStrProperty* StringProperty = Cast<UStrProperty>(Property))
-			{
-				StringProperty->SetPropertyValue(PropertyValuePtr, Value);
-			}
-			else if (UObjectProperty* ObjectProperty = Cast<UObjectProperty>(Property))
-			{
-				FString CPPType = Property->GetCPPType();
-				UE_LOG(LogPsydekick, Log, TEXT("UCSVLoader::CreateObject Got an object type for %s (%s)"), *Column, *CPPType);
-				if(CPPType == "UStaticMesh*")
-				{
-					FStringAssetReference assetRef(Value);
-					if(UStaticMesh* StaticMesh = Cast<UStaticMesh>(assetRef.TryLoad()))
-					{
-						ObjectProperty->SetObjectPropertyValue(PropertyValuePtr, StaticMesh);
-					}
-					else
-					{
-						UE_LOG(LogPsydekick, Warning, TEXT("UCSVLoader::CreateObject Failed to load StaticMesh \"%s\" for %s"), *Value, *Column);
-					}
-				}
-				else
-				{
-					UE_LOG(LogPsydekick, Warning, TEXT("UCSVLoader::CreateObject Unsupported object property %s for field %s"), *CPPType, *Column);
-				}
-
-			}
-			else if (UStructProperty* StructProperty = Cast<UStructProperty>(Property))
-			{
-				UScriptStruct* ScriptStruct = StructProperty->Struct;
-				FString CPPType = ScriptStruct->GetStructCPPName();
-				UE_LOG(LogPsydekick, Log, TEXT("UCSVLoader::CreateObject Got an struct type for %s (%s)"), *Column, *CPPType);
-				if (CPPType == "FLinearColor")
-				{
-					FLinearColor* ColorStruct = (FLinearColor*)PropertyValuePtr;
-					*ColorStruct = (FColor::FromHex(Value)).ReinterpretAsLinear();
-				}
-				else
-				{
-					UE_LOG(LogPsydekick, Warning, TEXT("UCSVLoader::CreateObject unknown struct type %s for %s."), *CPPType, *Column);
-				}
+				UE_LOG(LogPsydekick, Warning, TEXT("CSVLoader::CreateObject Column %d out of record range %d"), i, Record.Num());
 			}
 			else
 			{
-				UE_LOG(LogPsydekick, Warning, TEXT("UCSVLoader::CreateObject unknown data type for %s. Only basic types are supported."), *Column);
+				FString Value = Record[i];
+				void* PropertyValuePtr = Property->ContainerPtrToValuePtr<void>(Object);
+
+				if (FBoolProperty* BoolProperty = CastField<FBoolProperty>(*Property))
+				{
+					Value = Value.ToLower();
+					bool BoolValue = Value.Contains("t") || Value.Contains("1") || Value.Contains("y");
+					BoolProperty->SetPropertyValue(PropertyValuePtr, BoolValue);
+				}
+				else if (FIntProperty* IntProperty = CastField<FIntProperty>(*Property))
+				{
+					int32 IntValue = FCString::Atoi(*Value);
+					IntProperty->SetPropertyValue(PropertyValuePtr, IntValue);
+				}
+				else if (FFloatProperty* FloatProperty = CastField<FFloatProperty>(*Property))
+				{
+					float FloatValue = FCString::Atof(*Value);
+					FloatProperty->SetPropertyValue(PropertyValuePtr, FloatValue);
+				}
+				else if (FStrProperty* StringProperty = CastField<FStrProperty>(*Property))
+				{
+					StringProperty->SetPropertyValue(PropertyValuePtr, Value);
+				}
+				else if (FObjectProperty* ObjectProperty = CastField<FObjectProperty>(*Property))
+				{
+					FString CPPType = Property->GetCPPType();
+					UE_LOG(LogPsydekick, Log, TEXT("UCSVLoader::CreateObject Got an object type for %s (%s)"), *Column, *CPPType);
+					if(CPPType == "UStaticMesh*")
+					{
+						FStringAssetReference assetRef(Value);
+						if(UStaticMesh* StaticMesh = Cast<UStaticMesh>(assetRef.TryLoad()))
+						{
+							ObjectProperty->SetObjectPropertyValue(PropertyValuePtr, StaticMesh);
+						}
+						else
+						{
+							UE_LOG(LogPsydekick, Warning, TEXT("UCSVLoader::CreateObject Failed to load StaticMesh \"%s\" for %s"), *Value, *Column);
+						}
+					}
+					else
+					{
+						UE_LOG(LogPsydekick, Warning, TEXT("UCSVLoader::CreateObject Unsupported object property %s for field %s"), *CPPType, *Column);
+					}
+
+				}
+				else if (FStructProperty* StructProperty = CastField<FStructProperty>(*Property))
+				{
+					UScriptStruct* ScriptStruct = StructProperty->Struct;
+					FString CPPType = ScriptStruct->GetStructCPPName();
+					UE_LOG(LogPsydekick, Log, TEXT("UCSVLoader::CreateObject Got an struct type for %s (%s)"), *Column, *CPPType);
+					if (CPPType == "FLinearColor")
+					{
+						FLinearColor* ColorStruct = (FLinearColor*)PropertyValuePtr;
+						*ColorStruct = (FColor::FromHex(Value)).ReinterpretAsLinear();
+					}
+					else
+					{
+						UE_LOG(LogPsydekick, Warning, TEXT("UCSVLoader::CreateObject unknown struct type %s for %s."), *CPPType, *Column);
+					}
+				}
+				else
+				{
+					UE_LOG(LogPsydekick, Warning, TEXT("UCSVLoader::CreateObject unknown data type for %s. Only basic types are supported."), *Column);
+				}
 			}
 		}
-		else {
+		else
+		{
 			UE_LOG(LogPsydekick, Warning, TEXT("UCSVLoader::CreateObject could not find property for field %s in %s"), *Column, *Object->GetFName().ToString());
 		}
 	}

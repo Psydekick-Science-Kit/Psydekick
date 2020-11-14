@@ -8,6 +8,7 @@
 	"CreatedBy": "Dominic Canare",
 	"CreatedByURL": "https://psydekick.org/",
 	"DocsURL": "",
+	"EngineVersion": "4.25.4",
 	"MarketplaceURL": "",
 	"SupportURL": "",
 	"CanContainContent": true,
@@ -26,6 +27,10 @@
 				"Linux",
 				"LinuxAArch64"
 			]
+		},{
+			"Name": "PsydekickEd",
+			"Type": "Editor",
+			"LoadingPhase": "Default"
 		}
 	],
 	"Plugins": [

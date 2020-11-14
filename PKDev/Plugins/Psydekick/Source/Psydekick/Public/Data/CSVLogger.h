@@ -31,7 +31,7 @@ public:
 	void SetFieldNamesFromObject(const UObject* Object);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data", CustomThunk, meta = (CustomStructureParam = "Struct"))
-	void SetFieldNamesFromStruct(const UProperty* Struct);
+	void SetFieldNamesFromStruct(const TFieldPath<FProperty> Struct);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")
 	void LogStrings(const TMap<FString,FString> Record);
@@ -40,13 +40,13 @@ public:
 	void LogObject(const UObject* Object);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data", CustomThunk, meta = (CustomStructureParam = "Struct"))
-	void LogStruct(const UProperty* Struct);
+	void LogStruct(const TFieldPath<FProperty> Struct);
 
 	DECLARE_FUNCTION(execSetFieldNamesFromStruct)
 	{
 		Stack.Step(Stack.Object, NULL);
 		void* StructPtr = Stack.MostRecentPropertyAddress;
-		UStructProperty* StructProperty = ExactCast<UStructProperty>(Stack.MostRecentProperty);
+		FStructProperty* StructProperty = ExactCastField<FStructProperty>(Stack.MostRecentProperty);
 		P_FINISH;
 
 		UScriptStruct* ScriptStruct = StructProperty->Struct;
@@ -57,7 +57,7 @@ public:
 	{
 		Stack.Step(Stack.Object, NULL);
 		void* StructPtr = Stack.MostRecentPropertyAddress;
-		UStructProperty* StructProperty = ExactCast<UStructProperty>(Stack.MostRecentProperty);
+		FStructProperty* StructProperty = ExactCastField<FStructProperty>(Stack.MostRecentProperty);
 		P_FINISH;
 
 		UScriptStruct* ScriptStruct = StructProperty->Struct;

@@ -36,31 +36,31 @@ class PSYDEKICK_API AExperimentController : public AActor
 	GENERATED_BODY()
 
 public:
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick|Flow")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick")
 	TSubclassOf<AStimulus> StimulusClass;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick|Flow")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick")
 	TArray<AStimulus*> StimulusObjects;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick|Flow", meta = (ClampMin = "1", UIMin = "1"))
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick", meta = (ClampMin = "1", UIMin = "1"))
 	int32 NumberOfBlocks;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick|Flow")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick")
 	int32 TrialsPerBlock;
 
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick|Flow")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Psydekick")
 	ETrialSelectionMode TrialSelectionMode;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Psydekick|Flow")
+	UPROPERTY(BlueprintReadOnly, Category = "Psydekick")
 	int32 BlockID;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Psydekick|Flow")
+	UPROPERTY(BlueprintReadOnly, Category = "Psydekick")
 	int32 TrialID;
 
-	UPROPERTY(BlueprintReadOnly, Category = "Psydekick|Flow")
+	UPROPERTY(BlueprintReadOnly, Category = "Psydekick")
 	EExperimentControllerState State = EExperimentControllerState::NotStarted;
 
-	UPROPERTY(EditDefaultsOnly, Category = "Psydekick|Flow")
+	UPROPERTY(EditDefaultsOnly, Category = "Psydekick")
 	TSubclassOf<UStimulusConfiguration> ConfigurationClass;
 
 	AExperimentController();

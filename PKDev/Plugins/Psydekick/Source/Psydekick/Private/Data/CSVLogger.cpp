@@ -40,9 +40,9 @@ void UCSVLogger::SetFieldNamesFromObject(const UObject* Object)
 		Class = Object->GetClass();
 	}
 
-	for (TFieldIterator<UProperty> PropertyItr(Class); PropertyItr; ++PropertyItr)
+	for (TFieldIterator<FProperty> PropertyItr(Class); PropertyItr; ++PropertyItr)
 	{
-		UProperty* Property = *PropertyItr;
+		FProperty* Property = *PropertyItr;
 		Fields.Emplace(Property->GetDisplayNameText().ToString());
 	}
 	SetFieldNames(Fields);
@@ -99,39 +99,39 @@ void UCSVLogger::LogObjectProperties(const UObject* Object, const UStruct* Class
 	TMap<FString, FString> FieldValues;
 
 	for (FString FieldName : FieldNames) {
-		UProperty* Property = Class->FindPropertyByName(FName(*FieldName));
-		if(!Property)
+		TFieldPath<FProperty> Property = Class->FindPropertyByName(FName(*FieldName));
+		if(!*Property)
 		{
 			Property = Class->CustomFindProperty(FName(*FieldName));
 		}
 
-		if (Property)
+		if (*Property)
 		{
 			FString Value = "";
 			const void* PropertyValuePtr = Property->ContainerPtrToValuePtr<void>(ContainerPtr);
 
-			if (UBoolProperty* BoolProperty = Cast<UBoolProperty>(Property))
+			if (FBoolProperty* BoolProperty = CastField<FBoolProperty>(*Property))
 			{
 				Value = BoolProperty->GetPropertyValue(PropertyValuePtr) ? "1" : "0";
 			}
-			else if (UIntProperty* IntProperty = Cast<UIntProperty>(Property))
+			else if (FIntProperty* IntProperty = CastField<FIntProperty>(*Property))
 			{
 				Value = FString::FromInt(IntProperty->GetPropertyValue(PropertyValuePtr));
 			}
-			else if (UFloatProperty* FloatProperty = Cast<UFloatProperty>(Property))
+			else if (FFloatProperty* FloatProperty = CastField<FFloatProperty>(*Property))
 			{
 				Value = FString::SanitizeFloat(FloatProperty->GetPropertyValue(PropertyValuePtr));
 			}
-			else if (UStrProperty* StringProperty = Cast<UStrProperty>(Property))
+			else if (FStrProperty* StringProperty = CastField<FStrProperty>(*Property))
 			{
 				Value = StringProperty->GetPropertyValue(PropertyValuePtr);
 			}
-			else if (UObjectProperty* ObjectProperty = Cast<UObjectProperty>(Property))
+			else if (FObjectProperty* ObjectProperty = CastField<FObjectProperty>(*Property))
 			{
 				UE_LOG(LogPsydekick, Warning, TEXT("UCSVLogger::LogObject Unsupported Object property %s"), *FieldName);
 				Value = "<Object>";
 			}
-			else if (UStructProperty* StructProperty = Cast<UStructProperty>(Property))
+			else if (FStructProperty* StructProperty = CastField<FStructProperty>(*Property))
 			{
 				UE_LOG(LogPsydekick, Warning, TEXT("UCSVLogger::LogObject Unsupported Struct property %s"), *FieldName);
 				Value = "<Struct>";

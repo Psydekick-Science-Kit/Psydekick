@@ -9,28 +9,28 @@ FString UStimulusConfiguration::ToString_Implementation()
 {
 	FString PropValues = "";
 
-	for (TFieldIterator<UProperty> PropertyIterator(GetClass()); PropertyIterator; ++PropertyIterator)
+	for (TFieldIterator<FProperty> PropertyIterator(GetClass()); PropertyIterator; ++PropertyIterator)
 	{
-		UProperty* Property = *PropertyIterator;
+		TFieldPath<FProperty> Property = *PropertyIterator;
 		PropValues += Property->GetName() + "=";
 
-		if (UBoolProperty* BoolProperty = Cast<UBoolProperty>(Property))
+		if (FBoolProperty* BoolProperty = CastField<FBoolProperty>(*Property))
 		{
 			PropValues += BoolProperty->GetPropertyValue_InContainer(this) ? "true" : "false";
 		}
-		else if (UIntProperty* IntProperty = Cast<UIntProperty>(Property))
+		else if (FIntProperty* IntProperty = CastField<FIntProperty>(*Property))
 		{
 			PropValues.AppendInt(IntProperty->GetPropertyValue_InContainer(this));
 		}
-		else if (UFloatProperty* FloatProperty = Cast<UFloatProperty>(Property))
+		else if (FFloatProperty* FloatProperty = CastField<FFloatProperty>(*Property))
 		{
 			FString::SanitizeFloat(FloatProperty->GetPropertyValue_InContainer(this));
 		}
-		else if (UStrProperty* StringProperty = Cast<UStrProperty>(Property))
+		else if (FStrProperty* StringProperty = CastField<FStrProperty>(*Property))
 		{
 			PropValues += StringProperty->GetPropertyValue_InContainer(this);
 		}
-		else if (UObjectProperty* ObjectProperty = Cast<UObjectProperty>(Property))
+		else if (FObjectProperty* ObjectProperty = CastField<FObjectProperty>(*Property))
 		{
 			PropValues += "<Object>";
 		}
