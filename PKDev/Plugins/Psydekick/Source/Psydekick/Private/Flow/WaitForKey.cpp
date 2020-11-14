@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "Flow/WaitForKey.h"
+
 #include "Psydekick.h"
 #include "GameFramework/PlayerController.h"
-
-#include "WaitForKey.h"
 
 UWaitForKey* UWaitForKey::WaitForKey(const UObject* WorldContextObject, const TArray<FKey> Keys, const float Timeout)
 {
