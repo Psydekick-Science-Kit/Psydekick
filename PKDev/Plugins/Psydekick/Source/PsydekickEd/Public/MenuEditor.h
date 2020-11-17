@@ -55,5 +55,5 @@ private:
 	/** The Custom Asset open within this editor */
 	UMenu* Menu = nullptr;
 
-	FString WidgetReferencePath = "WidgetBlueprint'/Psydekick/Visuals/2D/Menu/MenuEditWidget.MenuEditWidget'";
+	FString WidgetReferencePath = "WidgetBlueprint'/Psydekick/Visuals/2D/Menu/Editor/MenuEditWidget.MenuEditWidget'";
 };
