@@ -7,38 +7,44 @@
 TArray<UMenuEntryWrapper*> UMenu::WrapEntries()
 {
 	TArray<UMenuEntryWrapper*> WrappedEntries;
-	TArray<int32> Indicies;
-	Indicies.Emplace(-1);
+	TArray<int32> Counts;
+	TArray<int32> Ancestors;
+
+	Ancestors.Emplace(-1);
+	Counts.Emplace(-1);
 
 	for(int32 GlobalIndex=0; GlobalIndex<Entries.Num(); GlobalIndex++){
 		// Manage stack for local index counting
-		int32 Cmp = Entries[GlobalIndex].Depth - (Indicies.Num()-1);
+		int32 Cmp = Entries[GlobalIndex].Depth - (Counts.Num()-1);
 		if(Cmp > 0)
 		{
 			// push
-			Indicies.Emplace(-1);
+			Ancestors.Push(GlobalIndex-1);
+			Counts.Emplace(-1);
 		}
 		else if(Cmp < 0)
 		{
 			// pop
-			while(Indicies.Num()-1 > Entries[GlobalIndex].Depth)
+			while(Counts.Num()-1 > Entries[GlobalIndex].Depth)
 			{
-				Indicies.RemoveAt(Indicies.Num()-1);
+				Ancestors.RemoveAt(Ancestors.Num()-1);
+				Counts.RemoveAt(Counts.Num()-1);
 			}
 		}
-		if(Indicies.Num() == 0)
+		if(Counts.Num() == 0)
 		{
-			UE_LOG(LogPsydekick, Warning, TEXT("UMenu::WrapEntries Underflowed indicies on Idx=%d"), GlobalIndex);
+			UE_LOG(LogPsydekick, Warning, TEXT("UMenu::WrapEntries Underflowed Counts on Idx=%d"), GlobalIndex);
 			return WrappedEntries;
 		}
-		Indicies[Indicies.Num()-1] += 1;
+		Counts[Counts.Num()-1] += 1;
 
 		UMenuEntryWrapper* Wrapper = NewObject<UMenuEntryWrapper>();
 		Wrapper->MenuEntry = Entries[GlobalIndex];
 		Wrapper->GlobalIndex = GlobalIndex;
-		Wrapper->LocalIndex = Indicies[Indicies.Num()-1];
+		Wrapper->LocalIndex = Counts[Counts.Num()-1];
 		Wrapper->IsLocalLast = IsLocalLast(GlobalIndex);
 		Wrapper->IsGlobalLast = (GlobalIndex == Entries.Num()-1);
+		Wrapper->ParentIndex = Ancestors[Ancestors.Num()-1];
 		Wrapper->HasChildren = HasChildren(GlobalIndex);
 
 		WrappedEntries.Emplace(Wrapper);
@@ -77,8 +83,39 @@ bool UMenu::IsLocalLast(int32 Index)
 	return (Index == Entries.Num()-1) || (Entries[Index].Depth > Entries[Index+1].Depth);
 }
 
+int32 UMenu::GetParent(int32 Index)
+{
+	while(--Index>-1 && Entries[Index].Depth == Entries[Index+1].Depth);
+
+	return Index;
+}
+
+TArray<int32> UMenu::GetAncestors(int32 Index)
+{
+	TArray<int32> Ancestors;
+
+	while(Index > -1 && Index < Entries.Num() && Entries[Index].Depth > 0){
+		Index = GetParent(Index);
+		Ancestors.Emplace(Index);
+	}
+
+	return Ancestors;
+}
+
 bool UMenu::GetDescendantRange(int32 Parent, int32 &First, int32 &Last)
 {
+	if(Parent < 0)
+	{
+		if(Entries.Num() > 0)
+		{
+			First = 0;
+			Last = Entries.Num()-1;
+			return true;
+		}
+
+		return false;
+	}
+
 	if((Parent >= Entries.Num()-1) || (Entries[Parent+1].Depth <= Entries[Parent].Depth))
 	{
 		return false;
@@ -95,6 +132,35 @@ bool UMenu::GetDescendantRange(int32 Parent, int32 &First, int32 &Last)
 	Last--;
 
 	return true;
+}
+
+TArray<int32> UMenu::GetChildren(int32 Index)
+{
+	TArray<int32> Children;
+
+	int32 First, Last;
+	if(GetDescendantRange(Index, First, Last))
+	{
+		for(int32 i=First; i<=Last; i++)
+		{
+			if(Entries[i].Depth < Entries[First].Depth)
+			{
+				// too shallow
+				break;
+			}
+			else if(Entries[i].Depth == Entries[First].Depth)
+			{
+				// found child
+				Children.Emplace(i);
+			}
+			else
+			{
+				// too deep
+			}
+		}
+	}
+
+	return Children;
 }
 
 TArray<FMenuEntry> UMenu::RemoveEntryAndChildren(int32 Index)

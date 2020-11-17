@@ -76,3 +76,5 @@ PKDev/Plugins/*/Intermediate/*
 PKDev/DerivedDataCache/*
 
 *.pdb
+
+PKDev/Content/tmp/*

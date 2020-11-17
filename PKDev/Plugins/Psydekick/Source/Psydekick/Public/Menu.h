@@ -29,6 +29,15 @@ public:
 	UPROPERTY(BlueprintReadWrite, Category = "Menu")
 	TArray<FMenuEntry> Entries;
 
+	UFUNCTION(BlueprintPure)
+	int32 GetParent(int32 Index);
+
+	UFUNCTION(BlueprintPure)
+	TArray<int32> GetAncestors(int32 Index);
+
+	UFUNCTION(BlueprintPure, Category = "Psydekick|Menu")
+	TArray<int32> GetChildren(int32 Parent);
+
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Menu")
 	void Indent(int32 Index);
 
@@ -78,6 +87,9 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	int32 LocalIndex;
+
+	UPROPERTY(BlueprintReadWrite)
+	int32 ParentIndex;
 
 	UPROPERTY(BlueprintReadWrite)
 	bool IsLocalLast;
