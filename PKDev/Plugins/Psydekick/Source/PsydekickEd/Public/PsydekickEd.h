@@ -7,19 +7,21 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleInterface.h"
 #include "Toolkits/AssetEditorToolkit.h"
-#include "Menu.h"
-#include "MenuEditor.h"
+#include "IAssetTools.h"
+#include "IAssetTypeActions.h"
 
+#include "MenuTree/MenuTreeEditor.h"
+#include "2D/MenuTree.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LogPsydekickEd, Log, All);
 
-class FPsydekickEdModule : public IModuleInterface//, public IHasMenuExtensibility, public IHasToolBarExtensibility
+class FPsydekickEdModule : public IModuleInterface
 {
 public:
 	virtual void StartupModule() override;
 	virtual void ShutdownModule() override;
 
-	virtual TSharedRef<FMenuEditor> CreateMenuEditor(const EToolkitMode::Type Mode, const TSharedPtr< IToolkitHost >& InitToolkitHost, UMenu* Menu);
+	virtual TSharedRef<FMenuTreeEditor> CreateMenuTreeEditor(const EToolkitMode::Type Mode, const TSharedPtr< IToolkitHost >& InitToolkitHost, UMenuTree* MenuTree);
 
 	void RegisterAssetTypeAction(IAssetTools& AssetTools, TSharedRef<IAssetTypeActions> Action);
 

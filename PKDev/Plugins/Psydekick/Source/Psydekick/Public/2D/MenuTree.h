@@ -4,11 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
-#include "Menu.generated.h"
-
+#include "MenuTree.generated.h"
 
 USTRUCT(BlueprintType)
-struct FMenuEntry
+struct FMenuTreeEntry
 {
 	GENERATED_USTRUCT_BODY()
 
@@ -19,16 +18,20 @@ struct FMenuEntry
 	int32 Depth;
 };
 
-
 UCLASS(BlueprintType)
-class PSYDEKICK_API UMenu : public UObject
+class PSYDEKICK_API UMenuTree : public UObject
 {
 	GENERATED_BODY()
 
+
+	#pragma region Properties
 public:
 	UPROPERTY(BlueprintReadWrite, Category = "Menu")
-	TArray<FMenuEntry> Entries;
+	TArray<FMenuTreeEntry> Entries;
+	#pragma endregion
 
+	#pragma region Functions
+public:
 	UFUNCTION(BlueprintPure)
 	int32 GetParent(int32 Index);
 
@@ -57,7 +60,7 @@ public:
 	void RemoveEntryKeepChildren(int32 Parent);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Menu")
-	TArray<FMenuEntry> RemoveEntryAndChildren(int32 Parent);
+	TArray<FMenuTreeEntry> RemoveEntryAndChildren(int32 Parent);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Menu")
 	void MoveEntryUp(int32 Index);
@@ -68,19 +71,24 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Menu")
 	void InsertAt(int32 Index, FString Name);
 
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Menu")
+	TArray<UMenuTreeEntryWrapper*> WrapEntries();
+
+protected:
 	void SwapAdjacent(int32 A, int32 B);
 
-	UFUNCTION(BlueprintCallable, Category = "Psydekick|Menu")
-	TArray<UMenuEntryWrapper*> WrapEntries();
+	#pragma endregion
+
 };
 
 UCLASS(BlueprintType)
-class PSYDEKICK_API UMenuEntryWrapper : public UObject {
+class PSYDEKICK_API UMenuTreeEntryWrapper : public UObject {
 	GENERATED_BODY()
 
+	#pragma region Properties
 public:
 	UPROPERTY(BlueprintReadWrite)
-	FMenuEntry MenuEntry;
+	FMenuTreeEntry MenuTreeEntry;
 
 	UPROPERTY(BlueprintReadWrite)
 	int32 GlobalIndex;
@@ -99,7 +107,12 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	bool HasChildren;
+	#pragma endregion
 
+	#pragma region Functions
+public:
 	UFUNCTION(BlueprintCallable, meta = (DisplayName = "MenuEntry To Menu Entry Wrapper", CompactNodeTitle = "Wrap", BlueprintAutocast), Category = "Psydekick")
-	static UMenuEntryWrapper* Conv_MenuEntryToMenuEntryWrapper(FMenuEntry InMenuEntry);
+	static UMenuTreeEntryWrapper* Conv_MenuEntryToMenuEntryWrapper(FMenuTreeEntry InMenuEntry);
+	#pragma endregion
+
 };

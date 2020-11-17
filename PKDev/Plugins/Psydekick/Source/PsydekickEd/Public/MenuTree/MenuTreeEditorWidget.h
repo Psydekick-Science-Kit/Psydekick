@@ -4,19 +4,19 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
-#include "MenuEditorWidget.generated.h"
+#include "MenuTreeEditorWidget.generated.h"
 
-class UMenu;
+class UMenuTree;
 /**
  *
  */
 UCLASS()
-class PSYDEKICKED_API UMenuEditorWidget : public UUserWidget
+class PSYDEKICKED_API UMenuTreeEditorWidget : public UUserWidget
 {
 	GENERATED_BODY()
 
 public:
 	UFUNCTION(BlueprintImplementableEvent)
-	void SetMenu(UMenu* Menu);
+	void SetMenuTree(UMenuTree* Menu);
 
 };

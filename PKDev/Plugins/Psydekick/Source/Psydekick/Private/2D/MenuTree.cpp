@@ -1,12 +1,12 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+#include "2D/MenuTree.h"
 
-#include "Menu.h"
 #include "Psydekick.h"
 
-TArray<UMenuEntryWrapper*> UMenu::WrapEntries()
+TArray<UMenuTreeEntryWrapper*> UMenuTree::WrapEntries()
 {
-	TArray<UMenuEntryWrapper*> WrappedEntries;
+	TArray<UMenuTreeEntryWrapper*> WrappedEntries;
 	TArray<int32> Counts;
 	TArray<int32> Ancestors;
 
@@ -33,13 +33,13 @@ TArray<UMenuEntryWrapper*> UMenu::WrapEntries()
 		}
 		if(Counts.Num() == 0)
 		{
-			UE_LOG(LogPsydekick, Warning, TEXT("UMenu::WrapEntries Underflowed Counts on Idx=%d"), GlobalIndex);
+			UE_LOG(LogPsydekick, Warning, TEXT("UMenuTree::WrapEntries Underflowed Counts on Idx=%d"), GlobalIndex);
 			return WrappedEntries;
 		}
 		Counts[Counts.Num()-1] += 1;
 
-		UMenuEntryWrapper* Wrapper = NewObject<UMenuEntryWrapper>();
-		Wrapper->MenuEntry = Entries[GlobalIndex];
+		UMenuTreeEntryWrapper* Wrapper = NewObject<UMenuTreeEntryWrapper>();
+		Wrapper->MenuTreeEntry = Entries[GlobalIndex];
 		Wrapper->GlobalIndex = GlobalIndex;
 		Wrapper->LocalIndex = Counts[Counts.Num()-1];
 		Wrapper->IsLocalLast = IsLocalLast(GlobalIndex);
@@ -53,44 +53,44 @@ TArray<UMenuEntryWrapper*> UMenu::WrapEntries()
 	return WrappedEntries;
 }
 
-UMenuEntryWrapper* UMenuEntryWrapper::Conv_MenuEntryToMenuEntryWrapper(FMenuEntry InMenuEntry)
+UMenuTreeEntryWrapper* UMenuTreeEntryWrapper::Conv_MenuEntryToMenuEntryWrapper(FMenuTreeEntry InMenuTreeEntry)
 {
-	UMenuEntryWrapper* Wrapper = NewObject<UMenuEntryWrapper>();
-	Wrapper->MenuEntry = InMenuEntry;
+	UMenuTreeEntryWrapper* Wrapper = NewObject<UMenuTreeEntryWrapper>();
+	Wrapper->MenuTreeEntry = InMenuTreeEntry;
 
 	return Wrapper;
 }
 
-bool UMenu::HasChildren(int32 Index)
+bool UMenuTree::HasChildren(int32 Index)
 {
 	if(Index < 0 || Index >= Entries.Num())
 	{
-		UE_LOG(LogPsydekick, Warning, TEXT("UMenu::HasChildren called with out of range index %d (Num()=%d)"), Index, Entries.Num());
+		UE_LOG(LogPsydekick, Warning, TEXT("UMenuTree::HasChildren called with out of range index %d (Num()=%d)"), Index, Entries.Num());
 		return false;
 	}
 
-	return Index < Entries.Num()-2 && Entries[Index+1].Depth > Entries[Index].Depth;
+	return Index < Entries.Num()-1 && Entries[Index+1].Depth > Entries[Index].Depth;
 }
 
-bool UMenu::IsLocalLast(int32 Index)
+bool UMenuTree::IsLocalLast(int32 Index)
 {
 	if(Index < 0 || Index >= Entries.Num())
 	{
-		UE_LOG(LogPsydekick, Warning, TEXT("UMenu::IsLocalLast called with out of range index %d (Num()=%d)"), Index, Entries.Num());
+		UE_LOG(LogPsydekick, Warning, TEXT("UMenuTree::IsLocalLast called with out of range index %d (Num()=%d)"), Index, Entries.Num());
 		return false;
 	}
 
 	return (Index == Entries.Num()-1) || (Entries[Index].Depth > Entries[Index+1].Depth);
 }
 
-int32 UMenu::GetParent(int32 Index)
+int32 UMenuTree::GetParent(int32 Index)
 {
 	while(--Index>-1 && Entries[Index].Depth == Entries[Index+1].Depth);
 
 	return Index;
 }
 
-TArray<int32> UMenu::GetAncestors(int32 Index)
+TArray<int32> UMenuTree::GetAncestors(int32 Index)
 {
 	TArray<int32> Ancestors;
 
@@ -102,7 +102,7 @@ TArray<int32> UMenu::GetAncestors(int32 Index)
 	return Ancestors;
 }
 
-bool UMenu::GetDescendantRange(int32 Parent, int32 &First, int32 &Last)
+bool UMenuTree::GetDescendantRange(int32 Parent, int32 &First, int32 &Last)
 {
 	if(Parent < 0)
 	{
@@ -134,7 +134,7 @@ bool UMenu::GetDescendantRange(int32 Parent, int32 &First, int32 &Last)
 	return true;
 }
 
-TArray<int32> UMenu::GetChildren(int32 Index)
+TArray<int32> UMenuTree::GetChildren(int32 Index)
 {
 	TArray<int32> Children;
 
@@ -163,13 +163,13 @@ TArray<int32> UMenu::GetChildren(int32 Index)
 	return Children;
 }
 
-TArray<FMenuEntry> UMenu::RemoveEntryAndChildren(int32 Index)
+TArray<FMenuTreeEntry> UMenuTree::RemoveEntryAndChildren(int32 Index)
 {
-	TArray<FMenuEntry> RemovedEntries;
+	TArray<FMenuTreeEntry> RemovedEntries;
 
 	if(Index >= Entries.Num() || Index < 0)
 	{
-		UE_LOG(LogPsydekick, Warning, TEXT("UMenu::RemoveEntryAndChildren called with out of range index %d (Num()=%d)"), Index, Entries.Num());
+		UE_LOG(LogPsydekick, Warning, TEXT("UMenuTree::RemoveEntryAndChildren called with out of range index %d (Num()=%d)"), Index, Entries.Num());
 		return RemovedEntries;
 	}
 
@@ -183,11 +183,11 @@ TArray<FMenuEntry> UMenu::RemoveEntryAndChildren(int32 Index)
 	return RemovedEntries;
 }
 
-void UMenu::RemoveEntryKeepChildren(int32 Parent)
+void UMenuTree::RemoveEntryKeepChildren(int32 Parent)
 {
 	if(Parent >= Entries.Num() || Parent < 0)
 	{
-		UE_LOG(LogPsydekick, Warning, TEXT("UMenu::RemoveEntryKeepChildren called with out of range index %d (Num()=%d)"), Parent, Entries.Num());
+		UE_LOG(LogPsydekick, Warning, TEXT("UMenuTree::RemoveEntryKeepChildren called with out of range index %d (Num()=%d)"), Parent, Entries.Num());
 		return;
 	}
 	for(int32 Index = Parent+1; (Index < Entries.Num() && Entries[Index].Depth > Entries[Parent].Depth); Index++)
@@ -197,11 +197,11 @@ void UMenu::RemoveEntryKeepChildren(int32 Parent)
 	Entries.RemoveAt(Parent);
 }
 
-void UMenu::SwapAdjacent(int32 A, int32 B)
+void UMenuTree::SwapAdjacent(int32 A, int32 B)
 {
 	if(A < 0 || B < 0 || A >= Entries.Num() || B >= Entries.Num())
 	{
-		UE_LOG(LogPsydekick, Warning, TEXT("Attempt to swap UMenu entries with bad indices %d, %d (Num()=%d)"), A, B, Entries.Num());
+		UE_LOG(LogPsydekick, Warning, TEXT("Attempt to swap UMenuTree entries with bad indices %d, %d (Num()=%d)"), A, B, Entries.Num());
 		return;
 	}
 
@@ -211,19 +211,19 @@ void UMenu::SwapAdjacent(int32 A, int32 B)
 	Entries[B].Depth = TmpDepth;
 }
 
-void UMenu::MoveEntryUp(int32 Index)
+void UMenuTree::MoveEntryUp(int32 Index)
 {
 	SwapAdjacent(Index-1, Index);
 }
 
-void UMenu::MoveEntryDown(int32 Index)
+void UMenuTree::MoveEntryDown(int32 Index)
 {
 	SwapAdjacent(Index, Index+1);
 }
 
-void UMenu::InsertAt(int32 Index, FString Name)
+void UMenuTree::InsertAt(int32 Index, FString Name)
 {
-	FMenuEntry Entry;
+	FMenuTreeEntry Entry;
 	Entry.Depth = 0;
 	Entry.Name = Name;
 	if(Index > 0 && Entries.Num() > 1)
@@ -234,11 +234,11 @@ void UMenu::InsertAt(int32 Index, FString Name)
 	Entries.Insert(Entry, Index);
 }
 
-void UMenu::Indent(int32 Index)
+void UMenuTree::Indent(int32 Index)
 {
 	if(Index >= Entries.Num() || Index < 0)
 	{
-		UE_LOG(LogPsydekick, Warning, TEXT("UMenu::Indent called with out of range index %d (Num()=%d)"), Index, Entries.Num());
+		UE_LOG(LogPsydekick, Warning, TEXT("UMenuTree::Indent called with out of range index %d (Num()=%d)"), Index, Entries.Num());
 		return;
 	}
 
@@ -253,11 +253,11 @@ void UMenu::Indent(int32 Index)
 	Entries[Index].Depth++;
 }
 
-void UMenu::Outdent(int32 Index)
+void UMenuTree::Outdent(int32 Index)
 {
 	if(Index >= Entries.Num() || Index < 0)
 	{
-		UE_LOG(LogPsydekick, Warning, TEXT("UMenu::Outdent called with out of range index %d (Num()=%d)"), Index, Entries.Num());
+		UE_LOG(LogPsydekick, Warning, TEXT("UMenuTree::Outdent called with out of range index %d (Num()=%d)"), Index, Entries.Num());
 		return;
 	}
 

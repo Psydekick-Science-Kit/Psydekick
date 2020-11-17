@@ -1,8 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "MenuEditor.h"
 
-#include "Menu.h"
+#include "MenuTree/MenuTreeEditor.h"
+#include "2D/MenuTree.h"
+#include "PsydekickEd.h"
 
 #include "Modules/ModuleManager.h"
 #include "EditorStyleSet.h"
@@ -13,15 +14,15 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Engine/StreamableManager.h"
 
-#define LOCTEXT_NAMESPACE "MenuEditor"
+#define LOCTEXT_NAMESPACE "MenuTreeEditor"
 
-const FName FMenuEditor::ToolkitFName(TEXT("MenuEditor"));
-const FName FMenuEditor::PropertiesTabId(TEXT("MenuEditor_Properties"));
-const FName FMenuEditor::MenuEditTabId(TEXT("MenuEditor_MenuEdit"));
-const FName FMenuEditor::MenuEditorAppIdentifier(TEXT("MenuEditorApp"));
+const FName FMenuTreeEditor::ToolkitFName(TEXT("MenuTreeEditor"));
+const FName FMenuTreeEditor::PropertiesTabId(TEXT("MenuTreeEditor_Properties"));
+const FName FMenuTreeEditor::MenuTreeEditTabId(TEXT("MenuTreeEditor_MenuEdit"));
+const FName FMenuTreeEditor::MenuTreeEditorAppIdentifier(TEXT("MenuTreeEditorApp"));
 
 
-void FMenuEditor::InitMenuEditor(const EToolkitMode::Type Mode, const TSharedPtr<class IToolkitHost>& InitToolkitHost, UMenu* InMenu)
+void FMenuTreeEditor::InitMenuTreeEditor(const EToolkitMode::Type Mode, const TSharedPtr<class IToolkitHost>& InitToolkitHost, UMenuTree* InMenuTree)
 {
 	// Cache some values that will be used for our details view arguments
 	const bool bIsUpdatable = false;
@@ -29,7 +30,7 @@ void FMenuEditor::InitMenuEditor(const EToolkitMode::Type Mode, const TSharedPtr
 	const bool bIsLockable = false;
 
 	// Set this Menu as our editing asset
-	Menu = InMenu;
+	MenuTree = InMenuTree;
 
 	// Retrieve the property editor module and assign properties to DetailsView
 	FPropertyEditorModule& PropertyEditorModule = FModuleManager::GetModuleChecked<FPropertyEditorModule>("PropertyEditor");
@@ -37,7 +38,7 @@ void FMenuEditor::InitMenuEditor(const EToolkitMode::Type Mode, const TSharedPtr
 	DetailsView = PropertyEditorModule.CreateDetailView(DetailsViewArgs);
 
 	// Create the layout of our custom asset editor
-	const TSharedRef<FTabManager::FLayout> StandaloneDefaultLayout = FTabManager::NewLayout("Standalone_MenuEditor_Layout_v1")->AddArea
+	const TSharedRef<FTabManager::FLayout> StandaloneDefaultLayout = FTabManager::NewLayout("Standalone_MenuTreeEditor_Layout_v1")->AddArea
 	(
 		// Create a vertical area and spawn the toolbar
 		FTabManager::NewPrimaryArea()->SetOrientation(Orient_Vertical)
@@ -51,7 +52,7 @@ void FMenuEditor::InitMenuEditor(const EToolkitMode::Type Mode, const TSharedPtr
 			FTabManager::NewSplitter()->Split
 			(
 				FTabManager::NewStack()
-					->AddTab(MenuEditTabId, ETabState::OpenedTab)
+					->AddTab(MenuTreeEditTabId, ETabState::OpenedTab)
 			)
 			->Split(
 				FTabManager::NewStack()
@@ -67,47 +68,47 @@ void FMenuEditor::InitMenuEditor(const EToolkitMode::Type Mode, const TSharedPtr
 	FAssetEditorToolkit::InitAssetEditor(
 		Mode,
 		InitToolkitHost,
-		MenuEditorAppIdentifier,
+		MenuTreeEditorAppIdentifier,
 		StandaloneDefaultLayout,
 		bCreateDefaultStandaloneMenu,
 		bCreateDefaultToolbar,
-		(UObject*)InMenu);
+		(UObject*)InMenuTree);
 
 	// Set the asset we are editing in the details view
 	if (DetailsView.IsValid())
 	{
-		DetailsView->SetObject((UObject*)InMenu);
+		DetailsView->SetObject((UObject*)InMenuTree);
 	}
 }
 
-void FMenuEditor::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
+void FMenuTreeEditor::RegisterTabSpawners(const TSharedRef<FTabManager>& InTabManager)
 {
-	WorkspaceMenuCategory = InTabManager->AddLocalWorkspaceMenuCategory(LOCTEXT("WorkspaceMenu_MenuEditor", "Menu Editor"));
+	WorkspaceMenuCategory = InTabManager->AddLocalWorkspaceMenuCategory(LOCTEXT("WorkspaceMenu_MenuTreeEditor", "Menu Tree Editor"));
 	FAssetEditorToolkit::RegisterTabSpawners(InTabManager);
 
-	InTabManager->RegisterTabSpawner(MenuEditTabId, FOnSpawnTab::CreateSP(this, &FMenuEditor::SpawnMenuEditTab))
-		.SetDisplayName(LOCTEXT("MenuEditTab", "Menu Edit"))
+	InTabManager->RegisterTabSpawner(MenuTreeEditTabId, FOnSpawnTab::CreateSP(this, &FMenuTreeEditor::SpawnMenuTreeEditTab))
+		.SetDisplayName(LOCTEXT("MenuTreeEditTab", "Menu Tree Edit"))
 		.SetGroup(WorkspaceMenuCategory.ToSharedRef());
 		//.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Details"));
 
-	InTabManager->RegisterTabSpawner(PropertiesTabId, FOnSpawnTab::CreateSP(this, &FMenuEditor::SpawnPropertiesTab))
+	InTabManager->RegisterTabSpawner(PropertiesTabId, FOnSpawnTab::CreateSP(this, &FMenuTreeEditor::SpawnPropertiesTab))
 		.SetDisplayName(LOCTEXT("PropertiesTab", "Details"))
 		.SetGroup(WorkspaceMenuCategory.ToSharedRef())
 		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "LevelEditor.Tabs.Details"));
 
 }
 
-void FMenuEditor::UnregisterTabSpawners(const TSharedRef<class FTabManager>& InTabManager)
+void FMenuTreeEditor::UnregisterTabSpawners(const TSharedRef<class FTabManager>& InTabManager)
 {
 	// Unregister the tab manager from the asset editor toolkit
 	FAssetEditorToolkit::UnregisterTabSpawners(InTabManager);
 
 	// Unregister our custom tab from the tab manager, making sure it is cleaned up when the editor gets destroyed
 	InTabManager->UnregisterTabSpawner(PropertiesTabId);
-	InTabManager->UnregisterTabSpawner(MenuEditTabId);
+	InTabManager->UnregisterTabSpawner(MenuTreeEditTabId);
 }
 
-TSharedRef<SDockTab> FMenuEditor::SpawnPropertiesTab(const FSpawnTabArgs& Args)
+TSharedRef<SDockTab> FMenuTreeEditor::SpawnPropertiesTab(const FSpawnTabArgs& Args)
 {
 	// Make sure we have the correct tab id
 	check(Args.GetTabId() == PropertiesTabId);
@@ -123,41 +124,41 @@ TSharedRef<SDockTab> FMenuEditor::SpawnPropertiesTab(const FSpawnTabArgs& Args)
 		];
 }
 
-TSharedRef<SDockTab> FMenuEditor::SpawnMenuEditTab(const FSpawnTabArgs& Args)
+TSharedRef<SDockTab> FMenuTreeEditor::SpawnMenuTreeEditTab(const FSpawnTabArgs& Args)
 {
 	// Make sure we have the correct tab id
-	check(Args.GetTabId() == MenuEditTabId);
+	check(Args.GetTabId() == MenuTreeEditTabId);
 	UBlueprint* WidgetBlueprint = Cast<UBlueprint>(LoadAssetFromContent(WidgetReferencePath));
 
 	if (WidgetBlueprint)
 	{
-		MenuEditUMGWidget = CreateWidget<UMenuEditorWidget>(GEditor->GetEditorWorldContext().World(), (UClass*)WidgetBlueprint->GeneratedClass);
-		if(!Menu)
+		MenuTreeEditUMGWidget = CreateWidget<UMenuTreeEditorWidget>(GEditor->GetEditorWorldContext().World(), (UClass*)WidgetBlueprint->GeneratedClass);
+		if(!MenuTree)
 		{
 			UE_LOG(LogPsydekickEd, Warning, TEXT("Oh no! Menu is null :("));
 		}
-		MenuEditUMGWidget->SetMenu(Menu);
+		MenuTreeEditUMGWidget->SetMenuTree(MenuTree);
 
 		return SNew(SDockTab)
 			//.Icon(FEditorStyle::GetBrush("GenericEditor.Tabs.Properties"))
-			.Label(LOCTEXT("MenuEditTitle", "Menu Editor"))
+			.Label(LOCTEXT("MenuEditTitle", "Menu Tree Editor"))
 			.TabColorScale(GetTabColorScale())
 			[
 					// Provide the details view as this tab its content
-					MenuEditUMGWidget->TakeWidget()
+					MenuTreeEditUMGWidget->TakeWidget()
 			];
 	}
 	else
 	{
-		UE_LOG(LogPsydekickEd, Warning, TEXT("Could not find MenuEditWidget Blueprint"));
+		UE_LOG(LogPsydekickEd, Warning, TEXT("Could not find MenuTreeEditWidget Blueprint at %s"), *WidgetReferencePath);
 		return SNew(SDockTab)
 			//.Icon(FEditorStyle::GetBrush("GenericEditor.Tabs.Properties"))
-			.Label(LOCTEXT("MenuEditTitle", "Menu Editor"))
+			.Label(LOCTEXT("MenuTreeEditTitle", "Menu Tree Editor"))
 			.TabColorScale(GetTabColorScale());
 	}
 }
 
-UObject* FMenuEditor::LoadAssetFromContent(FString Path)
+UObject* FMenuTreeEditor::LoadAssetFromContent(FString Path)
 {
 	FStringAssetReference* AssetRef = new FStringAssetReference(Path);
 	FStreamableManager AssetLoader;
@@ -169,33 +170,33 @@ UObject* FMenuEditor::LoadAssetFromContent(FString Path)
 	return LoadedAsset;
 }
 
-FMenuEditor::~FMenuEditor()
+FMenuTreeEditor::~FMenuTreeEditor()
 {
 	DetailsView.Reset();
 	PropertiesTab.Reset();
 }
 
-FName FMenuEditor::GetToolkitFName() const
+FName FMenuTreeEditor::GetToolkitFName() const
 {
 	return ToolkitFName;
 }
 
-FText FMenuEditor::GetBaseToolkitName() const
+FText FMenuTreeEditor::GetBaseToolkitName() const
 {
-	return LOCTEXT("AppLabel", "Menu Editor");
+	return LOCTEXT("AppLabel", "Menu Tree Editor");
 }
 
-FText FMenuEditor::GetToolkitToolTipText() const
+FText FMenuTreeEditor::GetToolkitToolTipText() const
 {
-	return LOCTEXT("ToolTip", "Menu Editor");
+	return LOCTEXT("ToolTip", "Menu Tree Editor");
 }
 
-FString FMenuEditor::GetWorldCentricTabPrefix() const
+FString FMenuTreeEditor::GetWorldCentricTabPrefix() const
 {
 	return LOCTEXT("WorldCentricTabPrefix", "AnimationDatabase ").ToString();
 }
 
-FLinearColor FMenuEditor::GetWorldCentricTabColorScale() const
+FLinearColor FMenuTreeEditor::GetWorldCentricTabColorScale() const
 {
 	return FColor::Red;
 }

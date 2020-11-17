@@ -2,6 +2,10 @@
 
 #include "PsydekickEd.h"
 
+#include "AssetToolsModule.h"
+#include "MenuTree/AssetTypeActions_MenuTree.h"
+#include "MenuTree/MenuTreeEditor.h"
+
 #define LOCTEXT_NAMESPACE "FPsydekickEdModule"
 
 DEFINE_LOG_CATEGORY(LogPsydekickEd)
@@ -11,7 +15,7 @@ void FPsydekickEdModule::StartupModule()
 	UE_LOG(LogPsydekickEd, Log, TEXT("PsydekickEd compiled %s at %s"), TEXT(__DATE__), TEXT(__TIME__));
 
 	IAssetTools& AssetTools = FModuleManager::LoadModuleChecked<FAssetToolsModule>("AssetTools").Get();
-	RegisterAssetTypeAction(AssetTools, MakeShareable(new FAssetTypeActions_Menu()));
+	RegisterAssetTypeAction(AssetTools, MakeShareable(new FAssetTypeActions_MenuTree()));
 }
 
 void FPsydekickEdModule::ShutdownModule()
@@ -29,13 +33,13 @@ void FPsydekickEdModule::ShutdownModule()
 	CreatedAssetTypeActions.Empty();
 }
 
-TSharedRef<FMenuEditor> FPsydekickEdModule::CreateMenuEditor(const EToolkitMode::Type Mode, const TSharedPtr< IToolkitHost >& InitToolkitHost, UMenu* Menu)
+TSharedRef<FMenuTreeEditor> FPsydekickEdModule::CreateMenuTreeEditor(const EToolkitMode::Type Mode, const TSharedPtr< IToolkitHost >& InitToolkitHost, UMenuTree* MenuTree)
 {
 	// Initialize and spawn a new custom asset editor with the provided parameters
-	TSharedRef<FMenuEditor> MenuEditor(new FMenuEditor());
-	MenuEditor->InitMenuEditor(Mode, InitToolkitHost, Menu);
+	TSharedRef<FMenuTreeEditor> MenuTreeEditor(new FMenuTreeEditor());
+	MenuTreeEditor->InitMenuTreeEditor(Mode, InitToolkitHost, MenuTree);
 
-	return MenuEditor;
+	return MenuTreeEditor;
 }
 
 void FPsydekickEdModule::RegisterAssetTypeAction(IAssetTools& AssetTools, TSharedRef<IAssetTypeActions> Action)

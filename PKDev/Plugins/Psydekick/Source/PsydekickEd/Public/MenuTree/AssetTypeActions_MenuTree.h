@@ -8,7 +8,7 @@
 /*
  *
  */
-class FAssetTypeActions_Menu : public FAssetTypeActions_Base
+class FAssetTypeActions_MenuTree : public FAssetTypeActions_Base
 {
 public:
 	// IAssetTypeActions interface
