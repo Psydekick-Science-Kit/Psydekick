@@ -43,7 +43,7 @@ void UCSVLogger::SetFieldNamesFromObject(const UObject* Object)
 	for (TFieldIterator<FProperty> PropertyItr(Class); PropertyItr; ++PropertyItr)
 	{
 		FProperty* Property = *PropertyItr;
-		Fields.Emplace(Property->GetDisplayNameText().ToString());
+		Fields.Emplace(Property->GetID().ToString());
 	}
 	SetFieldNames(Fields);
 }

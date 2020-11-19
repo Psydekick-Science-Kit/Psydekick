@@ -4,6 +4,9 @@
 
 #include "CoreMinimal.h"
 #include "UObject/NoExportTypes.h"
+
+#include "Blueprint/UserWidget.h"
+
 #include "MenuTree.generated.h"
 
 USTRUCT(BlueprintType)
@@ -23,7 +26,6 @@ class PSYDEKICK_API UMenuTree : public UObject
 {
 	GENERATED_BODY()
 
-
 	#pragma region Properties
 public:
 	UPROPERTY(BlueprintReadWrite, Category = "Menu")
@@ -32,10 +34,10 @@ public:
 
 	#pragma region Functions
 public:
-	UFUNCTION(BlueprintPure)
+	UFUNCTION(BlueprintPure, Category = "Psydekick|Menu")
 	int32 GetParent(int32 Index);
 
-	UFUNCTION(BlueprintPure)
+	UFUNCTION(BlueprintPure, Category = "Psydekick|Menu")
 	TArray<int32> GetAncestors(int32 Index);
 
 	UFUNCTION(BlueprintPure, Category = "Psydekick|Menu")
@@ -87,25 +89,25 @@ class PSYDEKICK_API UMenuTreeEntryWrapper : public UObject {
 
 	#pragma region Properties
 public:
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category="MenuTree")
 	FMenuTreeEntry MenuTreeEntry;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category="MenuTree")
 	int32 GlobalIndex;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category="MenuTree")
 	int32 LocalIndex;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category="MenuTree")
 	int32 ParentIndex;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category="MenuTree")
 	bool IsLocalLast;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category="MenuTree")
 	bool IsGlobalLast;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category="MenuTree")
 	bool HasChildren;
 	#pragma endregion
 

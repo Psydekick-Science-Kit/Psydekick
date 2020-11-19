@@ -17,6 +17,6 @@ class PSYDEKICKED_API UMenuTreeEditorWidget : public UUserWidget
 
 public:
 	UFUNCTION(BlueprintImplementableEvent)
-	void SetMenuTree(UMenuTree* Menu);
+	void LoadMenuTree(UMenuTree* Menu);
 
 };

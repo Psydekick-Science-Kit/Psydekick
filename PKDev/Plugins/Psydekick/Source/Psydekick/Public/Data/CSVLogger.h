@@ -21,10 +21,10 @@ private:
 public:
 	void LogObjectProperties(const UObject* Object, const UStruct* Class, const void* ContainerPtr);
 
-	UPROPERTY(BlueprintReadWrite, BlueprintSetter=SetFieldNames)
+	UPROPERTY(BlueprintReadWrite, BlueprintSetter=SetFieldNames, Category="General")
 	TArray<FString> FieldNames;
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")
 	void SetFieldNames(const TArray<FString> InFieldNames);
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")

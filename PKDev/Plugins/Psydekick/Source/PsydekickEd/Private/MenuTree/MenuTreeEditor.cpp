@@ -137,7 +137,7 @@ TSharedRef<SDockTab> FMenuTreeEditor::SpawnMenuTreeEditTab(const FSpawnTabArgs& 
 		{
 			UE_LOG(LogPsydekickEd, Warning, TEXT("Oh no! Menu is null :("));
 		}
-		MenuTreeEditUMGWidget->SetMenuTree(MenuTree);
+		MenuTreeEditUMGWidget->LoadMenuTree(MenuTree);
 
 		return SNew(SDockTab)
 			//.Icon(FEditorStyle::GetBrush("GenericEditor.Tabs.Properties"))
