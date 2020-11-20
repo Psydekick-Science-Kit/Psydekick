@@ -45,6 +45,9 @@ public class PsydekickEd : ModuleRules
 				"UnrealEd",
 				"LevelEditor",
 				"EditorStyle",
+				"PropertyEditor",
+				"UMGEditor",
+				"AssetRegistry",
 				"Psydekick"
 			}
 			);

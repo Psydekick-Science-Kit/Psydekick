@@ -14,11 +14,14 @@ struct FMenuTreeEntry
 {
 	GENERATED_USTRUCT_BODY()
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Psydekick")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Menu")
 	FString Name;
 
-	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Psydekick")
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Menu")
 	int32 Depth;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "Menu")
+	UClass* WidgetClass = nullptr;
 };
 
 UCLASS(BlueprintType)
