@@ -85,7 +85,8 @@ bool UMenuTree::IsLocalLast(int32 Index)
 
 int32 UMenuTree::GetParent(int32 Index)
 {
-	while(--Index>-1 && Entries[Index].Depth == Entries[Index+1].Depth);
+	int32 TargetDepth = Entries[Index].Depth-1;
+	while(--Index>-1 && Entries[Index].Depth > TargetDepth);
 
 	return Index;
 }
