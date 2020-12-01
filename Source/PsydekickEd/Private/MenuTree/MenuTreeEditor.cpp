@@ -11,8 +11,8 @@
 #include "PropertyEditorModule.h"
 #include "IDetailsView.h"
 #include "Editor.h"
-#include "UObject/ConstructorHelpers.h"
-#include "Engine/StreamableManager.h"
+
+#include "Misc/PKTools.h"
 
 #define LOCTEXT_NAMESPACE "MenuTreeEditor"
 
@@ -128,11 +128,11 @@ TSharedRef<SDockTab> FMenuTreeEditor::SpawnMenuTreeEditTab(const FSpawnTabArgs& 
 {
 	// Make sure we have the correct tab id
 	check(Args.GetTabId() == MenuTreeEditTabId);
-	UBlueprint* WidgetBlueprint = Cast<UBlueprint>(LoadAssetFromContent(WidgetReferencePath));
 
-	if (WidgetBlueprint)
+	UClass* MenuTreeEditWidgetClass = PKTools::GetBlueprintClass(WidgetReferencePath);
+	if (MenuTreeEditWidgetClass)
 	{
-		MenuTreeEditUMGWidget = CreateWidget<UMenuTreeEditorWidget>(GEditor->GetEditorWorldContext().World(), (UClass*)WidgetBlueprint->GeneratedClass);
+		MenuTreeEditUMGWidget = CreateWidget<UMenuTreeEditorWidget>(GEditor->GetEditorWorldContext().World(), MenuTreeEditWidgetClass);
 		if(!MenuTree)
 		{
 			UE_LOG(LogPsydekickEd, Warning, TEXT("Oh no! Menu is null :("));
@@ -156,18 +156,6 @@ TSharedRef<SDockTab> FMenuTreeEditor::SpawnMenuTreeEditTab(const FSpawnTabArgs& 
 			.Label(LOCTEXT("MenuTreeEditTitle", "Menu Tree Editor"))
 			.TabColorScale(GetTabColorScale());
 	}
-}
-
-UObject* FMenuTreeEditor::LoadAssetFromContent(FString Path)
-{
-	FStringAssetReference* AssetRef = new FStringAssetReference(Path);
-	FStreamableManager AssetLoader;
-	UObject* LoadedAsset = nullptr;
-
-	LoadedAsset = AssetLoader.LoadSynchronous(*AssetRef);
-	delete AssetRef;
-
-	return LoadedAsset;
 }
 
 FMenuTreeEditor::~FMenuTreeEditor()

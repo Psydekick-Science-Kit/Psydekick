@@ -40,8 +40,6 @@ public:
 
 private:
 
-	UObject* LoadAssetFromContent(FString Path);
-
 	// Create the properties tab and its content
 	TSharedRef<SDockTab> SpawnPropertiesTab(const FSpawnTabArgs& Args);
 	TSharedRef<SDockTab> SpawnMenuTreeEditTab(const FSpawnTabArgs& Args);
