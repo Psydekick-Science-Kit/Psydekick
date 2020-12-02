@@ -6,6 +6,8 @@
 
 #include "CoreMinimal.h"
 #include "Blueprint/UserWidget.h"
+#include "Animation/WidgetAnimation.h"
+
 #include "MenuTreeWidget.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FLeafSelected, UMenuTreeEntryWrapper*, MenuTreeEntry);
@@ -25,4 +27,17 @@ public:
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FLeafSelected LeafSelected;
 
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UWidgetAnimation* InAnimation = nullptr;
+
+	UPROPERTY(BlueprintReadWrite, EditAnywhere)
+	UWidgetAnimation* OutAnimation = nullptr;
+
+	UFUNCTION(BlueprintCallable)
+	void AnimateIn();
+
+	UFUNCTION(BlueprintCallable)
+	void AnimateOut();
+
+	FWidgetAnimationDynamicEvent AnimateOutFinished;
 };
