@@ -6,6 +6,8 @@
 #include "Kismet/BlueprintAsyncActionBase.h"
 #include "Components/InputComponent.h"
 
+#include "Tickable.h"
+
 #include "WaitForKey.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FKeyPressedExec, FKey, Key);
@@ -35,12 +37,12 @@ class PSYDEKICK_API UWaitForKey : public UBlueprintAsyncActionBase, public FTick
 	void OnTimeoutTriggered();
 	void OnKeyPress(FKey Key);
 
-	void Tick(float DeltaTime) override;
-	bool IsTickable() const override;
-	bool IsTickableInEditor() const override;
-	bool IsTickableWhenPaused() const override;
+	virtual void Tick(float DeltaTime) override;
+	virtual bool IsTickable() const override;
+	virtual bool IsTickableInEditor() const override;
+	virtual bool IsTickableWhenPaused() const override;
 
-	TStatId GetStatId() const override;
+	virtual TStatId GetStatId() const override;
 
 protected:
 	bool bActive;

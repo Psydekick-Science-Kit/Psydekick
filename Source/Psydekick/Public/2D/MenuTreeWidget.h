@@ -33,11 +33,9 @@ public:
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	UWidgetAnimation* OutAnimation = nullptr;
 
-	UFUNCTION(BlueprintCallable)
-	void AnimateIn();
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void Show();
 
-	UFUNCTION(BlueprintCallable)
-	void AnimateOut();
-
-	FWidgetAnimationDynamicEvent AnimateOutFinished;
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+	void Hide();
 };

@@ -3,29 +3,12 @@
 
 #include "2D/MenuTreeWidget.h"
 
-void UMenuTreeWidget::AnimateIn()
+void UMenuTreeWidget::Show_Implementation()
 {
-	if(IsValid(OutAnimation))
-	{
-		UnbindFromAnimationFinished(OutAnimation, AnimateOutFinished);
-	}
-
-	if(IsValid(InAnimation))
-	{
-		PlayAnimationForward(InAnimation, 1.0f, false);
-	}
+	AddToViewport();
 }
 
-void UMenuTreeWidget::AnimateOut()
+void UMenuTreeWidget::Hide_Implementation()
 {
-	if(IsValid(OutAnimation))
-	{
-		BindToAnimationFinished(OutAnimation, AnimateOutFinished);
-		PlayAnimationForward(OutAnimation, 1.0f, false);
-	}
-	else
-	{
-		AnimateOutFinished.ExecuteIfBound();
-	}
-
+	RemoveFromParent();
 }
