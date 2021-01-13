@@ -68,7 +68,7 @@ void SPKAssetPicker::SetContent( TSharedRef< SWidget > InContent )
 	ContentContainer->SetContent(InContent);
 }
 
-const TSharedRef< SWidget >& SBorder::GetContent() const
+const TSharedRef< SWidget >& SPKAssetPicker::GetContent() const
 {
 	return ChildSlot.GetWidget();
 }
