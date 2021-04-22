@@ -50,8 +50,6 @@ void UCSVLogger::SetFieldNamesFromObject(const UObject* Object)
 
 void UCSVLogger::LogStrings(const TMap<FString,FString> Record)
 {
-
-	UE_LOG(LogPsydekick, Log, TEXT("Got some strings yo!"));
 	if (FieldNames.Num() == 0)
 	{
 		TArray<FString> Keys;
@@ -60,16 +58,16 @@ void UCSVLogger::LogStrings(const TMap<FString,FString> Record)
 	}
 
 	FString Line = "";
-	if (!Record.Contains("Timestamp")) {
-		FString Timestamp = FDateTime::Now().ToIso8601();
-		Line += Timestamp + ",";
-	}
 
 	for (FString FieldName : FieldNames) {
+		UE_LOG(LogTemp, Log, TEXT("Log field name %s"), *FieldName);
 		FString Value;
 		if (Record.Contains(FieldName)) {
 			Value = *Record.Find(FieldName);
+		} else if(FieldName == "Timestamp"){
+			Value = FDateTime::Now().ToIso8601();
 		} else {
+
 			Value = "";
 		}
 
