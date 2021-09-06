@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// (c) 2021 Dominic Canare <dom@dominiccanare.com>
 
 #pragma once
 
@@ -10,9 +10,6 @@
 
 #include "PsydekickData.generated.h"
 
-/**
- *
- */
 UCLASS()
 class PSYDEKICK_API UPsydekickData : public UBlueprintFunctionLibrary
 {

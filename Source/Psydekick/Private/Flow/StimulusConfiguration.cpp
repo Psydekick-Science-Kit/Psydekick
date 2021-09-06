@@ -1,5 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
-
+// (c) 2021 Dominic Canare <dom@dominiccanare.com>
 
 #include "Flow/StimulusConfiguration.h"
 
@@ -48,5 +47,4 @@ FString UStimulusConfiguration::ToString_Implementation()
 	else {
 		return GetName() + "()";
 	}
-
 }

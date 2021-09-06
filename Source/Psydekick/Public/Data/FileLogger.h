@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// (c) 2021 Dominic Canare <dom@dominiccanare.com>
 
 #pragma once
 
@@ -8,9 +8,6 @@
 
 #include "FileLogger.generated.h"
 
-/**
- *
- */
 UCLASS(BlueprintType)
 class PSYDEKICK_API UFileLogger : public UFileWriter
 {

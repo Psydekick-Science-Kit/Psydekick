@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// (c) 2021 Dominic Canare <dom@dominiccanare.com>
 
 #pragma once
 
@@ -9,7 +9,6 @@
 #include "Engine/DataTable.h"
 
 #include "ExperimentController.generated.h"
-
 
 UENUM()
 enum class ETrialSelectionMode

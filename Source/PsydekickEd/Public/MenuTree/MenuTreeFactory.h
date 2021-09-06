@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// (c) 2021 Dominic Canare <dom@dominiccanare.com>
 
 #pragma once
 
@@ -6,9 +6,6 @@
 #include "Factories/Factory.h"
 #include "MenuTreeFactory.generated.h"
 
-/**
- *
- */
 UCLASS()
 class PSYDEKICKED_API UMenuTreeFactory : public UFactory
 {
