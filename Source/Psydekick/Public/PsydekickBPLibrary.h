@@ -33,4 +33,16 @@ class UPsydekickBPLibrary : public UBlueprintFunctionLibrary
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Data")
 	static UArrayPool* MakeArrayPool(TArray<UObject*> Source);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Settings")
+	static FString GetProjectSetting(FString Name);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Settings")
+	static FString GetBuildDate();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Settings")
+	static FString GetBuildTime();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Settings")
+	static FString GetBuildString();
 };
