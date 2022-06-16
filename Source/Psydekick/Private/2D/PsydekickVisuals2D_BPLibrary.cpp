@@ -8,6 +8,11 @@
 #include "Engine/EngineTypes.h"
 #include "Kismet/GameplayStatics.h"
 
+THIRD_PARTY_INCLUDES_START
+	#include <SDL.h>
+	#include <SDL_joystick.h>
+THIRD_PARTY_INCLUDES_END
+
 APsydekickVisuals2D* UPsydekickVisuals2D_BPLibrary::PKVisuals2DActor;
 
 APsydekickVisuals2D* UPsydekickVisuals2D_BPLibrary::GetPKVisuals2DActor(const UObject* WorldContextObject)
@@ -74,4 +79,56 @@ void UPsydekickVisuals2D_BPLibrary::SetUIMode(const UObject* WorldContextObject)
 void UPsydekickVisuals2D_BPLibrary::SetGameOnlyMode(const UObject* WorldContextObject)
 {
 	UPsydekickVisuals2D_BPLibrary::GetPKVisuals2DActor(WorldContextObject)->SetGameOnlyMode();
+}
+
+TArray<FGamepadInfo> UPsydekickVisuals2D_BPLibrary::GetGamepadInfo()
+{
+	TArray<FGamepadInfo> Gamepads;
+
+	SDL_Init(SDL_INIT_JOYSTICK);
+
+	int JoystickCount = SDL_NumJoysticks();
+
+	UE_LOG(LogPsydekick, Log, TEXT("Found %d Joysticks"), JoystickCount);
+
+	for(int i = 0; i < JoystickCount; i++)
+	{
+		SDL_Joystick* Joystick = SDL_JoystickOpen(i);
+		if (Joystick)
+		{
+			SDL_JoystickGUID SDL_guid = SDL_JoystickGetGUID(Joystick);
+			char GuidStr[1024];
+			SDL_JoystickGetGUIDString(SDL_guid, GuidStr, sizeof(GuidStr));
+			const char* NameStr = SDL_JoystickName(Joystick);
+
+			SDL_JoystickClose(Joystick);
+
+			FString Guid(GuidStr);
+			FString Name(NameStr);
+
+			FGamepadInfo Gamepad;
+			Gamepad.Guid = Guid;
+			Gamepad.Name = Name;
+
+			Gamepads.Add(Gamepad);
+		}
+	}
+
+	SDL_QuitSubSystem(SDL_INIT_JOYSTICK);
+	Gamepads.Shrink();
+
+	return Gamepads;
+}
+
+bool UPsydekickVisuals2D_BPLibrary::IsXboxGamepadConnected()
+{
+	TArray<FGamepadInfo> Gamepads = GetGamepadInfo();
+	for(FGamepadInfo Gamepad : Gamepads)
+	{
+		if(Gamepad.Guid.StartsWith("030000005e04")){
+			return true;
+		}
+	}
+
+	return false;
 }

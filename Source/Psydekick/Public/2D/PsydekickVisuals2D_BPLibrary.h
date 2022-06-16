@@ -10,6 +10,18 @@
 
 #include "PsydekickVisuals2D_BPLibrary.generated.h"
 
+USTRUCT(BlueprintType)
+struct FGamepadInfo
+{
+	GENERATED_USTRUCT_BODY()
+
+	UPROPERTY(BlueprintReadOnly, Category = "Gamepad")
+	FString Guid;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Gamepad")
+	FString Name;
+};
+
 UCLASS()
 class PSYDEKICK_API UPsydekickVisuals2D_BPLibrary : public UBlueprintFunctionLibrary
 {
@@ -60,4 +72,10 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
 	static void SetGameOnlyMode(const UObject* WorldContextObject);
+
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
+	static TArray<FGamepadInfo> GetGamepadInfo();
+
+	UFUNCTION(BlueprintCallable, Category = "Psydekick|Visuals|2D", meta = (WorldContext = WorldContextObject))
+	static bool IsXboxGamepadConnected();
 };
